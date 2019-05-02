@@ -25,17 +25,21 @@ export default class FormComponent extends React.Component {
     items: [],
     base: null,
     showWholeBase: false,
-    name: ''
+    name: '',
+    numberOfAllUseCases: 0
   };
 
   changeBaseToProperForm(val) {
+    let number = 0;
     let entries = Object.entries(val);
     entries.forEach(function (arr) {
       arr[1] = Object.keys(arr[1]);
+      number += arr[1].length
     });
     this.setState({
       base: entries,
-      showWholeBase: false
+      showWholeBase: false,
+      numberOfAllUseCases: number
     })
   }
 
@@ -67,7 +71,10 @@ export default class FormComponent extends React.Component {
       base.forEach(arrOfUC => {
         arrOfUC[1].forEach(
           function (uc) {
-            if (uc.toLowerCase().search(event.target.value.toLowerCase()) !== -1) {
+            if (uc.toLowerCase().search(
+              event.target.value.toLowerCase()
+                .replace(/^\s+|\s+$/g, "")
+                .replace(/\s+/g, " ")) !== -1) {
               ucArr.add(uc);
             }
           });
@@ -95,8 +102,9 @@ export default class FormComponent extends React.Component {
   };
 
   componentDidMount() {
-    firebase.database().ref('/').on('value',
-      snapshot => this.changeBaseToProperForm(snapshot.val())
+    firebase.database().ref('/').once('value').then(snapshot => {
+        this.changeBaseToProperForm(snapshot.val())
+      }
     )
   }
 
@@ -111,17 +119,18 @@ export default class FormComponent extends React.Component {
               <Row>
                 <Col sm="12" md={{size: 12}} className="form-input_mod">
                   <Input type="search" value={this.state.name} name="search" id="useCasesSearch" bsSize="lg"
-                         placeholder="Type what are you looking for... for example: post or chat" onChange={this.filterList}
+                         placeholder="Type what are you looking for... for example: post or chat"
+                         onChange={this.filterList}
                          onKeyPress={this.preventActionHandler}/>
                 </Col>
-                { !this.state.showWholeBase ?
+                {!this.state.showWholeBase ?
                   (<Col sm="12" md={{size: 4, offset: 4}} className="form-button_mod">
-                  <Button color="warning" onClick={this.showAllUseCases}>Show All Use Cases</Button>
-                </Col>):
+                    <Button color="warning" onClick={this.showAllUseCases}>Show All ({this.state.numberOfAllUseCases}) Use Cases</Button>
+                  </Col>) :
 
                   (<Col sm="12" md={{size: 4, offset: 4}} className="form-button_mod">
-                  <Button color="danger" onClick={this.hideAllUseCases}>Hide All Use Cases</Button>
-                </Col>)
+                    <Button color="danger" onClick={this.hideAllUseCases}>Hide All Use Cases</Button>
+                  </Col>)
                 }
               </Row>
               <Row>

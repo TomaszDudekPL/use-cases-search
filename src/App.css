@@ -8,7 +8,9 @@
 
 .badge-mod {
     padding: 5px;
-    margin: 5px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 .list-text_mod {
