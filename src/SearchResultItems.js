@@ -15,7 +15,7 @@ export default class SearchResultItems extends React.Component {
         let arrWithData = arr[0].split('%5C');
         return arr[1].map(uc => {
             return (
-              <Breadcrumb key={uc} className="list-item_mod" onClick={this.toggle}>
+              <Breadcrumb key={uc + Math.floor(Math.random()*1000)} className="list-item_mod" onClick={this.toggle}>
                 <span className="item-number_mod">{(number++) - (numberState - 1)}.</span>
                 <BreadcrumbItem>{arrWithData[0]}</BreadcrumbItem>
                 <BreadcrumbItem>{arrWithData[1]}</BreadcrumbItem>

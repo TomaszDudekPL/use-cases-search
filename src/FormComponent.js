@@ -61,52 +61,118 @@ export default class FormComponent extends React.Component {
 
   filterList = (event) => {
 
-    this.setState({
-      name: event.value,
-      showWholeBase: false
-    });
-
-    if (event.target.value.length > 3) {
-
-      let base = this.state.base;
-      let updatedList = [];
-      let ucArr = new Set();
-
-      console.log('base: ', base);
-
-      base.forEach(arrOfUC => {
-
-        arrOfUC[1].forEach(
-          function (uc) {
-
-            if (uc.toLowerCase().search(
-
-              event.target.value.toLowerCase()
-                .replace(/^\s+|\s+$/g, "")
-                .replace(/\s+/g, " ")) !== -1) { ucArr.add(uc); }
-
-          });
-
-        if (ucArr.size) {
-
-          updatedList.push([arrOfUC[0], [...ucArr]]);
-
-        }
-        ucArr = new Set();
-
-      });
+    if (!this.state.items.length) {
 
       this.setState({
-        items: updatedList
+        name: event.value,
+        showWholeBase: false
       });
 
-      console.log('updatedList: ', updatedList);
+      if (event.target.value.length > 3) {
 
-    } else {
+        let base = this.state.base;
+        let updatedList = [];
+        let ucArr = new Set();
 
-      this.setState({
-        items: []
+        base.forEach(arrOfUC => {
+
+          arrOfUC[1].forEach(
+            function (uc) {
+
+              if (uc.toLowerCase().search(
+                event.target.value.toLowerCase()
+                  .replace(/^\s+|\s+$/g, "")
+                  .replace(/\s+/g, " ")) !== -1) {
+                ucArr.add(uc);
+              }
+
+            });
+
+          if (ucArr.size) {
+            updatedList.push([arrOfUC[0], [...ucArr]]);
+          }
+          ucArr = new Set();
+
+        });
+
+        this.setState({
+          items: updatedList
+        });
+
+      } else {
+        this.setState({
+          items: []
+        });
+      }
+
+      // Experimental searching. It still does not work correctly.  Lines: 121 to 191
+
+    } else if (/\s+/.test(event.target.value)) {
+
+      let arrOfKeyWords = event.target.value.split(' ');
+      arrOfKeyWords = arrOfKeyWords.filter(function (el) {
+        return el !== null && el !== "";
       });
+
+      if (arrOfKeyWords.length > 1) {
+
+        let base = this.state.base;
+        let updatedList = [];
+        let ucArr = new Set();
+
+
+        base.forEach(arrOfUC => {
+
+          arrOfUC[1].forEach(
+            function (uc) {
+
+              if (uc.toLowerCase().search(
+                arrOfKeyWords[0].toLowerCase()
+                  .replace(/^\s+|\s+$/g, "")
+                  .replace(/\s+/g, " ")) !== -1) {
+                ucArr.add(uc);
+              }
+
+              if (arrOfKeyWords[1]) {
+
+                if (uc.toLowerCase().search(
+                  arrOfKeyWords[1].toLowerCase()
+                    .replace(/^\s+|\s+$/g, "")
+                    .replace(/\s+/g, " ")) !== -1) {
+                  ucArr.add(uc);
+                }
+              }
+
+              if (arrOfKeyWords[2]) {
+                if (uc.toLowerCase().search(
+                  arrOfKeyWords[2].toLowerCase()
+                    .replace(/^\s+|\s+$/g, "")
+                    .replace(/\s+/g, " ")) !== -1) {
+                  ucArr.add(uc);
+                }
+              }
+
+            });
+
+          if (ucArr.size) {
+            updatedList.push([arrOfUC[0], [...ucArr]]);
+          }
+          ucArr = new Set();
+
+        });
+
+        this.setState({
+          items: updatedList
+        });
+
+      } else {
+
+        // this.setState({
+        //   items: []
+        // });
+
+        // this.filterList();
+      }
 
     }
   };
@@ -142,7 +208,8 @@ export default class FormComponent extends React.Component {
                 </Col>
                 {!this.state.showWholeBase ?
                   (<Col sm="12" md={{size: 4, offset: 4}} className="form-button_mod">
-                    <Button color="warning" onClick={this.showAllUseCases}>Show All ({this.state.numberOfAllUseCases}) Use Cases</Button>
+                    <Button color="warning" onClick={this.showAllUseCases}>Show All ({this.state.numberOfAllUseCases})
+                      Use Cases</Button>
                   </Col>) :
 
                   (<Col sm="12" md={{size: 4, offset: 4}} className="form-button_mod">
