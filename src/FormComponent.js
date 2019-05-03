@@ -60,37 +60,54 @@ export default class FormComponent extends React.Component {
   };
 
   filterList = (event) => {
+
     this.setState({
       name: event.value,
       showWholeBase: false
     });
+
     if (event.target.value.length > 3) {
+
       let base = this.state.base;
       let updatedList = [];
       let ucArr = new Set();
+
+      console.log('base: ', base);
+
       base.forEach(arrOfUC => {
+
         arrOfUC[1].forEach(
           function (uc) {
+
             if (uc.toLowerCase().search(
+
               event.target.value.toLowerCase()
                 .replace(/^\s+|\s+$/g, "")
-                .replace(/\s+/g, " ")) !== -1) {
-              ucArr.add(uc);
-            }
+                .replace(/\s+/g, " ")) !== -1) { ucArr.add(uc); }
+
           });
+
         if (ucArr.size) {
+
           updatedList.push([arrOfUC[0], [...ucArr]]);
+
         }
         ucArr = new Set();
+
       });
 
       this.setState({
         items: updatedList
       });
+
+      console.log('updatedList: ', updatedList);
+
     } else {
+
       this.setState({
         items: []
       });
+
     }
   };
 

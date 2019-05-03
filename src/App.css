@@ -15,10 +15,16 @@
 
 .list-text_mod {
     margin-left: 20px;
+    color: #2fb431;
+    font-weight: 600;
 }
 
 .list-item_mod {
-    text-align: left;
+
+}
+
+.item-number_mod {
+    margin-right: 30px;
 }
 
 .form-mainLabel_mod {

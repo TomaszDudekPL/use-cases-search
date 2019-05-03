@@ -1,5 +1,5 @@
 import React from 'react';
-import {Badge, ListGroupItem} from 'reactstrap';
+import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
 
 export default class SearchResultItems extends React.Component {
 
@@ -12,13 +12,16 @@ export default class SearchResultItems extends React.Component {
 
     return (
       this.props.items ? this.props.items.map(arr => {
+        let arrWithData = arr[0].split('%5C');
         return arr[1].map(uc => {
-            return (<ListGroupItem key={uc} color="success" className="list-item_mod">{(number++) - (numberState - 1)}.
-                <Badge pill color="success" className="badge-mod">CONSUMER</Badge>
-                <Badge pill color="warning" className="badge-mod">Chat</Badge>
-                <Badge pill color="warning" className="badge-mod">{arr[0]}.js</Badge>
+            return (
+              <Breadcrumb key={uc} className="list-item_mod" onClick={this.toggle}>
+                <span className="item-number_mod">{(number++) - (numberState - 1)}.</span>
+                <BreadcrumbItem>{arrWithData[0]}</BreadcrumbItem>
+                <BreadcrumbItem>{arrWithData[1]}</BreadcrumbItem>
+                <BreadcrumbItem active>{arrWithData[2] + '.js'}</BreadcrumbItem>
                 <span className="list-text_mod">{uc}</span>
-              </ListGroupItem>
+              </Breadcrumb>
             )
           }
         )
