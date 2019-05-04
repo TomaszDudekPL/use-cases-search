@@ -1,6 +1,29 @@
 .App {
 
 }
+/* remove scrollbar */
+body::-webkit-scrollbar {
+    width: 0;
+}
+
+.highlight-text {
+    background: none;
+    color: #f18911;
+    font-weight: bold;
+    /*text-transform: uppercase;*/
+    padding: unset;
+}
+
+.jumbotron_mod {
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.jumbotron {
+    padding: 10px;
+}
 
 .main-label {
     text-align: center;
@@ -19,8 +42,16 @@
     font-weight: 600;
 }
 
-.list-item_mod {
+.breadcrumb:hover {
+    background-color: #dbdee1;
+}
 
+.list-item_mod:active {
+    border-radius: 5px;
+}
+
+.breadcrumb:active {
+    background-color: #b0b3b7;
 }
 
 .item-number_mod {
@@ -28,12 +59,13 @@
 }
 
 .form-mainLabel_mod {
-    margin-top: 20px;
     font-size: 3rem;
+    padding: 0;
+    margin: unset;
 }
 
 .form-input_mod {
-    /*padding: unset;*/
+
 }
 
 .form-button_mod {
