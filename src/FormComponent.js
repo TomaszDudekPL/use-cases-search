@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Container, Form, FormGroup, Input, Jumbotron, Row} from 'reactstrap';
+import {Button, Col, Row, Container, Form, FormGroup, Input, Jumbotron, InputGroup} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import * as firebase from "firebase/app";
 import "firebase/database";
@@ -228,8 +228,16 @@ export default class FormComponent extends React.Component {
               <Jumbotron fluid className="jumbotron_mod">
                 <h1 className="display-7 form-mainLabel_mod">USE CASES SEARCH</h1>
                 <p className="lead">
-                  <div id="hideMessage">{this.state.ucInfoObj? this.state.ucInfoObj.uc: ''}</div>
+                  <div id="hideMessage"></div>
                 </p>
+                <Row>
+                  <Col>
+                    <InputGroup size="sm">
+                <Input placeholder="" value={this.state.ucInfoObj? this.state.ucInfoObj.uc: ''} className="jumbotron-input_mod" />
+                  <Button color="success" size="sm" className="jumbotron-button_mod" outline >Clipboard!</Button>
+                    </InputGroup>
+                  </Col>
+                </Row>
               </Jumbotron>
             </Col>
           </Row>
@@ -238,7 +246,7 @@ export default class FormComponent extends React.Component {
             <FormGroup>
               <Row>
                 <Col sm="12" md={{size: 12}} className="form-input_mod">
-                  <Input type="search" value={this.state.name} name="search" id="useCasesSearch" bsSize="lg"
+                  <Input type="search" spellcheck="false" value={this.state.name} name="search" id="useCasesSearch" bsSize="lg"
                          placeholder="Type what are you looking for... for example: post or chat"
                          onChange={this.filterList}
                          onKeyPress={this.preventActionHandler}/>
@@ -246,14 +254,14 @@ export default class FormComponent extends React.Component {
               </Row>
               <Row>
                 {!this.state.showWholeBase ?
-                  (<Col sm="12" md={{size: 4, offset: 4}} className="form-button_mod">
-                    <Button block color="warning" onClick={this.showAllUseCases}>Show All
+                  (<Col sm="12" md={{ size: 6, offset: 3 }}>
+                    <Button block color="warning" className="form-button_mod" onClick={this.showAllUseCases}>Show All
                       ({this.state.numberOfAllUseCases})
                       Use Cases</Button>
                   </Col>) :
 
-                  (<Col sm="12" md={{size: 4, offset: 4}} className="form-button_mod">
-                    <Button block color="danger" onClick={this.hideAllUseCases}>Hide All Use Cases</Button>
+                  (<Col sm="12" md={{ size: 6, offset: 3 }}>
+                    <Button block color="danger" className="form-button_mod" onClick={this.hideAllUseCases}>Hide All Use Cases</Button>
                   </Col>)
                 }
               </Row>

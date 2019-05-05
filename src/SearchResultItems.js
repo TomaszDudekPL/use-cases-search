@@ -22,7 +22,7 @@ export default class SearchResultItems extends React.Component {
                 <span className="item-number_mod">{(number++) - (numberState - 1)}.</span>
                 <BreadcrumbItem>{arrWithData[0]}</BreadcrumbItem>
                 <BreadcrumbItem>{arrWithData[1]}</BreadcrumbItem>
-                <BreadcrumbItem>{arrWithData[2] + '.js'}</BreadcrumbItem>
+                <BreadcrumbItem active>{arrWithData[2] + '.js'}</BreadcrumbItem>
                 <Highlighter
                   className="list-text_mod "
                   highlightClassName="highlight-text"

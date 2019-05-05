@@ -1,5 +1,7 @@
-.App {
+@import url('https://fonts.googleapis.com/css?family=Jura');
 
+.App {
+    font-family: 'Jura', sans-serif;
 }
 /* remove scrollbar */
 body::-webkit-scrollbar {
@@ -10,7 +12,6 @@ body::-webkit-scrollbar {
     background: none;
     color: #f18911;
     font-weight: bold;
-    /*text-transform: uppercase;*/
     padding: unset;
 }
 
@@ -19,6 +20,7 @@ body::-webkit-scrollbar {
     margin-top: 20px;
     margin-bottom: 20px;
     background-color: white;
+    height: 150px;
 }
 
 .jumbotron {
@@ -46,14 +48,6 @@ body::-webkit-scrollbar {
     background-color: #dbdee1;
 }
 
-.list-item_mod:active {
-    border-radius: 5px;
-}
-
-.breadcrumb:active {
-    background-color: #b0b3b7;
-}
-
 .item-number_mod {
     margin-right: 30px;
 }
@@ -69,17 +63,30 @@ body::-webkit-scrollbar {
 }
 
 .form-button_mod {
-    padding: unset;
+    padding: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
-}
-
-input[type="search"] {
-    font-family: monospace;
-    font-size: 2rem;
 }
 
 ::placeholder {
     font-size: 1.3rem;
     font-style: italic;
+}
+
+.jumbotron-input_mod {
+    border-color: white;
+    text-align: right;
+}
+
+.jumbotron-input_mod{
+
+}
+
+.input-group {
+    font-size: .5rem;
+    outline: #f18911;
+}
+
+.jumbotron-button_mod {
+    border-radius: 5px;
 }
