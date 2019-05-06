@@ -10,6 +10,7 @@ export default class SearchResultItems extends React.Component {
       number += arr[1].length
     });
     let numberState = number;
+    let wantedWords = this.props.wantedWords;
 
     return (
       this.props.items ? this.props.items.map(arr => {
@@ -26,7 +27,7 @@ export default class SearchResultItems extends React.Component {
                 <Highlighter
                   className="list-text_mod "
                   highlightClassName="highlight-text"
-                  searchWords={this.props.wantedWords}
+                  searchWords={this.props.showWholeBase? []: wantedWords}
                   autoEscape={true}
                   textToHighlight={uc}
                 />

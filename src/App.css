@@ -58,10 +58,6 @@ body::-webkit-scrollbar {
     margin: unset;
 }
 
-.form-input_mod {
-
-}
-
 .form-button_mod {
     padding: 10px;
     margin-top: 20px;
@@ -75,11 +71,18 @@ body::-webkit-scrollbar {
 
 .jumbotron-input_mod {
     border-color: white;
-    text-align: right;
+    text-align: center;
 }
 
-.jumbotron-input_mod{
+.jumbotron-input-one_mod {
+    text-align: right;
+    font-weight: bolder;
+    color: #2fb431;
+}
 
+.jumbotron-input-two_mod {
+    text-align: right;
+    font-weight: bolder;
 }
 
 .input-group {
@@ -89,4 +92,30 @@ body::-webkit-scrollbar {
 
 .jumbotron-button_mod {
     border-radius: 5px;
+}
+
+#useCaseInput, #runThisUCInput, #runAllInput {
+    outline: none;
+    border: none;
+}
+
+.jumbotron-button_mod {
+    visibility: hidden;
+}
+
+.jumbotron-input_mod:hover + .jumbotron-button_mod, .jumbotron-button_mod:hover {
+    visibility: visible;
+}
+
+.jumbotron-label_mod{
+    font-size: .8rem;
+    padding-top: 6px;
+    color: #cc7610;
+    font-weight: bolder;
+}
+
+.jumbotron-lead {
+    color: #2fb431;
+    font-size: 1.3rem;
+    font-weight: bolder;
 }

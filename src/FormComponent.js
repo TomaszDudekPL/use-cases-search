@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Row, Container, Form, FormGroup, Input, Jumbotron, InputGroup} from 'reactstrap';
+import {Button, Col, Row, Container, Form, FormGroup, Input, Jumbotron, InputGroup, Label} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import * as firebase from "firebase/app";
 import "firebase/database";
@@ -12,7 +12,8 @@ const firebaseConfig = {
   databaseURL: "https://use-cases-search.firebaseio.com",
   projectId: "use-cases-search",
   storageBucket: "use-cases-search.appspot.com",
-  messagingSenderId: "970010596588"
+  messagingSenderId: "970010596588",
+  appId: "1:970010596588:web:90ec397eeda2b76f"
 };
 
 // Initialize Firebase
@@ -76,37 +77,25 @@ export default class FormComponent extends React.Component {
       return el !== null && el !== "";
     });
 
-
-    console.log('a1');
-    console.log('!arrOfKeyWords.length: ', !arrOfKeyWords.length);
-
-
     if (!this.state.items.length || arrOfKeyWords.length === 1) {
-
-      console.log('pierwszy przypadek');
 
       this.setState({
         name: event.value,
         showWholeBase: false
       });
 
-      console.log('event.target.value.length: ', event.target.value.length);
-
       if (event.target.value.length >= 3) {
 
         updatedList = [];
-
-        console.log('event.target.value.length------- wszedłem tu');
 
         base.forEach(arrOfUC => {
 
           arrOfUC[1].forEach(uc => {
 
-            uc = getLowerCaseFunc(uc);
             wantedValue = getLowerCaseFunc(event.target.value);
             wantedValue = removeSpacesFunc(wantedValue);
 
-            if (uc.search(wantedValue) !== -1) ucArr.add(uc);
+            if (getLowerCaseFunc(uc).search(wantedValue) !== -1) ucArr.add(uc);
 
           });
 
@@ -124,11 +113,7 @@ export default class FormComponent extends React.Component {
 
       }
 
-      // Experimental searching. It still does not work correctly.  Lines: 121 to 199
-
     } else if (/\s+/.test(event.target.value)) {
-      console.log('drugi przypadek');
-      console.log('arrOfKeyWords: ', arrOfKeyWords);
 
       let firstKeyWord = removeSpacesFunc(arrOfKeyWords[0]);
       let secondKeyWord = removeSpacesFunc(arrOfKeyWords[1]);
@@ -137,12 +122,8 @@ export default class FormComponent extends React.Component {
       let wantedWords = [];
 
       wantedWords.push(firstKeyWord);
-      if (secondKeyWord.length > 2) wantedWords.push(secondKeyWord);
-      if (secondKeyWord.length > 2) wantedWords.push(secondKeyWord);
-
-      console.log('firstKeyWord: ', firstKeyWord);
-      console.log('secondKeyWord: ', secondKeyWord);
-      console.log('thirdKeyWord: ', thirdKeyWord);
+      if (secondKeyWord && secondKeyWord.length > 2) wantedWords.push(secondKeyWord);
+      if (thirdKeyWord && thirdKeyWord.length > 2) wantedWords.push(thirdKeyWord);
 
       if (secondKeyWord || thirdKeyWord) {
 
@@ -154,20 +135,18 @@ export default class FormComponent extends React.Component {
 
           arrOfUC[1].forEach(
             function (uc) {
-
-              if (uc.search(firstKeyWord) !== -1) {
+              if (getLowerCaseFunc(uc).search(firstKeyWord) !== -1) {
                 if (!arrOfKeyWords[1]) {
                   ucArr.add(uc);
                 }
                 if (arrOfKeyWords[1]) {
-                  if (uc.search(secondKeyWord) !== -1) {
+                  if (getLowerCaseFunc(uc).search(secondKeyWord) !== -1) {
                     if (!arrOfKeyWords[2]) {
                       ucArr.add(uc);
-                    }
-                  }
-                  if (arrOfKeyWords[2]) {
-                    if (uc.search(thirdKeyWord) !== -1) {
-                      ucArr.add(uc);
+                    } else if (arrOfKeyWords[1] && arrOfKeyWords[2]) {
+                      if (getLowerCaseFunc(uc).search(thirdKeyWord) !== -1) {
+                        ucArr.add(uc);
+                      }
                     }
                   }
                 }
@@ -184,8 +163,6 @@ export default class FormComponent extends React.Component {
           }
 
         });
-
-
       }
 
     }
@@ -195,7 +172,6 @@ export default class FormComponent extends React.Component {
         items: []
       })
     }
-    console.log('a3');
   };
 
   preventActionHandler = (event) => {
@@ -218,8 +194,22 @@ export default class FormComponent extends React.Component {
     })
   };
 
+  saveToClipboard = (id) => {
+    return () => {
+      let copyText = document.getElementById(id);
+      copyText.select();
+      document.execCommand("copy");
+    }
+  };
+
 
   render() {
+    let runUCCommand;
+    if(this.state.ucInfoObj) {
+      let ucInfoObj = this.state.ucInfoObj;
+      let urlToFile = ucInfoObj.arr.join('/').concat('.js');
+      runUCCommand = `node launcher.js -p 1 -r 1 -e master -d ${urlToFile}`;
+    }
     return (
       <div className="main-label">
         <Container fluid>
@@ -227,17 +217,29 @@ export default class FormComponent extends React.Component {
             <Col sm="12" md={{size: 12, offset: 0}}>
               <Jumbotron fluid className="jumbotron_mod">
                 <h1 className="display-7 form-mainLabel_mod">USE CASES SEARCH</h1>
-                <p className="lead">
-                  <div id="hideMessage"></div>
-                </p>
-                <Row>
-                  <Col>
-                    <InputGroup size="sm">
-                <Input placeholder="" value={this.state.ucInfoObj? this.state.ucInfoObj.uc: ''} className="jumbotron-input_mod" />
-                  <Button color="success" size="sm" className="jumbotron-button_mod" outline >Clipboard!</Button>
-                    </InputGroup>
-                  </Col>
-                </Row>
+                { this.state.ucInfoObj? (
+                  <Row>
+                    <Col sm="12" md={{size: 10, offset: 1}}>
+                      <InputGroup size="sm">
+                        <Label className="jumbotron-label_mod">USE CASE:</Label>
+                        <Input placeholder="" type="text" spellCheck="false"
+                               value={this.state.ucInfoObj.uc}
+                               className="jumbotron-input_mod jumbotron-input-one_mod shadow-none" id="useCaseInput"/>
+                        <Button color="success" size="sm" className="jumbotron-button_mod" outline
+                                onClick={this.saveToClipboard("useCaseInput")}>Clipboard!</Button>
+                      </InputGroup>
+                      <InputGroup size="sm">
+                        <Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>
+                        <Input placeholder="" type="text" spellCheck="false"
+                               value={runUCCommand}
+                               className="jumbotron-input_mod jumbotron-input-two_mod shadow-none" id="runThisUCInput"/>
+                        <Button color="success" size="sm" className="jumbotron-button_mod" outline
+                                onClick={this.saveToClipboard("runThisUCInput")}>Clipboard!</Button>
+                      </InputGroup>
+                    </Col>
+                  </Row>
+                ): <span className="jumbotron-lead ">EASILY FIND ANY USE CASE IN OUR AUTOMATED TESTS DATABASE</span>
+                }
               </Jumbotron>
             </Col>
           </Row>
@@ -246,7 +248,7 @@ export default class FormComponent extends React.Component {
             <FormGroup>
               <Row>
                 <Col sm="12" md={{size: 12}} className="form-input_mod">
-                  <Input type="search" spellcheck="false" value={this.state.name} name="search" id="useCasesSearch" bsSize="lg"
+                  <Input type="search" spellCheck="false" value={this.state.name} name="search" id="useCasesSearch" bsSize="lg"
                          placeholder="Type what are you looking for... for example: post or chat"
                          onChange={this.filterList}
                          onKeyPress={this.preventActionHandler}/>
@@ -267,8 +269,10 @@ export default class FormComponent extends React.Component {
               </Row>
               <Row>
                 <Col sm="12" md={{size: 12, offset: 0}}>
-                  <SearchResultItems items={this.state.items} wantedWords={this.state.wantedWords}
-                                     itemClicked={this.onItemClicked}>.</SearchResultItems>
+                  <SearchResultItems items={this.state.items}
+                                     wantedWords={this.state.wantedWords}
+                                     itemClicked={this.onItemClicked}
+                                     showWholeBase={this.state.showWholeBase}>.</SearchResultItems>
                 </Col>
               </Row>
             </FormGroup>
