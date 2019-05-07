@@ -204,11 +204,12 @@ export default class FormComponent extends React.Component {
 
 
   render() {
-    let runUCCommand;
+    let runUCCommand, env;
     if(this.state.ucInfoObj) {
       let ucInfoObj = this.state.ucInfoObj;
+      ucInfoObj.arr[0] === 'CONSUMER'? env = 'master': env = 'master-pro';
       let urlToFile = ucInfoObj.arr.join('/').concat('.js');
-      runUCCommand = `node launcher.js -p 1 -r 1 -e master -d ${urlToFile}`;
+      runUCCommand = `node launcher.js -p 1 -r 1 -e ${env} -d ${urlToFile}`;
     }
     return (
       <div className="main-label">
