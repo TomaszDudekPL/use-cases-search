@@ -3,6 +3,12 @@
 .App {
     font-family: 'Jura', sans-serif;
 }
+
+.form_mod {
+    position: relative;
+    top: 180px
+}
+
 /* remove scrollbar */
 body::-webkit-scrollbar {
     width: 0;
@@ -20,11 +26,30 @@ body::-webkit-scrollbar {
     margin-top: 20px;
     margin-bottom: 20px;
     background-color: white;
-    height: 150px;
+    height: 170px;
+    position: fixed;
+    width: 1110px;
+    z-index: 5;
+    top: -20px;
 }
 
 .jumbotron {
     padding: 10px;
+}
+
+.jumbotron-label-text{
+    color: black;
+    font-weight: bolder;
+}
+
+.jumbotron-label-number{
+    color: red;
+    font-weight: bolder;
+    padding-left: 2px;
+}
+
+.jumbotron-result_mod {
+    margin-top: 30px
 }
 
 .main-label {
@@ -52,10 +77,16 @@ body::-webkit-scrollbar {
     margin-right: 30px;
 }
 
-.form-mainLabel_mod {
-    font-size: 3rem;
+.form-mainLabel_mod1 {
+    font-size: 3.5rem;
     padding: 0;
     margin: unset;
+}
+
+.form-mainLabel_mod2 {
+    font-size: 5rem;
+    padding: 0;
+    margin-top: 30px;
 }
 
 .form-button_mod {

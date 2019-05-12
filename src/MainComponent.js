@@ -8,7 +8,7 @@ export default class MainComponent extends React.Component {
       <Container>
         <Row>
           <Col sm="12" md={{size: 12, offset: 0}}>
-            <FormComponent></FormComponent>
+            <FormComponent />
           </Col>
         </Row>
       </Container>

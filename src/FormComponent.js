@@ -1,11 +1,9 @@
 import React from 'react';
-import {Button, Col, Row, Container, Form, FormGroup, Input, Jumbotron, InputGroup, Label} from 'reactstrap';
+import {Button, Col, Container, Form, FormGroup, Input, InputGroup, Jumbotron, Label, Row} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import * as firebase from "firebase/app";
 import "firebase/database";
 
-
-// TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAZ_b4I7T3sJANfHxuBmBVT7tjdbJ11ons",
   authDomain: "use-cases-search.firebaseapp.com",
@@ -59,6 +57,17 @@ export default class FormComponent extends React.Component {
       items: [],
       showWholeBase: !this.state.showWholeBase,
       name: ''
+    })
+  };
+
+  multipleFuncOnChangeHandler = (event) => {
+    this.filterList(event);
+    this.showSearchValue(event);
+  };
+
+  showSearchValue = (event) => {
+    this.setState({
+      name: event.target.value
     })
   };
 
@@ -205,66 +214,112 @@ export default class FormComponent extends React.Component {
 
   render() {
     let runUCCommand, env;
-    if(this.state.ucInfoObj) {
-      let ucInfoObj = this.state.ucInfoObj;
-      ucInfoObj.arr[0] === 'CONSUMER'? env = 'master': env = 'master-pro';
+    let ucInfoObj = this.state.ucInfoObj;
+    let numberOfUCforConsumer = 0, numberOfUCforPro = 0;
+
+    if (ucInfoObj) {
+      ucInfoObj.arr[0] === 'CONSUMER' ? env = 'master' : env = 'master-pro';
       let urlToFile = ucInfoObj.arr.join('/').concat('.js');
       runUCCommand = `node launcher.js -p 1 -r 1 -e ${env} -d ${urlToFile}`;
     }
+
+    this.state.items.forEach(arr => {
+      numberOfUCforConsumer += /CONSUMER/.test(arr[0]) ? arr[1].length : 0;
+      numberOfUCforPro += /PRO/.test(arr[0]) ? arr[1].length : 0;
+    });
+
     return (
       <div className="main-label">
-        <Container fluid>
-          <Row>
-            <Col sm="12" md={{size: 12, offset: 0}}>
-              <Jumbotron fluid className="jumbotron_mod">
-                <h1 className="display-7 form-mainLabel_mod">USE CASES SEARCH</h1>
-                { this.state.ucInfoObj? (
-                  <Row>
-                    <Col sm="12" md={{size: 10, offset: 1}}>
-                      <InputGroup size="sm">
-                        <Label className="jumbotron-label_mod">USE CASE:</Label>
-                        <Input placeholder="" type="text" spellCheck="false"
-                               value={this.state.ucInfoObj.uc}
-                               className="jumbotron-input_mod jumbotron-input-one_mod shadow-none" id="useCaseInput"/>
-                        <Button color="success" size="sm" className="jumbotron-button_mod" outline
-                                onClick={this.saveToClipboard("useCaseInput")}>Clipboard!</Button>
-                      </InputGroup>
-                      <InputGroup size="sm">
-                        <Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>
-                        <Input placeholder="" type="text" spellCheck="false"
-                               value={runUCCommand}
-                               className="jumbotron-input_mod jumbotron-input-two_mod shadow-none" id="runThisUCInput"/>
-                        <Button color="success" size="sm" className="jumbotron-button_mod" outline
-                                onClick={this.saveToClipboard("runThisUCInput")}>Clipboard!</Button>
-                      </InputGroup>
-                    </Col>
-                  </Row>
-                ): <span className="jumbotron-lead ">EASILY FIND ANY USE CASE IN OUR AUTOMATED TESTS DATABASE</span>
-                }
-              </Jumbotron>
-            </Col>
-          </Row>
+        <Jumbotron fluid className="jumbotron_mod">
+          <h1
+            className={this.state.ucInfoObj || this.state.name ? "display-7 form-mainLabel_mod1" : "display-7 form-mainLabel_mod2"}>USE
+            CASES SEARCH</h1>
+          {this.state.name && !this.state.ucInfoObj ? (
 
-          <Form>
+            <Row className="jumbotron-result_mod">
+              <Col sm="12" md={{size: 10, offset: 1}}>
+                <span className="jumbotron-label-text">FOR </span>
+                <span className="jumbotron-label-number">{this.state.name.toUpperCase()}</span>
+                <span className="jumbotron-label-text"> SEARCH TERM: </span>
+                <span className="jumbotron-label-number">{numberOfUCforConsumer + numberOfUCforPro}</span>
+                <span
+                  className="jumbotron-label-text"> USE CASE{numberOfUCforConsumer + numberOfUCforPro > 1 ? 'S' : ''} FOUND. </span>
+                <br/>
+                <span className="jumbotron-label-text"> CONSUMER: </span>
+                <span className="jumbotron-label-number">{numberOfUCforConsumer}</span>
+                <span className="jumbotron-label-text"> PRO: </span>
+                <span className="jumbotron-label-number">{numberOfUCforPro}</span>
+              </Col>
+            </Row>
+
+          ) : this.state.ucInfoObj ? (
+            <Row>
+              <Col sm="12" md={{size: 10, offset: 1}}>
+                <InputGroup size="sm">
+                  <Label className="jumbotron-label_mod">USE CASE:</Label>
+                  <Input placeholder="" type="text" spellCheck="false"
+                         value={this.state.ucInfoObj ? this.state.ucInfoObj.uc : null}
+                         className="jumbotron-input_mod jumbotron-input-one_mod shadow-none" id="useCaseInput"/>
+                  <Button color="success" size="sm" className="jumbotron-button_mod" outline
+                          onClick={this.saveToClipboard("useCaseInput")}>Clipboard!</Button>
+                </InputGroup>
+                <InputGroup size="sm">
+                  <Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>
+                  <Input placeholder="" type="text" spellCheck="false"
+                         value={runUCCommand}
+                         className="jumbotron-input_mod jumbotron-input-two_mod shadow-none" id="runThisUCInput"/>
+                  <Button color="success" size="sm" className="jumbotron-button_mod" outline
+                          onClick={this.saveToClipboard("runThisUCInput")}>Clipboard!</Button>
+                </InputGroup>
+
+                <Row>
+                  <Col sm="12" md={{size: 10, offset: 1}}>
+                    {!this.state.showWholeBase ? (
+                      <span>
+                        <span className="jumbotron-label-text">FOR </span>
+                        <span className="jumbotron-label-number">{this.state.name.toUpperCase()}</span>
+                        <span className="jumbotron-label-text"> SEARCH TERM: </span>
+                      </span>
+                    ): ''
+                    }
+                    <span className="jumbotron-label-number">{numberOfUCforConsumer + numberOfUCforPro}</span>
+                    <span
+                      className="jumbotron-label-text"> USE CASE{numberOfUCforConsumer + numberOfUCforPro > 1 ? 'S' : ''} FOUND. </span>
+                    <span className="jumbotron-label-text"> CONSUMER: </span>
+                    <span className="jumbotron-label-number">{numberOfUCforConsumer}</span>
+                    <span className="jumbotron-label-text"> PRO: </span>
+                    <span className="jumbotron-label-number">{numberOfUCforPro}</span>
+                  </Col>
+                </Row>
+
+              </Col>
+            </Row>
+          ) : null
+          }
+        </Jumbotron>
+        <Container fluid>
+          <Form className="form_mod">
             <FormGroup>
               <Row>
                 <Col sm="12" md={{size: 12}} className="form-input_mod">
-                  <Input type="search" spellCheck="false" value={this.state.name} name="search" id="useCasesSearch" bsSize="lg"
+                  <Input type="search" spellCheck="false" value={this.state.name} name="search" id="useCasesSearch"
+                         bsSize="lg"
                          placeholder="Type what are you looking for... for example: post or chat"
-                         onChange={this.filterList}
+                         onChange={this.multipleFuncOnChangeHandler}
                          onKeyPress={this.preventActionHandler}/>
                 </Col>
               </Row>
               <Row>
                 {!this.state.showWholeBase ?
-                  (<Col sm="12" md={{ size: 6, offset: 3 }}>
+                  (<Col sm="12" md={{size: 6, offset: 3}}>
                     <Button block color="warning" className="form-button_mod" onClick={this.showAllUseCases}>Show All
                       ({this.state.numberOfAllUseCases})
                       Use Cases</Button>
                   </Col>) :
 
-                  (<Col sm="12" md={{ size: 6, offset: 3 }}>
-                    <Button block color="danger" className="form-button_mod" onClick={this.hideAllUseCases}>Hide All Use Cases</Button>
+                  (<Col sm="12" md={{size: 6, offset: 3}}>
+                    <Button block color="danger" className="form-button_mod" onClick={this.hideAllUseCases}>Hide All Use
+                      Cases</Button>
                   </Col>)
                 }
               </Row>
