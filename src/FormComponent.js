@@ -274,7 +274,7 @@ export default class FormComponent extends React.Component {
 
                 <Row>
                   <Col sm="12" md={{size: 10, offset: 1}}>
-                    {!this.state.showWholeBase ? (
+                    {!this.state.showWholeBase && numberOfUCforConsumer + numberOfUCforPro > 1 ? (
                       <span>
                         <span className="jumbotron-label-text">FOR </span>
                         <span className="jumbotron-label-number">{this.state.name.toUpperCase()}</span>
@@ -283,8 +283,7 @@ export default class FormComponent extends React.Component {
                     ): ''
                     }
                     <span className="jumbotron-label-number">{numberOfUCforConsumer + numberOfUCforPro}</span>
-                    <span
-                      className="jumbotron-label-text"> USE CASE{numberOfUCforConsumer + numberOfUCforPro > 1 ? 'S' : ''} FOUND. </span>
+                    <span className="jumbotron-label-text"> USE CASE{numberOfUCforConsumer + numberOfUCforPro > 1 ? 'S' : ''} FOUND. </span>
                     <span className="jumbotron-label-text"> CONSUMER: </span>
                     <span className="jumbotron-label-number">{numberOfUCforConsumer}</span>
                     <span className="jumbotron-label-text"> PRO: </span>
