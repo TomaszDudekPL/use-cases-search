@@ -16,7 +16,7 @@ body::-webkit-scrollbar {
 
 .highlight-text {
     background: none;
-    color: #f18911;
+    color: #2fb431;
     font-weight: bold;
     padding: unset;
 }
@@ -43,7 +43,7 @@ body::-webkit-scrollbar {
 }
 
 .jumbotron-label-number{
-    color: red;
+    color: #2fb431;
     font-weight: bolder;
     padding-left: 2px;
 }
@@ -65,12 +65,28 @@ body::-webkit-scrollbar {
 
 .list-text_mod {
     margin-left: 20px;
-    color: #2fb431;
+    color: #0d63af;
     font-weight: 600;
 }
 
 .breadcrumb:hover {
     background-color: #dbdee1;
+}
+
+.breadcrumb_mod {
+    color: #0d81fe;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.breadcrumb-link_mod a {
+    color: #0d81fe;
+    text-decoration: none;
+}
+
+.breadcrumb-link_mod a:hover {
+    color: #0949a4;
+    font-weight: bolder;
 }
 
 .item-number_mod {
@@ -114,6 +130,7 @@ body::-webkit-scrollbar {
 .jumbotron-input-two_mod {
     text-align: right;
     font-weight: bolder;
+    color: #2fb431;
 }
 
 .input-group {
@@ -130,6 +147,11 @@ body::-webkit-scrollbar {
     border: none;
 }
 
+#useCasesSearch {
+    color: #2fb431;
+    font-weight: bolder;
+}
+
 .jumbotron-button_mod {
     visibility: hidden;
 }
@@ -141,7 +163,7 @@ body::-webkit-scrollbar {
 .jumbotron-label_mod{
     font-size: .8rem;
     padding-top: 6px;
-    color: #cc7610;
+    color: black;
     font-weight: bolder;
 }
 
