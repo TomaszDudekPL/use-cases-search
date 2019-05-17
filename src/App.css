@@ -4,6 +4,10 @@
     font-family: 'Jura', sans-serif;
 }
 
+.container {
+    max-width: 1400px;
+}
+
 .form_mod {
     position: relative;
     top: 180px
@@ -28,7 +32,7 @@ body::-webkit-scrollbar {
     background-color: white;
     height: 170px;
     position: fixed;
-    width: 1110px;
+    width: 1400px;
     z-index: 5;
     top: -20px;
 }
@@ -37,12 +41,12 @@ body::-webkit-scrollbar {
     padding: 10px;
 }
 
-.jumbotron-label-text{
+.jumbotron-label-text {
     color: black;
     font-weight: bolder;
 }
 
-.jumbotron-label-number{
+.jumbotron-label-number {
     color: #2fb431;
     font-weight: bolder;
     padding-left: 2px;
@@ -160,7 +164,7 @@ body::-webkit-scrollbar {
     visibility: visible;
 }
 
-.jumbotron-label_mod{
+.jumbotron-label_mod {
     font-size: .8rem;
     padding-top: 6px;
     color: black;

@@ -30,7 +30,8 @@ export default class SearchResultItems extends React.Component {
       this.props.items ? this.props.items.map(arr => {
         let arrWithData = arr[0].split('%5C');
         return arr[1].map(uc => {
-            uc = uc.charAt(0).toUpperCase() + uc.substring(1);
+            uc = uc.charAt(0).toUpperCase() + uc.substring(1) + '.';
+            uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
             return (
               <Breadcrumb key={uc + Math.floor(Math.random() * 1000)} className="list-item_mod"
                           onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}>
