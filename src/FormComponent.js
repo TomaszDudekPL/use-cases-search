@@ -3,18 +3,7 @@ import {Button, Col, Container, Form, FormGroup, Input, InputGroup, Jumbotron, L
 import SearchResultItems from "./SearchResultItems";
 import * as firebase from "firebase/app";
 import "firebase/database";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAZ_b4I7T3sJANfHxuBmBVT7tjdbJ11ons",
-  authDomain: "use-cases-search.firebaseapp.com",
-  databaseURL: "https://use-cases-search.firebaseio.com",
-  projectId: "use-cases-search",
-  storageBucket: "use-cases-search.appspot.com",
-  messagingSenderId: "970010596588",
-  appId: "1:970010596588:web:90ec397eeda2b76f"
-};
-
-// Initialize Firebase
+import firebaseConfig from './firebaseConfig.js'
 firebase.initializeApp(firebaseConfig);
 
 export default class FormComponent extends React.Component {
@@ -23,22 +12,45 @@ export default class FormComponent extends React.Component {
     initialState: null,
     items: [],
     base: null,
+    consumerList: null,
+    proList: null,
     showWholeBase: false,
     name: '',
     numberOfAllUseCases: 0,
     wantedWords: [],
-    ucInfoObj: null
+    ucInfoObj: null,
+    consumer_chkbox: true,
+    pro_chkbox: true
   };
 
+  componentDidMount() {
+    firebase.database().ref('/').once('value').then(snapshot => {
+        this.changeBaseToProperForm(snapshot.val())
+      }
+    )
+  }
+
   changeBaseToProperForm(val) {
+
     let number = 0;
     let entries = Object.entries(val);
+    let consumerList = [];
+    let proList = [];
+
     entries.forEach(function (arr) {
       arr[1] = Object.keys(arr[1]);
-      number += arr[1].length
+      number += arr[1].length;
+      if(/CONSUMER/mi.test(arr[0])){
+        consumerList.push(arr);
+      } else if (/PRO/mi.test(arr[0])){
+        proList.push(arr);
+      }
     });
+
     this.setState({
       base: entries,
+      consumerList: consumerList,
+      proList: proList,
       showWholeBase: false,
       numberOfAllUseCases: number
     })
@@ -60,11 +72,6 @@ export default class FormComponent extends React.Component {
     })
   };
 
-  multipleFuncOnChangeHandler = (event) => {
-    this.filterList(event);
-    this.showSearchValue(event);
-  };
-
   showSearchValue = (event) => {
     this.setState({
       name: event.target.value
@@ -72,6 +79,12 @@ export default class FormComponent extends React.Component {
   };
 
   filterList = (event) => {
+
+    // database filtering-  divide into consumer, pro, whole, none.
+    // if(this.state.consumer_chkbox && this.state.pro_chkbox === false) base = this.state.consumerList;
+    // if(this.state.consumer_chkbox === false && this.state.pro_chkbox) base = this.state.proList;
+    // if(this.state.consumer_chkbox === false && this.state.pro_chkbox === false) base = [];
+    // if(this.state.consumer_chkbox && this.state.pro_chkbox) base = this.state.base;
 
     let updatedList = [];
     let base = this.state.base;
@@ -81,11 +94,13 @@ export default class FormComponent extends React.Component {
     let removeSpacesFunc = (word) => word ? word.replace(/^\s+|\s+$/g, "").replace(/\s+/g, " ") : null;
     let getLowerCaseFunc = (character) => character.toLowerCase();
 
+    // preparing search key words
     let arrOfKeyWords = event.target.value.split(' ');
     arrOfKeyWords = arrOfKeyWords.filter(function (el) {
       return el !== null && el !== "";
     });
 
+    // searching by one word
     if (!this.state.items.length || arrOfKeyWords.length === 1) {
 
       this.setState({
@@ -124,6 +139,8 @@ export default class FormComponent extends React.Component {
 
     } else if (/\s+/.test(event.target.value)) {
 
+      // searching by two and three words
+
       let firstKeyWord = removeSpacesFunc(arrOfKeyWords[0]);
       let secondKeyWord = removeSpacesFunc(arrOfKeyWords[1]);
       let thirdKeyWord = removeSpacesFunc(arrOfKeyWords[2]);
@@ -136,7 +153,6 @@ export default class FormComponent extends React.Component {
 
       if (secondKeyWord || thirdKeyWord) {
 
-        let base = this.state.base;
         let updatedList = [];
         let ucArr = new Set();
 
@@ -190,13 +206,6 @@ export default class FormComponent extends React.Component {
     }
   };
 
-  componentDidMount() {
-    firebase.database().ref('/').once('value').then(snapshot => {
-        this.changeBaseToProperForm(snapshot.val())
-      }
-    )
-  }
-
   onItemClicked = (ucInfoObj) => {
     this.setState({
       ucInfoObj: ucInfoObj
@@ -209,6 +218,23 @@ export default class FormComponent extends React.Component {
       copyText.select();
       document.execCommand("copy");
     }
+  };
+
+  multipleFuncOnChangeHandler = (event) => {
+    this.filterList(event);
+    this.showSearchValue(event);
+  };
+
+  handleChangeConsumerChk = () => {
+    this.setState({
+      consumer_chkbox: !this.state.consumer_chkbox
+    })
+  };
+
+  handleChangeProChk = () => {
+    this.setState({
+      pro_chkbox: !this.state.pro_chkbox
+    })
   };
 
 
@@ -308,6 +334,26 @@ export default class FormComponent extends React.Component {
                          onKeyPress={this.preventActionHandler}/>
                 </Col>
               </Row>
+
+              <Row>
+                <Col>
+                  <FormGroup check>
+                    <div className="double-consumer">
+                    <Label check className="input-label_mod">
+                      <Input type="checkbox" id="consumer-chkbox" className="input-checkbox_mod" defaultChecked={this.state.consumer_chkbox} onChange={this.handleChangeConsumerChk}/>{' '}
+                      CONSUMER
+                    </Label>
+                    </div>
+                    <div className="double-pro">
+                    <Label check className="input-label_mod">
+                      <Input type="checkbox" id="pro-chkbox" className="input-checkbox_mod" defaultChecked={this.state.pro_chkbox} onChange={this.handleChangeProChk}/>{' '}
+                      PRO
+                    </Label>
+                    </div>
+                  </FormGroup>
+                </Col>
+              </Row>
+
               <Row>
                 {!this.state.showWholeBase ?
                   (<Col sm="12" md={{size: 6, offset: 3}}>
