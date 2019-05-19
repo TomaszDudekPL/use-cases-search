@@ -80,16 +80,16 @@ export default class FormComponent extends React.Component {
 
   filterList = (event) => {
 
-    // database filtering-  divide into consumer, pro, whole, none.
-    // if(this.state.consumer_chkbox && this.state.pro_chkbox === false) base = this.state.consumerList;
-    // if(this.state.consumer_chkbox === false && this.state.pro_chkbox) base = this.state.proList;
-    // if(this.state.consumer_chkbox === false && this.state.pro_chkbox === false) base = [];
-    // if(this.state.consumer_chkbox && this.state.pro_chkbox) base = this.state.base;
-
+    let base;
     let updatedList = [];
-    let base = this.state.base;
     let ucArr = new Set();
     let wantedValue;
+
+    // database filtering-  divide into consumer, pro, whole, none.
+    if (this.state.consumer_chkbox && this.state.pro_chkbox === false) base = this.state.consumerList;
+    if (this.state.consumer_chkbox === false && this.state.pro_chkbox) base = this.state.proList;
+    if (this.state.consumer_chkbox === false && this.state.pro_chkbox === false) base = [];
+    if (this.state.consumer_chkbox && this.state.pro_chkbox) base = this.state.base;
 
     let removeSpacesFunc = (word) => word ? word.replace(/^\s+|\s+$/g, "").replace(/\s+/g, " ") : null;
     let getLowerCaseFunc = (character) => character.toLowerCase();
@@ -226,15 +226,17 @@ export default class FormComponent extends React.Component {
   };
 
   handleChangeConsumerChk = () => {
+    let checkedConsumerValue = document.getElementById('consumer-chkbox').checked;
     this.setState({
-      consumer_chkbox: !this.state.consumer_chkbox
-    })
+      consumer_chkbox: checkedConsumerValue
+    });
   };
 
   handleChangeProChk = () => {
+    let checkedProValue = document.getElementById('pro-chkbox').checked;
     this.setState({
-      pro_chkbox: !this.state.pro_chkbox
-    })
+      pro_chkbox: checkedProValue
+    });
   };
 
 
@@ -306,10 +308,11 @@ export default class FormComponent extends React.Component {
                         <span className="jumbotron-label-number">{this.state.name.toUpperCase()}</span>
                         <span className="jumbotron-label-text"> SEARCH TERM: </span>
                       </span>
-                    ): ''
+                    ) : ''
                     }
                     <span className="jumbotron-label-number">{numberOfUCforConsumer + numberOfUCforPro}</span>
-                    <span className="jumbotron-label-text"> USE CASE{numberOfUCforConsumer + numberOfUCforPro > 1 ? 'S' : ''} FOUND. </span>
+                    <span
+                      className="jumbotron-label-text"> USE CASE{numberOfUCforConsumer + numberOfUCforPro > 1 ? 'S' : ''} FOUND. </span>
                     <span className="jumbotron-label-text"> CONSUMER: </span>
                     <span className="jumbotron-label-number">{numberOfUCforConsumer}</span>
                     <span className="jumbotron-label-text"> PRO: </span>
@@ -339,16 +342,19 @@ export default class FormComponent extends React.Component {
                 <Col>
                   <FormGroup check>
                     <div className="double-consumer">
-                    <Label check className="input-label_mod">
-                      <Input type="checkbox" id="consumer-chkbox" className="input-checkbox_mod" defaultChecked={this.state.consumer_chkbox} onChange={this.handleChangeConsumerChk}/>{' '}
-                      CONSUMER
-                    </Label>
+                      <Label check className="input-label_mod">
+                        <Input type="checkbox" id="consumer-chkbox" className="input-checkbox_mod"
+                               defaultChecked={this.state.consumer_chkbox}
+                               onChange={this.handleChangeConsumerChk}/>{' '}
+                        CONSUMER
+                      </Label>
                     </div>
                     <div className="double-pro">
-                    <Label check className="input-label_mod">
-                      <Input type="checkbox" id="pro-chkbox" className="input-checkbox_mod" defaultChecked={this.state.pro_chkbox} onChange={this.handleChangeProChk}/>{' '}
-                      PRO
-                    </Label>
+                      <Label check className="input-label_mod">
+                        <Input type="checkbox" id="pro-chkbox" className="input-checkbox_mod"
+                               defaultChecked={this.state.pro_chkbox} onChange={this.handleChangeProChk}/>{' '}
+                        PRO
+                      </Label>
                     </div>
                   </FormGroup>
                 </Col>
