@@ -228,14 +228,18 @@ export default class FormComponent extends React.Component {
   handleChangeConsumerChk = () => {
     let checkedConsumerValue = document.getElementById('consumer-chkbox').checked;
     this.setState({
-      consumer_chkbox: checkedConsumerValue
+      consumer_chkbox: checkedConsumerValue,
+      items: [],
+      name: ''
     });
   };
 
   handleChangeProChk = () => {
     let checkedProValue = document.getElementById('pro-chkbox').checked;
     this.setState({
-      pro_chkbox: checkedProValue
+      pro_chkbox: checkedProValue,
+      items: [],
+      name: ''
     });
   };
 
