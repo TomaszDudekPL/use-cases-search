@@ -7,6 +7,72 @@
 .container {
     max-width: 1400px;
 }
+.jumbotron_mod {
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: white;
+    height: 170px;
+    position: fixed;
+    width: 1400px;
+    z-index: 5;
+    top: -20px;
+}
+
+.form-mainLabel_mod1 {
+    font-size: 3.5rem;
+    padding: 0;
+    margin: unset;
+}
+
+.form-mainLabel_mod2 {
+    font-size: 5rem;
+    padding: 0;
+    margin-top: 30px;
+}
+
+@media(max-width: 1300px) {
+
+    .form-mainLabel_mod1 {
+        font-size: 3rem;
+        padding: 0;
+        margin: unset;
+    }
+
+    .jumbotron_mod {
+        width: 1300px;
+    }
+}
+
+@media (max-width: 1100px) {
+
+    .form-mainLabel_mod1 {
+        font-size: 3rem;
+        padding: 0;
+        margin: unset;
+    }
+
+    .jumbotron_mod {
+        width: 1100px;
+    }
+}
+
+@media (max-width: 900px) {
+
+    .form-mainLabel_mod1 {
+        font-size: 3rem;
+        padding: 0;
+        margin: unset;
+    }
+
+    .form-mainLabel_mod2 {
+        font-size: 3rem;
+    }
+
+    .jumbotron_mod {
+        width: 900px;
+    }
+}
 
 .form_mod {
     position: relative;
@@ -49,18 +115,6 @@ body::-webkit-scrollbar {
     color: #2fb431;
     font-weight: bold;
     padding: unset;
-}
-
-.jumbotron_mod {
-    border-radius: 10px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background-color: white;
-    height: 170px;
-    position: fixed;
-    width: 1400px;
-    z-index: 5;
-    top: -20px;
 }
 
 .jumbotron {
@@ -121,18 +175,6 @@ body::-webkit-scrollbar {
 
 .item-number_mod {
     margin-right: 30px;
-}
-
-.form-mainLabel_mod1 {
-    font-size: 3.5rem;
-    padding: 0;
-    margin: unset;
-}
-
-.form-mainLabel_mod2 {
-    font-size: 5rem;
-    padding: 0;
-    margin-top: 30px;
 }
 
 .form-button_mod {

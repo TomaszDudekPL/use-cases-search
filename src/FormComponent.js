@@ -336,7 +336,7 @@ export default class FormComponent extends React.Component {
                 <Col sm="12" md={{size: 12}} className="form-input_mod">
                   <Input type="search" spellCheck="false" value={this.state.name} name="search" id="useCasesSearch"
                          bsSize="lg"
-                         placeholder="Type what are you looking for... for example: post or chat"
+                         placeholder="Type what are you looking for... for example: post video"
                          onChange={this.multipleFuncOnChangeHandler}
                          onKeyPress={this.preventActionHandler}/>
                 </Col>
