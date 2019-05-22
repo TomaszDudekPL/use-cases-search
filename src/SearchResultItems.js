@@ -28,7 +28,7 @@ export default class SearchResultItems extends React.Component {
 
     return (
       this.props.items ? this.props.items.map(arr => {
-        let arrWithData = arr[0].split('%5C');
+        let arrWithData = arr[0].split(/%5C|%2F/);
         return arr[1].map(uc => {
             uc = uc.charAt(0).toUpperCase() + uc.substring(1) + '.';
             uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
