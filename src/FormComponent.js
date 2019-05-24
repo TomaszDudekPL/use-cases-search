@@ -250,7 +250,20 @@ export default class FormComponent extends React.Component {
     let numberOfUCforConsumer = 0, numberOfUCforPro = 0;
 
     if (ucInfoObj) {
-      ucInfoObj.arr[0] === 'CONSUMER' ? env = 'master' : env = 'master-pro';
+
+      switch(ucInfoObj.arr[0]){
+        case 'CONSUMER':
+          env = 'master';
+          break;
+        case 'PRO':
+          env = 'master-pro';
+          break;
+        case 'LIVE':
+          env = 'live';
+          break;
+       default:  env = 'master';
+      }
+
       let urlToFile = ucInfoObj.arr.join('/').concat('.js');
       runUCCommand = `node launcher.js -p 1 -r 1 -e ${env} -d ${urlToFile}`;
     }
