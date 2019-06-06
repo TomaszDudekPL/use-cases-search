@@ -57,9 +57,22 @@ export default class FormComponent extends React.Component {
   }
 
   showAllUseCases = () => {
+
+    let consumer_chkbox = this.state.consumer_chkbox;
+    let pro_chkbox = this.state.pro_chkbox;
+    let itemsToView = null;
+    let showWholeBase = !this.state.showWholeBase;
+    let numberOfUseCasesToShow = this.state.numberOfUseCasesToShow;
+
+    if(consumer_chkbox && pro_chkbox) {itemsToView = this.state.base; numberOfUseCasesToShow = this.state.numberOfAllUseCases}
+    if(consumer_chkbox && !pro_chkbox) {itemsToView = this.state.consumerList;}
+    if(!consumer_chkbox && pro_chkbox) {itemsToView = this.state.proList;}
+    if(!consumer_chkbox && !pro_chkbox) {itemsToView = []; showWholeBase = false;}
+
     this.setState({
-      items: this.state.base,
-      showWholeBase: !this.state.showWholeBase,
+      items: itemsToView,
+      showWholeBase: showWholeBase,
+      numberOfUseCasesToShow: numberOfUseCasesToShow,
       name: ''
     })
   };
@@ -226,8 +239,10 @@ export default class FormComponent extends React.Component {
   };
 
   handleChangeConsumerChk = () => {
+    let showWholeBase = false;
     let checkedConsumerValue = document.getElementById('consumer-chkbox').checked;
     this.setState({
+      showWholeBase: showWholeBase,
       consumer_chkbox: checkedConsumerValue,
       items: [],
       name: ''
@@ -237,6 +252,7 @@ export default class FormComponent extends React.Component {
   handleChangeProChk = () => {
     let checkedProValue = document.getElementById('pro-chkbox').checked;
     this.setState({
+      showWholeBase: false,
       pro_chkbox: checkedProValue,
       items: [],
       name: ''
