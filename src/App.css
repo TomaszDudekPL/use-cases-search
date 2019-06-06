@@ -244,3 +244,8 @@ body::-webkit-scrollbar {
     font-size: 1.3rem;
     font-weight: bolder;
 }
+
+.checkbox-counter{
+    color: #2fb431;
+    font-size: .5rem;
+}

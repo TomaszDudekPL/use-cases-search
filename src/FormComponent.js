@@ -32,7 +32,7 @@ export default class FormComponent extends React.Component {
 
   changeBaseToProperForm(val) {
 
-    let number = 0;
+    let number = 0, numberConsumer = 0, numberPro = 0;
     let entries = Object.entries(val);
     let consumerList = [];
     let proList = [];
@@ -42,8 +42,10 @@ export default class FormComponent extends React.Component {
       number += arr[1].length;
       if(/CONSUMER/mi.test(arr[0])){
         consumerList.push(arr);
+        numberConsumer += arr[1].length;
       } else if (/PRO/mi.test(arr[0])){
         proList.push(arr);
+        numberPro += arr[1].length;
       }
     });
 
@@ -52,6 +54,8 @@ export default class FormComponent extends React.Component {
       consumerList: consumerList,
       proList: proList,
       showWholeBase: false,
+      numberOfAllUCforConsumer: numberConsumer,
+      numberOfAllUCforPro: numberPro,
       numberOfAllUseCases: number
     })
   }
@@ -62,9 +66,8 @@ export default class FormComponent extends React.Component {
     let pro_chkbox = this.state.pro_chkbox;
     let itemsToView = null;
     let showWholeBase = !this.state.showWholeBase;
-    let numberOfUseCasesToShow = this.state.numberOfUseCasesToShow;
 
-    if(consumer_chkbox && pro_chkbox) {itemsToView = this.state.base; numberOfUseCasesToShow = this.state.numberOfAllUseCases}
+    if(consumer_chkbox && pro_chkbox) {itemsToView = this.state.base;}
     if(consumer_chkbox && !pro_chkbox) {itemsToView = this.state.consumerList;}
     if(!consumer_chkbox && pro_chkbox) {itemsToView = this.state.proList;}
     if(!consumer_chkbox && !pro_chkbox) {itemsToView = []; showWholeBase = false;}
@@ -72,7 +75,6 @@ export default class FormComponent extends React.Component {
     this.setState({
       items: itemsToView,
       showWholeBase: showWholeBase,
-      numberOfUseCasesToShow: numberOfUseCasesToShow,
       name: ''
     })
   };
@@ -379,14 +381,14 @@ export default class FormComponent extends React.Component {
                         <Input type="checkbox" id="consumer-chkbox" className="input-checkbox_mod"
                                defaultChecked={this.state.consumer_chkbox}
                                onChange={this.handleChangeConsumerChk}/>{' '}
-                        CONSUMER
+                        CONSUMER <span className="checkbox-counter">{this.state.numberOfAllUCforConsumer}</span>
                       </Label>
                     </div>
                     <div className="double-pro">
                       <Label check className="input-label_mod">
                         <Input type="checkbox" id="pro-chkbox" className="input-checkbox_mod"
                                defaultChecked={this.state.pro_chkbox} onChange={this.handleChangeProChk}/>{' '}
-                        PRO
+                        PRO  <span className="checkbox-counter">{this.state.numberOfAllUCforPro}</span>
                       </Label>
                     </div>
                   </FormGroup>
@@ -396,9 +398,7 @@ export default class FormComponent extends React.Component {
               <Row>
                 {!this.state.showWholeBase ?
                   (<Col sm="12" md={{size: 6, offset: 3}}>
-                    <Button block color="warning" className="form-button_mod" onClick={this.showAllUseCases}>Show All
-                      ({this.state.numberOfAllUseCases})
-                      Use Cases</Button>
+                    <Button block color="warning" className="form-button_mod" onClick={this.showAllUseCases}>Show All Use Cases</Button>
                   </Col>) :
 
                   (<Col sm="12" md={{size: 6, offset: 3}}>
