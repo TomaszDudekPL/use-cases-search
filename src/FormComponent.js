@@ -93,7 +93,15 @@ export default class FormComponent extends React.Component {
     })
   };
 
+  clearPreviousView = () => {
+    this.setState({
+      ucInfoObj: null
+    })
+  };
+
   filterList = (event) => {
+
+    this.clearPreviousView();
 
     let base;
     let updatedList = [];
