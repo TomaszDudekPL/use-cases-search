@@ -40,7 +40,7 @@ export default class FormComponent extends React.Component {
     entries.forEach(function (arr) {
       arr[1] = Object.keys(arr[1]);
       number += arr[1].length;
-      if(/CONSUMER/mi.test(arr[0])){
+      if(/CONSUMER|LIVE/mi.test(arr[0])){
         consumerList.push(arr);
         numberConsumer += arr[1].length;
       } else if (/PRO/mi.test(arr[0])){
@@ -287,7 +287,7 @@ export default class FormComponent extends React.Component {
     }
 
     this.state.items.forEach(arr => {
-      numberOfUCforConsumer += /CONSUMER/.test(arr[0]) ? arr[1].length : 0;
+      numberOfUCforConsumer += /CONSUMER|LIVE/.test(arr[0]) ? arr[1].length : 0;
       numberOfUCforPro += /PRO/.test(arr[0]) ? arr[1].length : 0;
     });
 
