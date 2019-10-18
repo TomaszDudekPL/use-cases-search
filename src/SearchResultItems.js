@@ -37,6 +37,7 @@ export default class SearchResultItems extends React.Component {
                           onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}>
                 <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
                 <BreadcrumbItems arrWithData={arrWithData}/>
+                <div className="use_case-text_mod">
                 <Highlighter
                   className="list-text_mod "
                   highlightClassName="highlight-text"
@@ -44,6 +45,7 @@ export default class SearchResultItems extends React.Component {
                   autoEscape={true}
                   textToHighlight={uc}
                 />
+                </div>
               </Breadcrumb>
             )
           }

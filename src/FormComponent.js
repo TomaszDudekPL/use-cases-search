@@ -4,6 +4,7 @@ import SearchResultItems from "./SearchResultItems";
 import * as firebase from "firebase/app";
 import "firebase/database";
 import firebaseConfig from './firebaseConfig.js'
+import prepareMapOfSearchResults from './helpers/prepareMapOfSearchResults'
 firebase.initializeApp(firebaseConfig);
 
 export default class FormComponent extends React.Component {
@@ -20,7 +21,8 @@ export default class FormComponent extends React.Component {
     wantedWords: [],
     ucInfoObj: null,
     consumer_chkbox: true,
-    pro_chkbox: true
+    pro_chkbox: false,
+    detailsSwitchView: false
   };
 
   componentDidMount() {
@@ -231,7 +233,8 @@ export default class FormComponent extends React.Component {
 
   onItemClicked = (ucInfoObj) => {
     this.setState({
-      ucInfoObj: ucInfoObj
+      ucInfoObj: ucInfoObj,
+      detailsSwitchView: true
     })
   };
 
@@ -269,6 +272,16 @@ export default class FormComponent extends React.Component {
     });
   };
 
+  hideThisViewBtn = () => {
+    this.setState( {
+      detailsSwitchView: false
+    })
+  };
+
+  createPrintView = (items) => () => {
+    prepareMapOfSearchResults(items);
+  };
+
 
   render() {
     let runUCCommand, env;
@@ -302,10 +315,9 @@ export default class FormComponent extends React.Component {
     return (
       <div className="main-label">
         <Jumbotron fluid className="jumbotron_mod">
-          <h1
-            className={this.state.ucInfoObj || this.state.name ? "display-7 form-mainLabel_mod1" : "display-7 form-mainLabel_mod2"}>USE
-            CASES SEARCH</h1>
-          {this.state.name && !this.state.ucInfoObj ? (
+          <h1 className={(this.state.ucInfoObj && this.state.detailsSwitchView) || (this.state.name && this.state.detailsSwitchView) ? "display-7 form-mainLabel_mod1" : "display-7 form-mainLabel_mod2"}>USE CASES SEARCH</h1>
+          {[0] in this.state.items? <Button color="success" size="sm" className="print_view-button_mod" onClick={this.createPrintView(this.state.items)}>Print View of this list</Button>: null}
+          {(this.state.name && !this.state.ucInfoObj) || (this.state.name && !this.state.detailsSwitchView) ? (
 
             <Row className="jumbotron-result_mod">
               <Col sm="12" md={{size: 10, offset: 1}}>
@@ -323,7 +335,7 @@ export default class FormComponent extends React.Component {
               </Col>
             </Row>
 
-          ) : this.state.ucInfoObj ? (
+          ) : this.state.ucInfoObj && this.state.detailsSwitchView ? (
             <Row>
               <Col sm="12" md={{size: 10, offset: 1}}>
                 <InputGroup size="sm">
@@ -362,7 +374,7 @@ export default class FormComponent extends React.Component {
                     <span className="jumbotron-label-number">{numberOfUCforPro}</span>
                   </Col>
                 </Row>
-
+                <Button color="secondary" size="sm" onClick={this.hideThisViewBtn}>✕ Hide this view</Button>
               </Col>
             </Row>
           ) : null
@@ -410,8 +422,7 @@ export default class FormComponent extends React.Component {
                   </Col>) :
 
                   (<Col sm="12" md={{size: 6, offset: 3}}>
-                    <Button block color="danger" className="form-button_mod" onClick={this.hideAllUseCases}>Hide All Use
-                      Cases</Button>
+                    <Button block color="danger" className="form-button_mod" onClick={this.hideAllUseCases}>✕ Hide All Use Cases</Button>
                   </Col>)
                 }
               </Row>
