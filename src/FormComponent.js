@@ -5,6 +5,8 @@ import * as firebase from "firebase/app";
 import "firebase/database";
 import firebaseConfig from './firebaseConfig.js'
 import prepareMapOfSearchResults from './helpers/prepareMapOfSearchResults'
+import changeBaseEngine from './helpers/changeBaseEngine'
+import {preventActionHandler, saveToClipboard, returnRunCommand, calculateNumberOfUCForConsumer, calculateNumberOfUCForPro} from './helpers/helperFunctions'
 firebase.initializeApp(firebaseConfig);
 
 export default class FormComponent extends React.Component {
@@ -33,33 +35,9 @@ export default class FormComponent extends React.Component {
   }
 
   changeBaseToProperForm(val) {
-
-    let number = 0, numberConsumer = 0, numberPro = 0;
-    let entries = Object.entries(val);
-    let consumerList = [];
-    let proList = [];
-
-    entries.forEach(function (arr) {
-      arr[1] = Object.keys(arr[1]);
-      number += arr[1].length;
-      if(/CONSUMER|LIVE/mi.test(arr[0])){
-        consumerList.push(arr);
-        numberConsumer += arr[1].length;
-      } else if (/PRO/mi.test(arr[0])){
-        proList.push(arr);
-        numberPro += arr[1].length;
-      }
-    });
-
-    this.setState({
-      base: entries,
-      consumerList: consumerList,
-      proList: proList,
-      showWholeBase: false,
-      numberOfAllUCforConsumer: numberConsumer,
-      numberOfAllUCforPro: numberPro,
-      numberOfAllUseCases: number
-    })
+    let changedBase = changeBaseEngine(val);
+    changeBaseEngine.showWholeBase = false;
+    this.setState(() => changedBase);
   }
 
   showAllUseCases = () => {
@@ -224,26 +202,11 @@ export default class FormComponent extends React.Component {
     }
   };
 
-  preventActionHandler = (event) => {
-    let charCode = event.charCode;
-    if (charCode === 13) {
-      event.preventDefault();
-    }
-  };
-
   onItemClicked = (ucInfoObj) => {
     this.setState({
       ucInfoObj: ucInfoObj,
       detailsSwitchView: true
     })
-  };
-
-  saveToClipboard = (id) => {
-    return () => {
-      let copyText = document.getElementById(id);
-      copyText.select();
-      document.execCommand("copy");
-    }
   };
 
   multipleFuncOnChangeHandler = (event) => {
@@ -282,35 +245,11 @@ export default class FormComponent extends React.Component {
     prepareMapOfSearchResults(items);
   };
 
+  calculateNumbersOfUC = (items = this.state.items) => {
+    return calculateNumberOfUCForConsumer(items) + calculateNumberOfUCForPro(items);
+  };
 
   render() {
-    let runUCCommand, env;
-    let ucInfoObj = this.state.ucInfoObj;
-    let numberOfUCforConsumer = 0, numberOfUCforPro = 0;
-
-    if (ucInfoObj) {
-
-      switch(ucInfoObj.arr[0]){
-        case 'CONSUMER':
-          env = 'master';
-          break;
-        case 'PRO':
-          env = 'master-pro';
-          break;
-        case 'LIVE':
-          env = 'live';
-          break;
-       default:  env = 'master';
-      }
-
-      let urlToFile = ucInfoObj.arr.join('/').concat('.js');
-      runUCCommand = `node launcher.js -p 1 -r 1 -e ${env} -d ${urlToFile}`;
-    }
-
-    this.state.items.forEach(arr => {
-      numberOfUCforConsumer += /CONSUMER|LIVE/.test(arr[0]) ? arr[1].length : 0;
-      numberOfUCforPro += /PRO/.test(arr[0]) ? arr[1].length : 0;
-    });
 
     return (
       <div className="main-label">
@@ -324,14 +263,14 @@ export default class FormComponent extends React.Component {
                 <span className="jumbotron-label-text">FOR </span>
                 <span className="jumbotron-label-number">{this.state.name.toUpperCase()}</span>
                 <span className="jumbotron-label-text"> SEARCH TERM: </span>
-                <span className="jumbotron-label-number">{numberOfUCforConsumer + numberOfUCforPro}</span>
+                <span className="jumbotron-label-number">{this.calculateNumbersOfUC()}</span>
                 <span
-                  className="jumbotron-label-text"> USE CASE{numberOfUCforConsumer + numberOfUCforPro > 1 ? 'S' : ''} FOUND. </span>
+                  className="jumbotron-label-text"> USE CASE{this.calculateNumbersOfUC() > 1 ? 'S' : ''} FOUND. </span>
                 <br/>
                 <span className="jumbotron-label-text"> CONSUMER: </span>
-                <span className="jumbotron-label-number">{numberOfUCforConsumer}</span>
+                <span className="jumbotron-label-number">{calculateNumberOfUCForConsumer(this.state.items)}</span>
                 <span className="jumbotron-label-text"> PRO: </span>
-                <span className="jumbotron-label-number">{numberOfUCforPro}</span>
+                <span className="jumbotron-label-number">{calculateNumberOfUCForPro(this.state.items)}</span>
               </Col>
             </Row>
 
@@ -344,20 +283,20 @@ export default class FormComponent extends React.Component {
                          value={this.state.ucInfoObj ? this.state.ucInfoObj.uc : null}
                          className="jumbotron-input_mod jumbotron-input-one_mod shadow-none" id="useCaseInput"/>
                   <Button color="success" size="sm" className="jumbotron-button_mod" outline
-                          onClick={this.saveToClipboard("useCaseInput")}>Clipboard!</Button>
+                          onClick={saveToClipboard("useCaseInput")}>Clipboard!</Button>
                 </InputGroup>
                 <InputGroup size="sm">
                   <Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>
                   <Input placeholder="" type="text" spellCheck="false"
-                         value={runUCCommand}
+                         value={returnRunCommand(this.state.ucInfoObj)}
                          className="jumbotron-input_mod jumbotron-input-two_mod shadow-none" id="runThisUCInput"/>
                   <Button color="success" size="sm" className="jumbotron-button_mod" outline
-                          onClick={this.saveToClipboard("runThisUCInput")}>Clipboard!</Button>
+                          onClick={saveToClipboard("runThisUCInput")}>Clipboard!</Button>
                 </InputGroup>
 
                 <Row>
                   <Col sm="12" md={{size: 10, offset: 1}}>
-                    {!this.state.showWholeBase && numberOfUCforConsumer + numberOfUCforPro > 1 ? (
+                    {!this.state.showWholeBase && this.calculateNumbersOfUC() > 1 ? (
                       <span>
                         <span className="jumbotron-label-text">FOR </span>
                         <span className="jumbotron-label-number">{this.state.name.toUpperCase()}</span>
@@ -365,13 +304,13 @@ export default class FormComponent extends React.Component {
                       </span>
                     ) : ''
                     }
-                    <span className="jumbotron-label-number">{numberOfUCforConsumer + numberOfUCforPro}</span>
+                    <span className="jumbotron-label-number">{this.calculateNumbersOfUC()}</span>
                     <span
-                      className="jumbotron-label-text"> USE CASE{numberOfUCforConsumer + numberOfUCforPro > 1 ? 'S' : ''} FOUND. </span>
+                      className="jumbotron-label-text"> USE CASE{this.calculateNumbersOfUC() > 1 ? 'S' : ''} FOUND. </span>
                     <span className="jumbotron-label-text"> CONSUMER: </span>
-                    <span className="jumbotron-label-number">{numberOfUCforConsumer}</span>
+                    <span className="jumbotron-label-number">{calculateNumberOfUCForConsumer(this.state.items)}</span>
                     <span className="jumbotron-label-text"> PRO: </span>
-                    <span className="jumbotron-label-number">{numberOfUCforPro}</span>
+                    <span className="jumbotron-label-number">{calculateNumberOfUCForPro(this.state.items)}</span>
                   </Col>
                 </Row>
                 <Button color="secondary" size="sm" onClick={this.hideThisViewBtn}>✕ Hide this view</Button>
@@ -389,7 +328,7 @@ export default class FormComponent extends React.Component {
                          bsSize="lg"
                          placeholder="Type what are you looking for... for example: post video"
                          onChange={this.multipleFuncOnChangeHandler}
-                         onKeyPress={this.preventActionHandler}/>
+                         onKeyPress={preventActionHandler}/>
                 </Col>
               </Row>
 
