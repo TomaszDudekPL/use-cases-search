@@ -258,6 +258,7 @@ body::-webkit-scrollbar {
 }
 
 .print_view-button_mod {
+    display: none;
     left: 1150px;
     bottom: 130px;
     position: absolute;
