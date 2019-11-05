@@ -1,13 +1,14 @@
 import React from 'react';
-import {Button, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap';
+import {Col, Container, Form, FormGroup, Input, Row} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import JumbotronComponent from "./JumbotronComponent";
+import CheckboxesComponent from "./CheckboxesComponent";
+import AllCasesButtonComponent from "./AllCasesButtonComponent";
 import * as firebase from "firebase/app";
 import "firebase/database";
 import firebaseConfig from './firebaseConfig.js'
-import prepareMapOfSearchResults from './helpers/prepareMapOfSearchResults'
 import changeBaseEngine from './helpers/changeBaseEngine'
-import {preventActionHandler, calculateNumberOfUCForConsumer, calculateNumberOfUCForPro} from './helpers/helperFunctions'
+import {preventActionHandler, calculateNumberOfUCForConsumer, calculateNumberOfUCForPro, prepareMapOfSearchResults} from './helpers/helperFunctions'
 firebase.initializeApp(firebaseConfig);
 
 export default class FormComponent extends React.Component {
@@ -272,42 +273,29 @@ export default class FormComponent extends React.Component {
                          bsSize="lg"
                          placeholder="Type what are you looking for... for example: post video"
                          onChange={this.multipleFuncOnChangeHandler}
-                         onKeyPress={preventActionHandler}/>
+                         onKeyPress={preventActionHandler}
+                  />
                 </Col>
               </Row>
 
               <Row>
                 <Col>
-                  <FormGroup check>
-                    <div className="double-consumer">
-                      <Label check className="input-label_mod">
-                        <Input type="checkbox" id="consumer-chkbox" className="input-checkbox_mod"
-                               defaultChecked={this.state.consumer_chkbox}
-                               onChange={this.handleChangeConsumerChk}/>{' '}
-                        CONSUMER <span className="checkbox-counter">{this.state.numberOfAllUCforConsumer}</span>
-                      </Label>
-                    </div>
-                    <div className="double-pro">
-                      <Label check className="input-label_mod">
-                        <Input type="checkbox" id="pro-chkbox" className="input-checkbox_mod"
-                               defaultChecked={this.state.pro_chkbox} onChange={this.handleChangeProChk}/>{' '}
-                        PRO  <span className="checkbox-counter">{this.state.numberOfAllUCforPro}</span>
-                      </Label>
-                    </div>
-                  </FormGroup>
+                  <CheckboxesComponent consumer_chkbox={this.state.consumer_chkbox}
+                                       pro_chkbox={this.state.pro_chkbox}
+                                       numberOfAllUCforConsumer={this.state.numberOfAllUCforConsumer}
+                                       handleChangeConsumerChk={this.handleChangeConsumerChk}
+                                       handleChangeProChk={this.handleChangeProChk}
+                                       numberOfAllUCforPro={this.state.numberOfAllUCforPro}
+                  />
                 </Col>
               </Row>
 
               <Row>
-                {!this.state.showWholeBase ?
-                  (<Col sm="12" md={{size: 6, offset: 3}}>
-                    <Button block color="warning" className="form-button_mod" onClick={this.showAllUseCases}>Show All Use Cases</Button>
-                  </Col>) :
+                <AllCasesButtonComponent showWholeBase={this.state.showWholeBase}
+                                showAllUseCases={this.showAllUseCases}
+                                hideAllUseCases={this.hideAllUseCases}
 
-                  (<Col sm="12" md={{size: 6, offset: 3}}>
-                    <Button block color="danger" className="form-button_mod" onClick={this.hideAllUseCases}>✕ Hide All Use Cases</Button>
-                  </Col>)
-                }
+                />
               </Row>
               <Row>
                 <Col sm="12" md={{size: 12, offset: 0}}>
