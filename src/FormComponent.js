@@ -237,7 +237,7 @@ export default class FormComponent extends React.Component {
               <div className="instruct-mod">
                 <Row>
                   <Col>
-                    <h5 className="green-color font-weight-bolder">1. First choose what kind of UC you are interested
+                    <h5 className="blue-color font-weight-bolder">1. First choose what kind of UC you are interested
                       in:</h5>
                   </Col>
                 </Row>
@@ -256,7 +256,7 @@ export default class FormComponent extends React.Component {
 
                 <Row>
                   <Col>
-                    <h5 className="green-color font-weight-bolder">2. Choose tag of what you are interested in to narrow
+                    <h5 className="blue-color font-weight-bolder">2. Choose tag of what you are interested in to narrow
                       down the results or just jump into next step.</h5>
                   </Col>
                 </Row>
@@ -272,8 +272,8 @@ export default class FormComponent extends React.Component {
 
                 <Row>
                   <Col>
-                    <h5 className="green-color font-weight-bolder bottom-margin">3. Use maximum 3 words to describe what
-                      are you looking for:</h5>
+                    <h5 className="blue-color font-weight-bolder bottom-margin">3. Use maximum 3 words to describe what
+                      exactly are you looking for:</h5>
                   </Col>
                 </Row>
 

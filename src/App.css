@@ -11,7 +11,6 @@
 .jumbotron_mod {
     border-radius: 10px;
     margin-top: 20px;
-    /*margin-bottom: 20px;*/
     background-color: white;
     height: 152px;
     position: fixed;
@@ -24,20 +23,18 @@
     font-size: 1.5rem;
     padding: 0;
     margin: unset;
-    /*color: #e9ecef;*/
 }
 
 .form-mainLabel_mod2 {
     font-size: 4rem;
     padding: 0;
-    /*margin-top: 55px;*/
-    /*color: #e9ecef;*/
+    margin-top: 20px;
 }
 
 .instruct-mod {
     background-color: #f4f7fa;
     border-radius: 5px;
-    margin-bottom: 2px;
+    margin-bottom: 5px;
 }
 
 @media(max-width: 1300px) {
@@ -85,7 +82,7 @@
 
 .form_mod {
     position: relative;
-    top: 210px
+    top: 160px
 }
 
 .input-label_mod {
@@ -260,7 +257,7 @@ body::-webkit-scrollbar {
 
 .checkbox-counter{
     color: #2fb431;
-    font-size: .5rem;
+    font-size: .6rem;
 }
 
 .print_view-button_mod {
@@ -270,8 +267,8 @@ body::-webkit-scrollbar {
     position: absolute;
 }
 
-.green-color {
-    color: #2fb431;
+.blue-color {
+    color: #0d63af;
 }
 
 .bottom-margin {

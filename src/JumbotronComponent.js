@@ -68,7 +68,7 @@ export default class JumbotronComponent extends React.Component {
                   <span className="jumbotron-label-number">{calculateNumberOfUCForPro(this.props.items)}</span>
                 </Col>
               </Row>
-              <Button color="secondary" size="sm" onClick={this.props.hideThisViewBtn}>✕ Hide this view</Button>
+              <Button color="danger" size="sm" onClick={this.props.hideThisViewBtn}>✕ Hide this view</Button>
             </Col>
           </Row>
         ) : null
