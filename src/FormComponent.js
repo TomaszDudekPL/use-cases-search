@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Container, Form, FormGroup, Input, Row} from 'reactstrap';
+import {Col, Container, Form, FormGroup, Input, Row, Badge} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import JumbotronComponent from "./JumbotronComponent";
 import CheckboxesComponent from "./CheckboxesComponent";
@@ -8,8 +8,20 @@ import * as firebase from "firebase/app";
 import "firebase/database";
 import firebaseConfig from './firebaseConfig.js'
 import changeBaseEngine from './helpers/changeBaseEngine'
-import {preventActionHandler, calculateNumberOfUCForConsumer, calculateNumberOfUCForPro, prepareMapOfSearchResults} from './helpers/helperFunctions'
-import {removeSpacesFunc, returnNotEmptyValues, returnUpdatedListOfUseCases_ifOneWord, returnUpdatedListOfUseCases_ifMoreThenOneWord, returnBaseDividedOnCategories} from './helpers/filterEngine_helpers'
+import {
+  preventActionHandler,
+  calculateNumberOfUCForConsumer,
+  calculateNumberOfUCForPro,
+  prepareMapOfSearchResults
+} from './helpers/helperFunctions'
+import {
+  removeSpacesFunc,
+  returnNotEmptyValues,
+  returnUpdatedListOfUseCases_ifOneWord,
+  returnUpdatedListOfUseCases_ifMoreThenOneWord,
+  returnBaseDividedOnCategories
+} from './helpers/filterEngine_helpers'
+
 firebase.initializeApp(firebaseConfig);
 
 export default class FormComponent extends React.Component {
@@ -50,10 +62,19 @@ export default class FormComponent extends React.Component {
     let itemsToView = null;
     let showWholeBase = !this.state.showWholeBase;
 
-    if(consumer_chkbox && pro_chkbox) {itemsToView = this.state.base;}
-    if(consumer_chkbox && !pro_chkbox) {itemsToView = this.state.consumerList;}
-    if(!consumer_chkbox && pro_chkbox) {itemsToView = this.state.proList;}
-    if(!consumer_chkbox && !pro_chkbox) {itemsToView = []; showWholeBase = false;}
+    if (consumer_chkbox && pro_chkbox) {
+      itemsToView = this.state.base;
+    }
+    if (consumer_chkbox && !pro_chkbox) {
+      itemsToView = this.state.consumerList;
+    }
+    if (!consumer_chkbox && pro_chkbox) {
+      itemsToView = this.state.proList;
+    }
+    if (!consumer_chkbox && !pro_chkbox) {
+      itemsToView = [];
+      showWholeBase = false;
+    }
 
     this.setState({
       items: itemsToView,
@@ -130,7 +151,7 @@ export default class FormComponent extends React.Component {
 
       if (secondKeyWord || thirdKeyWord) {
 
-       let updatedList = returnUpdatedListOfUseCases_ifMoreThenOneWord(base, arrOfKeyWords, firstKeyWord, secondKeyWord, thirdKeyWord);
+        let updatedList = returnUpdatedListOfUseCases_ifMoreThenOneWord(base, arrOfKeyWords, firstKeyWord, secondKeyWord, thirdKeyWord);
 
         // if something will be wrong with searching with two or more key words move this setState func to TARGET comment place in filterEngine_helpers
         this.setState({
@@ -183,7 +204,7 @@ export default class FormComponent extends React.Component {
   };
 
   hideThisViewBtn = () => {
-    this.setState( {
+    this.setState({
       detailsSwitchView: false
     })
   };
@@ -212,11 +233,57 @@ export default class FormComponent extends React.Component {
         <Container fluid>
           <Form className="form_mod">
             <FormGroup>
+
+              <div className="instruct-mod">
+                <Row>
+                  <Col>
+                    <h5 className="green-color font-weight-bolder">1. First choose what kind of UC you are interested
+                      in:</h5>
+                  </Col>
+                </Row>
+
+                <Row className="bottom-margin">
+                  <Col>
+                    <CheckboxesComponent consumer_chkbox={this.state.consumer_chkbox}
+                                         pro_chkbox={this.state.pro_chkbox}
+                                         numberOfAllUCforConsumer={this.state.numberOfAllUCforConsumer}
+                                         handleChangeConsumerChk={this.handleChangeConsumerChk}
+                                         handleChangeProChk={this.handleChangeProChk}
+                                         numberOfAllUCforPro={this.state.numberOfAllUCforPro}
+                    />
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <h5 className="green-color font-weight-bolder">2. Choose tag of what you are interested in to narrow
+                      down the results or just jump into next step.</h5>
+                  </Col>
+                </Row>
+
+                <Row className="bottom-margin">
+                  <Col>
+                    <h5 className="badge-mod"><Badge color="success">#Registration</Badge></h5>
+                    <h5 className="badge-mod"><Badge color="success">#Chat</Badge></h5>
+                    <h5 className="badge-mod"><Badge color="success">#Posting</Badge></h5>
+                    <h5 className="badge-mod"><Badge color="success">#Inviting</Badge></h5>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <h5 className="green-color font-weight-bolder bottom-margin">3. Use maximum 3 words to describe what
+                      are you looking for:</h5>
+                  </Col>
+                </Row>
+
+              </div>
+
               <Row>
                 <Col sm="12" md={{size: 12}} className="form-input_mod">
                   <Input type="search" spellCheck="false" value={this.state.name} name="search" id="useCasesSearch"
                          bsSize="lg"
-                         placeholder="Type what are you looking for... for example: post video"
+                         placeholder="Narrow down the results..."
                          onChange={this.multipleFuncOnChangeHandler}
                          onKeyPress={preventActionHandler}
                   />
@@ -224,21 +291,9 @@ export default class FormComponent extends React.Component {
               </Row>
 
               <Row>
-                <Col>
-                  <CheckboxesComponent consumer_chkbox={this.state.consumer_chkbox}
-                                       pro_chkbox={this.state.pro_chkbox}
-                                       numberOfAllUCforConsumer={this.state.numberOfAllUCforConsumer}
-                                       handleChangeConsumerChk={this.handleChangeConsumerChk}
-                                       handleChangeProChk={this.handleChangeProChk}
-                                       numberOfAllUCforPro={this.state.numberOfAllUCforPro}
-                  />
-                </Col>
-              </Row>
-
-              <Row>
                 <AllCasesButtonComponent showWholeBase={this.state.showWholeBase}
-                                showAllUseCases={this.showAllUseCases}
-                                hideAllUseCases={this.hideAllUseCases}
+                                         showAllUseCases={this.showAllUseCases}
+                                         hideAllUseCases={this.hideAllUseCases}
 
                 />
               </Row>

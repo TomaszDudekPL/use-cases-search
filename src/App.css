@@ -7,12 +7,13 @@
 .container {
     max-width: 1400px;
 }
+
 .jumbotron_mod {
     border-radius: 10px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
     background-color: white;
-    height: 200px;
+    height: 152px;
     position: fixed;
     width: 1400px;
     z-index: 5;
@@ -20,15 +21,23 @@
 }
 
 .form-mainLabel_mod1 {
-    font-size: 3.5rem;
+    font-size: 1.5rem;
     padding: 0;
     margin: unset;
+    /*color: #e9ecef;*/
 }
 
 .form-mainLabel_mod2 {
-    font-size: 5rem;
+    font-size: 4rem;
     padding: 0;
-    margin-top: 55px;
+    /*margin-top: 55px;*/
+    /*color: #e9ecef;*/
+}
+
+.instruct-mod {
+    background-color: #f4f7fa;
+    border-radius: 5px;
+    margin-bottom: 2px;
 }
 
 @media(max-width: 1300px) {
@@ -84,7 +93,7 @@
 }
 
 .double-consumer, .double-pro {
-    zoom: .8;
+    zoom: .7;
     transform: scale(2);
     -ms-transform: scale(2);
     -webkit-transform: scale(2);
@@ -98,7 +107,6 @@
     -webkit-transform-origin: 0 0;
     display: inline-block;
     margin-bottom: 20px;
-    margin-top: 20px;
 }
 
 .double-consumer {
@@ -142,9 +150,7 @@ body::-webkit-scrollbar {
 
 .badge-mod {
     padding: 5px;
-    margin-left: 10px;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    display: inline;
 }
 
 .list-item_mod {
@@ -262,4 +268,20 @@ body::-webkit-scrollbar {
     left: 1150px;
     bottom: 130px;
     position: absolute;
+}
+
+.green-color {
+    color: #2fb431;
+}
+
+.bottom-margin {
+   margin-bottom: 20px;
+}
+
+.font-weight-bolder {
+    font-weight: bolder;
+}
+
+.jumbotron {
+    padding: 0;
 }
