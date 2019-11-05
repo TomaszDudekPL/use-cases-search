@@ -9,6 +9,7 @@ import "firebase/database";
 import firebaseConfig from './firebaseConfig.js'
 import changeBaseEngine from './helpers/changeBaseEngine'
 import {preventActionHandler, calculateNumberOfUCForConsumer, calculateNumberOfUCForPro, prepareMapOfSearchResults} from './helpers/helperFunctions'
+import {removeSpacesFunc, getLowerCaseFunc, returnNotEmptyValues, returnUpdatedListOfUseCases_ifOneWord, returnUpdatedListOfUseCases_ifMoreThenOneWord} from './helpers/filterEngine_helpers'
 firebase.initializeApp(firebaseConfig);
 
 export default class FormComponent extends React.Component {
@@ -86,8 +87,7 @@ export default class FormComponent extends React.Component {
     this.clearPreviousView();
 
     let base;
-    let updatedList = [];
-    let ucArr = new Set();
+    let updatedList;
     let wantedValue;
 
     // database filtering-  divide into consumer, pro, whole, none.
@@ -96,14 +96,8 @@ export default class FormComponent extends React.Component {
     if (this.state.consumer_chkbox === false && this.state.pro_chkbox === false) base = [];
     if (this.state.consumer_chkbox && this.state.pro_chkbox) base = this.state.base;
 
-    let removeSpacesFunc = (word) => word ? word.replace(/^\s+|\s+$/g, "").replace(/\s+/g, " ") : null;
-    let getLowerCaseFunc = (character) => character.toLowerCase();
-
     // preparing search key words
-    let arrOfKeyWords = event.target.value.split(' ');
-    arrOfKeyWords = arrOfKeyWords.filter(function (el) {
-      return el !== null && el !== "";
-    });
+    let arrOfKeyWords = returnNotEmptyValues(event.target.value);
 
     // searching by one word
     if (!this.state.items.length || arrOfKeyWords.length === 1) {
@@ -115,24 +109,7 @@ export default class FormComponent extends React.Component {
 
       if (event.target.value.length >= 3) {
 
-        updatedList = [];
-
-        base.forEach(arrOfUC => {
-
-          arrOfUC[1].forEach(uc => {
-
-            wantedValue = getLowerCaseFunc(event.target.value);
-            wantedValue = removeSpacesFunc(wantedValue);
-
-            if (getLowerCaseFunc(uc).search(wantedValue) !== -1) ucArr.add(uc);
-
-          });
-
-          if (ucArr.size) updatedList.push([arrOfUC[0], [...ucArr]]);
-
-          ucArr = new Set();
-
-        });
+        updatedList = returnUpdatedListOfUseCases_ifOneWord(base, event);
 
         // ready results to be rendered
         this.setState({
@@ -145,7 +122,6 @@ export default class FormComponent extends React.Component {
     } else if (/\s+/.test(event.target.value)) {
 
       // searching by two and three words
-
       let firstKeyWord = removeSpacesFunc(arrOfKeyWords[0]);
       let secondKeyWord = removeSpacesFunc(arrOfKeyWords[1]);
       let thirdKeyWord = removeSpacesFunc(arrOfKeyWords[2]);
@@ -158,40 +134,12 @@ export default class FormComponent extends React.Component {
 
       if (secondKeyWord || thirdKeyWord) {
 
-        let updatedList = [];
-        let ucArr = new Set();
+       let updatedList = returnUpdatedListOfUseCases_ifMoreThenOneWord(base, arrOfKeyWords, firstKeyWord, secondKeyWord, thirdKeyWord);
 
-        base.forEach(arrOfUC => {
-
-          arrOfUC[1].forEach(
-            function (uc) {
-              if (getLowerCaseFunc(uc).search(firstKeyWord) !== -1) {
-                if (!arrOfKeyWords[1]) {
-                  ucArr.add(uc);
-                }
-                if (arrOfKeyWords[1]) {
-                  if (getLowerCaseFunc(uc).search(secondKeyWord) !== -1) {
-                    if (!arrOfKeyWords[2]) {
-                      ucArr.add(uc);
-                    } else if (arrOfKeyWords[1] && arrOfKeyWords[2]) {
-                      if (getLowerCaseFunc(uc).search(thirdKeyWord) !== -1) {
-                        ucArr.add(uc);
-                      }
-                    }
-                  }
-                }
-              }
-            });
-
-          if (ucArr.size) {
-            updatedList.push([arrOfUC[0], [...ucArr]]);
-            ucArr = new Set();
-            this.setState({
-              items: updatedList,
-              wantedWords: wantedWords
-            });
-          }
-
+        // if something will be wrong with searching with two or more key words move this setState func to TARGET comment place in filterEngine_helpers
+        this.setState({
+          items: updatedList,
+          wantedWords: wantedWords
         });
       }
 
