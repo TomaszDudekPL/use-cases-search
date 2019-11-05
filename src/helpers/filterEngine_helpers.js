@@ -1,3 +1,16 @@
+const returnBaseDividedOnCategories = (state) => {
+
+  let base;
+
+  if (state.consumer_chkbox && state.pro_chkbox === false) base = state.consumerList;
+  if (state.consumer_chkbox === false && state.pro_chkbox) base = state.proList;
+  if (state.consumer_chkbox === false && state.pro_chkbox === false) base = [];
+  if (state.consumer_chkbox && state.pro_chkbox) base = state.base;
+
+  return base;
+};
+
+
 const removeSpacesFunc = (word) => word ? word.replace(/^\s+|\s+$/g, "").replace(/\s+/g, " ") : null;
 
 const getLowerCaseFunc = (character) => character.toLowerCase();
@@ -35,8 +48,9 @@ const returnUpdatedListOfUseCases_ifOneWord = (base, event) => {
         ucArr = new Set();
   });
 
-  return updatedList;
+  return {updatedList, wantedValue};
 };
+
 const returnUpdatedListOfUseCases_ifMoreThenOneWord = (base, arrOfKeyWords, firstKeyWord, secondKeyWord, thirdKeyWord) => {
 
   let updatedList = [];
@@ -79,5 +93,6 @@ export {
   getLowerCaseFunc,
   returnNotEmptyValues,
   returnUpdatedListOfUseCases_ifOneWord,
-  returnUpdatedListOfUseCases_ifMoreThenOneWord
+  returnUpdatedListOfUseCases_ifMoreThenOneWord,
+  returnBaseDividedOnCategories
 }

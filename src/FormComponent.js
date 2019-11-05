@@ -9,7 +9,7 @@ import "firebase/database";
 import firebaseConfig from './firebaseConfig.js'
 import changeBaseEngine from './helpers/changeBaseEngine'
 import {preventActionHandler, calculateNumberOfUCForConsumer, calculateNumberOfUCForPro, prepareMapOfSearchResults} from './helpers/helperFunctions'
-import {removeSpacesFunc, getLowerCaseFunc, returnNotEmptyValues, returnUpdatedListOfUseCases_ifOneWord, returnUpdatedListOfUseCases_ifMoreThenOneWord} from './helpers/filterEngine_helpers'
+import {removeSpacesFunc, returnNotEmptyValues, returnUpdatedListOfUseCases_ifOneWord, returnUpdatedListOfUseCases_ifMoreThenOneWord, returnBaseDividedOnCategories} from './helpers/filterEngine_helpers'
 firebase.initializeApp(firebaseConfig);
 
 export default class FormComponent extends React.Component {
@@ -84,17 +84,11 @@ export default class FormComponent extends React.Component {
 
   filterList = (event) => {
 
+    // divide into consumer, pro, whole, none.
+    let base = returnBaseDividedOnCategories(this.state);
+
+    // clear previous searching result
     this.clearPreviousView();
-
-    let base;
-    let updatedList;
-    let wantedValue;
-
-    // database filtering-  divide into consumer, pro, whole, none.
-    if (this.state.consumer_chkbox && this.state.pro_chkbox === false) base = this.state.consumerList;
-    if (this.state.consumer_chkbox === false && this.state.pro_chkbox) base = this.state.proList;
-    if (this.state.consumer_chkbox === false && this.state.pro_chkbox === false) base = [];
-    if (this.state.consumer_chkbox && this.state.pro_chkbox) base = this.state.base;
 
     // preparing search key words
     let arrOfKeyWords = returnNotEmptyValues(event.target.value);
@@ -109,7 +103,7 @@ export default class FormComponent extends React.Component {
 
       if (event.target.value.length >= 3) {
 
-        updatedList = returnUpdatedListOfUseCases_ifOneWord(base, event);
+        const {updatedList, wantedValue} = returnUpdatedListOfUseCases_ifOneWord(base, event);
 
         // ready results to be rendered
         this.setState({
@@ -119,9 +113,11 @@ export default class FormComponent extends React.Component {
 
       }
 
-    } else if (/\s+/.test(event.target.value)) {
+    }
 
-      // searching by two and three words
+    // searching by two and three words
+    else if (/\s+/.test(event.target.value)) {
+
       let firstKeyWord = removeSpacesFunc(arrOfKeyWords[0]);
       let secondKeyWord = removeSpacesFunc(arrOfKeyWords[1]);
       let thirdKeyWord = removeSpacesFunc(arrOfKeyWords[2]);
@@ -145,6 +141,7 @@ export default class FormComponent extends React.Component {
 
     }
 
+    // clear search result view if input is clearing by user
     if (event.target.value.length < 4) {
       this.setState({
         items: []
