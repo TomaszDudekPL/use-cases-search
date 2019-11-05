@@ -1,12 +1,13 @@
 import React from 'react';
-import {Button, Col, Container, Form, FormGroup, Input, InputGroup, Jumbotron, Label, Row} from 'reactstrap';
+import {Button, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
+import JumbotronComponent from "./JumbotronComponent";
 import * as firebase from "firebase/app";
 import "firebase/database";
 import firebaseConfig from './firebaseConfig.js'
 import prepareMapOfSearchResults from './helpers/prepareMapOfSearchResults'
 import changeBaseEngine from './helpers/changeBaseEngine'
-import {preventActionHandler, saveToClipboard, returnRunCommand, calculateNumberOfUCForConsumer, calculateNumberOfUCForPro} from './helpers/helperFunctions'
+import {preventActionHandler, calculateNumberOfUCForConsumer, calculateNumberOfUCForPro} from './helpers/helperFunctions'
 firebase.initializeApp(firebaseConfig);
 
 export default class FormComponent extends React.Component {
@@ -253,72 +254,15 @@ export default class FormComponent extends React.Component {
 
     return (
       <div className="main-label">
-        <Jumbotron fluid className="jumbotron_mod">
-          <h1 className={(this.state.ucInfoObj && this.state.detailsSwitchView) || (this.state.name && this.state.detailsSwitchView) ? "display-7 form-mainLabel_mod1" : "display-7 form-mainLabel_mod2"}>USE CASES SEARCH</h1>
-          {[0] in this.state.items? <Button color="success" size="sm" className="print_view-button_mod" onClick={this.createPrintView(this.state.items)}>Print View of this list</Button>: null}
-          {(this.state.name && !this.state.ucInfoObj) || (this.state.name && !this.state.detailsSwitchView) ? (
-
-            <Row className="jumbotron-result_mod">
-              <Col sm="12" md={{size: 10, offset: 1}}>
-                <span className="jumbotron-label-text">FOR </span>
-                <span className="jumbotron-label-number">{this.state.name.toUpperCase()}</span>
-                <span className="jumbotron-label-text"> SEARCH TERM: </span>
-                <span className="jumbotron-label-number">{this.calculateNumbersOfUC()}</span>
-                <span
-                  className="jumbotron-label-text"> USE CASE{this.calculateNumbersOfUC() > 1 ? 'S' : ''} FOUND. </span>
-                <br/>
-                <span className="jumbotron-label-text"> CONSUMER: </span>
-                <span className="jumbotron-label-number">{calculateNumberOfUCForConsumer(this.state.items)}</span>
-                <span className="jumbotron-label-text"> PRO: </span>
-                <span className="jumbotron-label-number">{calculateNumberOfUCForPro(this.state.items)}</span>
-              </Col>
-            </Row>
-
-          ) : this.state.ucInfoObj && this.state.detailsSwitchView ? (
-            <Row>
-              <Col sm="12" md={{size: 10, offset: 1}}>
-                <InputGroup size="sm">
-                  <Label className="jumbotron-label_mod">USE CASE:</Label>
-                  <Input placeholder="" type="text" spellCheck="false"
-                         value={this.state.ucInfoObj ? this.state.ucInfoObj.uc : null}
-                         className="jumbotron-input_mod jumbotron-input-one_mod shadow-none" id="useCaseInput"/>
-                  <Button color="success" size="sm" className="jumbotron-button_mod" outline
-                          onClick={saveToClipboard("useCaseInput")}>Clipboard!</Button>
-                </InputGroup>
-                <InputGroup size="sm">
-                  <Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>
-                  <Input placeholder="" type="text" spellCheck="false"
-                         value={returnRunCommand(this.state.ucInfoObj)}
-                         className="jumbotron-input_mod jumbotron-input-two_mod shadow-none" id="runThisUCInput"/>
-                  <Button color="success" size="sm" className="jumbotron-button_mod" outline
-                          onClick={saveToClipboard("runThisUCInput")}>Clipboard!</Button>
-                </InputGroup>
-
-                <Row>
-                  <Col sm="12" md={{size: 10, offset: 1}}>
-                    {!this.state.showWholeBase && this.calculateNumbersOfUC() > 1 ? (
-                      <span>
-                        <span className="jumbotron-label-text">FOR </span>
-                        <span className="jumbotron-label-number">{this.state.name.toUpperCase()}</span>
-                        <span className="jumbotron-label-text"> SEARCH TERM: </span>
-                      </span>
-                    ) : ''
-                    }
-                    <span className="jumbotron-label-number">{this.calculateNumbersOfUC()}</span>
-                    <span
-                      className="jumbotron-label-text"> USE CASE{this.calculateNumbersOfUC() > 1 ? 'S' : ''} FOUND. </span>
-                    <span className="jumbotron-label-text"> CONSUMER: </span>
-                    <span className="jumbotron-label-number">{calculateNumberOfUCForConsumer(this.state.items)}</span>
-                    <span className="jumbotron-label-text"> PRO: </span>
-                    <span className="jumbotron-label-number">{calculateNumberOfUCForPro(this.state.items)}</span>
-                  </Col>
-                </Row>
-                <Button color="secondary" size="sm" onClick={this.hideThisViewBtn}>✕ Hide this view</Button>
-              </Col>
-            </Row>
-          ) : null
-          }
-        </Jumbotron>
+        <JumbotronComponent name={this.state.name}
+                            ucInfoObj={this.state.ucInfoObj}
+                            detailsSwitchView={this.state.detailsSwitchView}
+                            items={this.state.items}
+                            showWholeBase={this.state.showWholeBase}
+                            createPrintView={this.createPrintView}
+                            calculateNumbersOfUC={this.calculateNumbersOfUC}
+                            hideThisViewBtn={this.hideThisViewBtn}
+        />
         <Container fluid>
           <Form className="form_mod">
             <FormGroup>
