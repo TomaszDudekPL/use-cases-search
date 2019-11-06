@@ -1,6 +1,6 @@
 import React from 'react';
 import {Col, Input, Row} from "reactstrap";
-import {preventActionHandler} from "./helpers/helperFunctions";
+import {preventActionHandler} from "../helpers/helperFunctions";
 
 const SearchInputComponent = ({multipleFuncOnChangeHandler, name}) => {
   return (

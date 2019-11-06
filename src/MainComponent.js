@@ -1,6 +1,6 @@
 import React from 'react';
 import {Col, Container, Row} from 'reactstrap';
-import FormComponent from "./FormComponent";
+import FormComponent from "./Components/FormComponent";
 
 export default class MainComponent extends React.Component {
   render() {

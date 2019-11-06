@@ -6,8 +6,8 @@ import CheckboxesComponent from "./CheckboxesComponent";
 import AllCasesButtonComponent from "./AllCasesButtonComponent";
 import * as firebase from "firebase/app";
 import "firebase/database";
-import firebaseConfig from './firebaseConfig.js'
-import changeBaseEngine from './helpers/changeBaseEngine'
+import firebaseConfig from '../firebaseConfig.js'
+import changeBaseEngine from '../helpers/changeBaseEngine'
 import InstructComponent from './InstructComponent'
 import BadgesComponent from './BadgesComponent'
 import SearchInputComponent from './SearchInputComponent'
@@ -15,14 +15,14 @@ import {
   calculateNumberOfUCForConsumer,
   calculateNumberOfUCForPro,
   prepareMapOfSearchResults
-} from './helpers/helperFunctions'
+} from '../helpers/helperFunctions'
 import {
   removeSpacesFunc,
   returnNotEmptyValues,
   returnUpdatedListOfUseCases_ifOneWord,
   returnUpdatedListOfUseCases_ifMoreThenOneWord,
   returnBaseDividedOnCategories
-} from './helpers/filterEngine_helpers'
+} from '../helpers/filterEngine_helpers'
 
 firebase.initializeApp(firebaseConfig);
 

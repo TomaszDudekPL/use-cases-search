@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Col, Input, InputGroup, Jumbotron, Label, Row} from 'reactstrap';
-import {saveToClipboard, returnRunCommand, calculateNumberOfUCForConsumer, calculateNumberOfUCForPro} from './helpers/helperFunctions'
+import {saveToClipboard, returnRunCommand, calculateNumberOfUCForConsumer, calculateNumberOfUCForPro} from '../helpers/helperFunctions'
 
 export default class JumbotronComponent extends React.Component {
 
