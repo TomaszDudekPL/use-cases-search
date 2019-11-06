@@ -262,9 +262,17 @@ body::-webkit-scrollbar {
 
 .print_view-button_mod {
     display: none;
-    left: 1150px;
-    bottom: 130px;
+    left: 1050px;
+    bottom: 90px;
     position: absolute;
+}
+
+.all-cases-button_mod {
+    display: none;
+    /*left: 1050px;*/
+    /*bottom: 400px;*/
+    position: absolute;
+    /*z-index: 10;*/
 }
 
 .blue-color {

@@ -20,14 +20,40 @@ const createArrayOfKeyWords = (string) => {
 };
 
 const returnNotEmptyValues = (arrOfKeyWords) => {
-  let arr = createArrayOfKeyWords(arrOfKeyWords);
-  arr = arr.filter(function (el) {
-    return el !== null && el !== "";
-  });
-  return arr;
+  if(arrOfKeyWords) {
+    let arr = createArrayOfKeyWords(arrOfKeyWords);
+    arr = arr.filter(function (el) {
+      return el !== null && el !== "";
+    });
+    return arr;
+  }
 };
 
-const returnUpdatedListOfUseCases_ifOneWord = (base, event) => {
+const returnAllUseCasesWithWantedTag = (base, tag) => {
+
+  let ucArr = new Set();
+  let updatedBase = [];
+  const reg = new RegExp(tag);
+
+  // console.log(tag);
+
+  base.forEach(arrOfUC => {
+
+    arrOfUC[1].forEach(uc => {
+
+      if (reg.test(uc)) ucArr.add(uc);
+
+    });
+
+    if (ucArr.size) updatedBase.push([arrOfUC[0], [...ucArr]]);
+    ucArr = new Set();
+  });
+
+  // console.log(updatedBase);
+  return updatedBase;
+};
+
+const returnUpdatedListOfUseCases_ifOneWord = (base, searchValue) => {
 
   let updatedList = [];
   let ucArr = new Set();
@@ -37,7 +63,7 @@ const returnUpdatedListOfUseCases_ifOneWord = (base, event) => {
 
     arrOfUC[1].forEach(uc => {
 
-      wantedValue = getLowerCaseFunc(event.target.value);
+      wantedValue = getLowerCaseFunc(searchValue);
       wantedValue = removeSpacesFunc(wantedValue);
 
       if (getLowerCaseFunc(uc).search(wantedValue) !== -1) ucArr.add(uc);
@@ -92,6 +118,7 @@ export {
   removeSpacesFunc,
   getLowerCaseFunc,
   returnNotEmptyValues,
+  returnAllUseCasesWithWantedTag,
   returnUpdatedListOfUseCases_ifOneWord,
   returnUpdatedListOfUseCases_ifMoreThenOneWord,
   returnBaseDividedOnCategories

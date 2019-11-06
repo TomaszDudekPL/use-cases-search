@@ -33,9 +33,9 @@ export default class SearchResultItems extends React.Component {
             uc = uc.charAt(0).toUpperCase() + uc.substring(1) + '.';
             uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
             return (
-              <Row>
+              <Row key={uc + Math.floor(Math.random() * 1000)}>
                 <Col sm="12" md={{size: 12, offset: 0}}>
-                  <Breadcrumb key={uc + Math.floor(Math.random() * 1000)} className="list-item_mod"
+                  <Breadcrumb className="list-item_mod"
                               onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}>
                     <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
                     <BreadcrumbItems arrWithData={arrWithData}/>

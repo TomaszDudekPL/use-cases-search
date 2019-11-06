@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Form, FormGroup} from 'reactstrap';
+import {Container, Form, FormGroup,  ButtonGroup} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import JumbotronComponent from "./JumbotronComponent";
 import CheckboxesComponent from "./CheckboxesComponent";
@@ -11,6 +11,7 @@ import changeBaseEngine from '../helpers/changeBaseEngine'
 import InstructComponent from './InstructComponent'
 import BadgesComponent from './BadgesComponent'
 import SearchInputComponent from './SearchInputComponent'
+import SearchButtonComponent from './SearchButtonComponent'
 import {
   calculateNumberOfUCForConsumer,
   calculateNumberOfUCForPro,
@@ -21,7 +22,8 @@ import {
   returnNotEmptyValues,
   returnUpdatedListOfUseCases_ifOneWord,
   returnUpdatedListOfUseCases_ifMoreThenOneWord,
-  returnBaseDividedOnCategories
+  returnBaseDividedOnCategories,
+  returnAllUseCasesWithWantedTag
 } from '../helpers/filterEngine_helpers'
 
 firebase.initializeApp(firebaseConfig);
@@ -41,7 +43,9 @@ export default class FormComponent extends React.Component {
     ucInfoObj: null,
     consumer_chkbox: true,
     pro_chkbox: false,
-    detailsSwitchView: false
+    detailsSwitchView: false,
+    readyToProceed: true,
+    hashtag: 'Registration'
   };
 
   componentDidMount() {
@@ -105,28 +109,74 @@ export default class FormComponent extends React.Component {
     })
   };
 
-  filterList = (event) => {
+  proceedSearching = (e) => {
+    e.preventDefault();
+    console.log('proceedSearching');
+
+    if(this.state.name && this.state.base) {
+
+      // divide into consumer, pro, whole, none.
+      let base = returnBaseDividedOnCategories(this.state);
+      base = returnAllUseCasesWithWantedTag(base, this.state.hashtag);
+
+      this.setState(() => {
+          return {
+            readyToProceed: false,
+            base: base
+          }
+        }
+      );
+      // console.log(this.state.base);
+
+      console.log('this.state.name: ', this.state.name);
+
+      this.filterList(base, this.state.name);
+    }
+  };
+
+  resetAllSettings = (e) => {
+    e.preventDefault();
+    console.log('resetAllSettings');
+    this.setState(() => {
+        return {
+          readyToProceed: true
+        }
+      }
+    )
+  };
+
+  filterList = (base, searchValue) => {
+
+    console.log('searchValue:', searchValue);
+    console.log('base: ', base);
 
     // divide into consumer, pro, whole, none.
-    let base = returnBaseDividedOnCategories(this.state);
+    // let base = returnBaseDividedOnCategories(this.state);
 
     // clear previous searching result
     this.clearPreviousView();
 
     // preparing search key words
-    let arrOfKeyWords = returnNotEmptyValues(event.target.value);
+    let arrOfKeyWords = returnNotEmptyValues(searchValue);
 
-    // searching by one word
-    if (!this.state.items.length || arrOfKeyWords.length === 1) {
+    console.log('arrOfKeyWords:', arrOfKeyWords);
+
+    //searching by one word
+    if (!this.state.items.length && arrOfKeyWords.length === 1) {
+
+      console.log('searching with ONE word');
 
       this.setState({
-        name: event.value,
+        // name: event.value,
         showWholeBase: false
       });
 
-      if (event.target.value.length >= 3) {
+      if (searchValue && searchValue.length >= 3) {
 
-        const {updatedList, wantedValue} = returnUpdatedListOfUseCases_ifOneWord(base, event);
+        const {updatedList, wantedValue} = returnUpdatedListOfUseCases_ifOneWord(base, searchValue);
+
+        console.log('wantedValue: ', wantedValue);
+        console.log('updatedList: ', updatedList);
 
         // ready results to be rendered
         this.setState({
@@ -139,7 +189,9 @@ export default class FormComponent extends React.Component {
     }
 
     // searching by two and three words
-    else if (/\s+/.test(event.target.value)) {
+    else if (arrOfKeyWords.length > 1) {
+
+      console.log('searching by two words');
 
       let firstKeyWord = removeSpacesFunc(arrOfKeyWords[0]);
       let secondKeyWord = removeSpacesFunc(arrOfKeyWords[1]);
@@ -150,6 +202,8 @@ export default class FormComponent extends React.Component {
       wantedWords.push(firstKeyWord);
       if (secondKeyWord && secondKeyWord.length > 2) wantedWords.push(secondKeyWord);
       if (thirdKeyWord && thirdKeyWord.length > 2) wantedWords.push(thirdKeyWord);
+
+      console.log("wantedWords:", wantedWords);
 
       if (secondKeyWord || thirdKeyWord) {
 
@@ -164,8 +218,10 @@ export default class FormComponent extends React.Component {
 
     }
 
+    console.log('base: ', this.state.base);
+
     // clear search result view if input is clearing by user
-    if (event.target.value.length < 4) {
+    if (searchValue && searchValue.length < 4) {
       this.setState({
         items: []
       })
@@ -180,7 +236,7 @@ export default class FormComponent extends React.Component {
   };
 
   multipleFuncOnChangeHandler = (event) => {
-    this.filterList(event);
+    // this.filterList(event);
     this.showSearchValue(event);
   };
 
@@ -247,7 +303,8 @@ export default class FormComponent extends React.Component {
                                      handleChangeProChk={this.handleChangeProChk}
                                      numberOfAllUCforPro={this.state.numberOfAllUCforPro}
                 />
-                <InstructComponent text="2. Choose tag of what you are interested in to narrow down the results or just jump into next step."/>
+                <InstructComponent
+                  text="2. Choose tag of what you are interested in to narrow down the results or just jump into next step."/>
 
                 <BadgesComponent/>
 
@@ -259,6 +316,21 @@ export default class FormComponent extends React.Component {
                 multipleFuncOnChangeHandler={this.multipleFuncOnChangeHandler}
                 name={this.state.name}
               />
+
+              <ButtonGroup>
+              <SearchButtonComponent executeFunc={this.proceedSearching}
+                                     readyToProceed={this.state.readyToProceed}
+                                     color="success"
+                                     name={this.state.readyToProceed? "Search Now!": "Search Again."}
+              />
+
+              <SearchButtonComponent executeFunc={this.resetAllSettings}
+                                     readyToProceed={this.state.readyToProceed}
+                                     color="danger"
+                                     name="✕ Reset all settings."
+                                     visibility={this.state.readyToProceed}
+              />
+              </ButtonGroup>
 
               <AllCasesButtonComponent showWholeBase={this.state.showWholeBase}
                                        showAllUseCases={this.showAllUseCases}

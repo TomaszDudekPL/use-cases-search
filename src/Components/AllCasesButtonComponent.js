@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Row} from 'reactstrap';
+import {Button} from 'reactstrap';
 
 export default class AllCasesButtonComponent extends React.Component {
 
@@ -8,15 +8,17 @@ export default class AllCasesButtonComponent extends React.Component {
     return (
 
       !this.props.showWholeBase ?
-        (<Row><Col sm="12" md={{size: 6, offset: 3}}>
-          <Button block color="warning" className="form-button_mod" onClick={this.props.showAllUseCases}>Show All Use
-            Cases</Button>
-        </Col></Row>) :
+        (
+          <Button color="warning" className="form-button_mod all-cases-button_mod" onClick={this.props.showAllUseCases}>
+            Show All Use Cases
+          </Button>
+        ) :
 
-        (<Row><Col sm="12" md={{size: 6, offset: 3}}>
-          <Button block color="danger" className="form-button_mod" onClick={this.props.hideAllUseCases}>✕ Hide All Use
-            Cases</Button>
-        </Col></Row>)
+        (
+          <Button color="danger" className="form-button_mod all-cases-button_mod" onClick={this.props.hideAllUseCases}>
+            ✕ Hide All Use Cases
+          </Button>
+        )
     )
   }
 
