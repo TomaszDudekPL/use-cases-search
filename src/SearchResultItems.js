@@ -1,5 +1,5 @@
 import React from 'react';
-import {Breadcrumb} from 'reactstrap';
+import {Breadcrumb, Col, Row} from 'reactstrap';
 import Highlighter from "react-highlight-words";
 import BreadcrumbItems from "./BreadcrumbItems";
 
@@ -33,20 +33,24 @@ export default class SearchResultItems extends React.Component {
             uc = uc.charAt(0).toUpperCase() + uc.substring(1) + '.';
             uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
             return (
-              <Breadcrumb key={uc + Math.floor(Math.random() * 1000)} className="list-item_mod"
-                          onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}>
-                <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
-                <BreadcrumbItems arrWithData={arrWithData}/>
-                <div className="use_case-text_mod">
-                <Highlighter
-                  className="list-text_mod "
-                  highlightClassName="highlight-text"
-                  searchWords={showWholeBase ? [] : wantedWords}
-                  autoEscape={true}
-                  textToHighlight={uc}
-                />
-                </div>
-              </Breadcrumb>
+              <Row>
+                <Col sm="12" md={{size: 12, offset: 0}}>
+                  <Breadcrumb key={uc + Math.floor(Math.random() * 1000)} className="list-item_mod"
+                              onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}>
+                    <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
+                    <BreadcrumbItems arrWithData={arrWithData}/>
+                    <div className="use_case-text_mod">
+                      <Highlighter
+                        className="list-text_mod "
+                        highlightClassName="highlight-text"
+                        searchWords={showWholeBase ? [] : wantedWords}
+                        autoEscape={true}
+                        textToHighlight={uc}
+                      />
+                    </div>
+                  </Breadcrumb>
+                </Col>
+              </Row>
             )
           }
         )

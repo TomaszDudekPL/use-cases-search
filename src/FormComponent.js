@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Container, Form, FormGroup, Input, Row, Badge} from 'reactstrap';
+import {Container, Form, FormGroup} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import JumbotronComponent from "./JumbotronComponent";
 import CheckboxesComponent from "./CheckboxesComponent";
@@ -8,8 +8,10 @@ import * as firebase from "firebase/app";
 import "firebase/database";
 import firebaseConfig from './firebaseConfig.js'
 import changeBaseEngine from './helpers/changeBaseEngine'
+import InstructComponent from './InstructComponent'
+import BadgesComponent from './BadgesComponent'
+import SearchInputComponent from './SearchInputComponent'
 import {
-  preventActionHandler,
   calculateNumberOfUCForConsumer,
   calculateNumberOfUCForPro,
   prepareMapOfSearchResults
@@ -230,81 +232,45 @@ export default class FormComponent extends React.Component {
                             calculateNumbersOfUC={this.calculateNumbersOfUC}
                             hideThisViewBtn={this.hideThisViewBtn}
         />
+
         <Container fluid>
           <Form className="form_mod">
             <FormGroup>
 
               <div className="instruct-mod">
-                <Row>
-                  <Col>
-                    <h5 className="blue-color font-weight-bolder">1. First choose what kind of UC you are interested
-                      in:</h5>
-                  </Col>
-                </Row>
 
-                <Row className="bottom-margin">
-                  <Col>
-                    <CheckboxesComponent consumer_chkbox={this.state.consumer_chkbox}
-                                         pro_chkbox={this.state.pro_chkbox}
-                                         numberOfAllUCforConsumer={this.state.numberOfAllUCforConsumer}
-                                         handleChangeConsumerChk={this.handleChangeConsumerChk}
-                                         handleChangeProChk={this.handleChangeProChk}
-                                         numberOfAllUCforPro={this.state.numberOfAllUCforPro}
-                    />
-                  </Col>
-                </Row>
+                <InstructComponent text="1. First choose what kind of UC you are interested in:"/>
+                <CheckboxesComponent consumer_chkbox={this.state.consumer_chkbox}
+                                     pro_chkbox={this.state.pro_chkbox}
+                                     numberOfAllUCforConsumer={this.state.numberOfAllUCforConsumer}
+                                     handleChangeConsumerChk={this.handleChangeConsumerChk}
+                                     handleChangeProChk={this.handleChangeProChk}
+                                     numberOfAllUCforPro={this.state.numberOfAllUCforPro}
+                />
+                <InstructComponent text="2. Choose tag of what you are interested in to narrow down the results or just jump into next step."/>
 
-                <Row>
-                  <Col>
-                    <h5 className="blue-color font-weight-bolder">2. Choose tag of what you are interested in to narrow
-                      down the results or just jump into next step.</h5>
-                  </Col>
-                </Row>
+                <BadgesComponent/>
 
-                <Row className="bottom-margin">
-                  <Col>
-                    <h5 className="badge-mod"><Badge color="success">#Registration</Badge></h5>
-                    <h5 className="badge-mod"><Badge color="success">#Chat</Badge></h5>
-                    <h5 className="badge-mod"><Badge color="success">#Posting</Badge></h5>
-                    <h5 className="badge-mod"><Badge color="success">#Inviting</Badge></h5>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col>
-                    <h5 className="blue-color font-weight-bolder bottom-margin">3. Use maximum 3 words to describe what
-                      exactly are you looking for:</h5>
-                  </Col>
-                </Row>
+                <InstructComponent text="3. Use maximum 3 words to describe what exactly are you looking for:"/>
 
               </div>
 
-              <Row>
-                <Col sm="12" md={{size: 12}} className="form-input_mod">
-                  <Input type="search" spellCheck="false" value={this.state.name} name="search" id="useCasesSearch"
-                         bsSize="lg"
-                         placeholder="Narrow down the results..."
-                         onChange={this.multipleFuncOnChangeHandler}
-                         onKeyPress={preventActionHandler}
-                  />
-                </Col>
-              </Row>
+              <SearchInputComponent
+                multipleFuncOnChangeHandler={this.multipleFuncOnChangeHandler}
+                name={this.state.name}
+              />
 
-              <Row>
-                <AllCasesButtonComponent showWholeBase={this.state.showWholeBase}
-                                         showAllUseCases={this.showAllUseCases}
-                                         hideAllUseCases={this.hideAllUseCases}
+              <AllCasesButtonComponent showWholeBase={this.state.showWholeBase}
+                                       showAllUseCases={this.showAllUseCases}
+                                       hideAllUseCases={this.hideAllUseCases}
 
-                />
-              </Row>
-              <Row>
-                <Col sm="12" md={{size: 12, offset: 0}}>
-                  <SearchResultItems items={this.state.items}
-                                     wantedWords={this.state.wantedWords}
-                                     itemClicked={this.onItemClicked}
-                                     showWholeBase={this.state.showWholeBase}>.</SearchResultItems>
-                </Col>
-              </Row>
+              />
+
+              <SearchResultItems items={this.state.items}
+                                 wantedWords={this.state.wantedWords}
+                                 itemClicked={this.onItemClicked}
+                                 showWholeBase={this.state.showWholeBase}>.</SearchResultItems>
+
             </FormGroup>
           </Form>
         </Container>
