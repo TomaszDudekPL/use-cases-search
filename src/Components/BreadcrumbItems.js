@@ -14,7 +14,9 @@ export default class BreadcrumbItems extends React.Component {
 
               <BreadcrumbItem active key={data} className="breadcrumb-link_mod">
                 <a target="_blank" rel="noopener noreferrer"  href={"https://github.com/sgrouples/Frontend-E2E-Tests/blob/master/test/specs/" + arrWithData.join('/') + '.js'}>{data + '.js'}</a>
-              </BreadcrumbItem>: <BreadcrumbItem key={data} className="breadcrumb_mod">{data}</BreadcrumbItem>
+              </BreadcrumbItem>:
+
+              <BreadcrumbItem key={data} className="breadcrumb_mod">{data}</BreadcrumbItem>
           )
         }
       ) : null)

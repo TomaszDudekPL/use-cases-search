@@ -32,23 +32,58 @@ export default class SearchResultItems extends React.Component {
         return arr[1].map(uc => {
             uc = uc.charAt(0).toUpperCase() + uc.substring(1) + '.';
             uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
+
+            console.log('uc: ',uc);
+
+            // cut into chunks: tags, constant keywords, use case name
+          let arrOfAllTagsFindInUseCaseDescription = uc.match(/#\w+\./gm); // #hashtag.
+          arrOfAllTagsFindInUseCaseDescription = ['#Posting', '#Video'];
+          const arrOfAllConstantKeyWordsFindInUseCaseDescription = uc.match(/!\w+\./gmi); // !keyWord.
+          const arrOfUseCaseNameFindInUseCaseDescription = /It: | Step /.test(uc)? uc.match(/It:.+|Step.+/gmi): [uc]; // It: something. OR Step 1of5: something.
+
+          console.log('arrOfUseCaseNameFindInUseCaseDescription: ', arrOfUseCaseNameFindInUseCaseDescription);
+          // highlight: It, Step, searched keywords.
+
+          // highlight in others colors: tags, constant keywords, use case name (whole)
+
             return (
               <Row key={uc + Math.floor(Math.random() * 1000)}>
                 <Col sm="12" md={{size: 12, offset: 0}}>
+
                   <Breadcrumb className="list-item_mod"
-                              onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}>
+                              onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
+                  >
                     <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
+
                     <BreadcrumbItems arrWithData={arrWithData}/>
+
                     <div className="use_case-text_mod">
                       <Highlighter
-                        className="list-text_mod "
+                        className="list-text_mod"
                         highlightClassName="highlight-text"
                         searchWords={showWholeBase ? [] : wantedWords}
                         autoEscape={true}
-                        textToHighlight={uc}
+                        textToHighlight={arrOfUseCaseNameFindInUseCaseDescription[0]}
                       />
                     </div>
+
+                  <div className="item-footer-mod">
+                    <div className="hashtags-title-mod">HASHTAGS:
+                    {arrOfAllTagsFindInUseCaseDescription? arrOfAllTagsFindInUseCaseDescription.map(singleTag => {
+                      return <span className="hashtag-item-mod"> {singleTag} </span>
+                    }): null}
+                    </div>
+
+                    <div className="keywords-title-mod">KEY WORDS:
+                      {arrOfAllTagsFindInUseCaseDescription? arrOfAllTagsFindInUseCaseDescription.map(singleTag => {
+                        return <span className="keyword-item-mod"> {singleTag} </span>
+                      }): null}
+                    </div>
+                  </div>
+
+
                   </Breadcrumb>
+
                 </Col>
               </Row>
             )

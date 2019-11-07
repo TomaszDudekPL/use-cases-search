@@ -279,6 +279,10 @@ body::-webkit-scrollbar {
     color: #0d63af;
 }
 
+.red-color {
+    color: red;
+}
+
 .bottom-margin {
    margin-bottom: 20px;
 }
@@ -289,4 +293,28 @@ body::-webkit-scrollbar {
 
 .jumbotron {
     padding: 0;
+}
+
+.item-footer-mod {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.hashtags-title-mod{
+    color: #f18911;
+}
+
+.keywords-title-mod {
+    color: #f18911;
+}
+
+.hashtag-item-mod, .keyword-item-mod {
+    color: #2fb431;
+}
+
+.use_case-text_mod {
+    margin-top: 15px;
 }
