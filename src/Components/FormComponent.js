@@ -45,7 +45,7 @@ export default class FormComponent extends React.Component {
     pro_chkbox: false,
     detailsSwitchView: false,
     readyToProceed: true,
-    hashtag: 'Registration'
+    hashtag: ''
   };
 
   componentDidMount() {
@@ -275,7 +275,18 @@ export default class FormComponent extends React.Component {
     return calculateNumberOfUCForConsumer(items) + calculateNumberOfUCForPro(items);
   };
 
+  chooseHashTag = (hashTagName) => () => {
+    console.log('chooseHashTag click!');
+    this.setState(()=> {
+      return {
+        hashtag: this.state.hashtag !== hashTagName? hashTagName: ''
+      }
+    })
+  };
+
   render() {
+
+    console.log('hashtag: ', this.state.hashtag);
 
     return (
       <div className="main-label">
@@ -306,7 +317,9 @@ export default class FormComponent extends React.Component {
                 <InstructComponent
                   text="2. Choose tag of what you are interested in to narrow down the results or just jump into next step."/>
 
-                <BadgesComponent/>
+                <BadgesComponent chooseHashTag={this.chooseHashTag}
+                                 state={this.state}
+                />
 
                 <InstructComponent text="3. Use maximum 3 words to describe what exactly are you looking for:"/>
 
