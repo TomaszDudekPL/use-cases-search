@@ -19,17 +19,20 @@ const createArrayOfKeyWords = (string) => {
   return string.split(' ');
 };
 
-const returnNotEmptyValues = (arrOfKeyWords) => {
-  if(arrOfKeyWords) {
-    let arr = createArrayOfKeyWords(arrOfKeyWords);
+const returnNotEmptyValues = (searchValue) => {
+  if(searchValue) {
+    let arr = createArrayOfKeyWords(searchValue);
     arr = arr.filter(function (el) {
       return el !== null && el !== "";
     });
     return arr;
   }
+  return [];
 };
 
 const returnAllUseCasesWithWantedTag = (base, tag) => {
+
+  console.log('returnAllUseCasesWithWantedTag');
 
   let ucArr = new Set();
   let updatedBase = [];
@@ -49,7 +52,7 @@ const returnAllUseCasesWithWantedTag = (base, tag) => {
     ucArr = new Set();
   });
 
-  // console.log(updatedBase);
+  // console.log('updatedBase: ',updatedBase);
   return updatedBase;
 };
 

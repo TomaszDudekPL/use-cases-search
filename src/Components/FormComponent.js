@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Form, FormGroup,  ButtonGroup} from 'reactstrap';
+import {Container, Form, FormGroup, ButtonGroup} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import JumbotronComponent from "./JumbotronComponent";
 import CheckboxesComponent from "./CheckboxesComponent";
@@ -113,10 +113,11 @@ export default class FormComponent extends React.Component {
     e.preventDefault();
     console.log('proceedSearching');
 
-    if(this.state.name && this.state.base) {
+    if ((this.state.name || this.state.hashtag) && this.state.base) {
 
       // divide into consumer, pro, whole, none.
       let base = returnBaseDividedOnCategories(this.state);
+
       base = returnAllUseCasesWithWantedTag(base, this.state.hashtag);
 
       this.setState(() => {
@@ -145,7 +146,7 @@ export default class FormComponent extends React.Component {
     )
   };
 
-  filterList = (base, searchValue) => {
+  filterList = (base, searchValue = '') => {
 
     console.log('searchValue:', searchValue);
     console.log('base: ', base);
@@ -218,7 +219,13 @@ export default class FormComponent extends React.Component {
 
     }
 
-    console.log('base: ', this.state.base);
+    if (!arrOfKeyWords.length && this.state.hashtag) {
+      this.setState(() => {
+        return {
+          items: base
+        }
+      })
+    }
 
     // clear search result view if input is clearing by user
     if (searchValue && searchValue.length < 4) {
@@ -277,9 +284,9 @@ export default class FormComponent extends React.Component {
 
   chooseHashTag = (hashTagName) => () => {
     console.log('chooseHashTag click!');
-    this.setState(()=> {
+    this.setState(() => {
       return {
-        hashtag: this.state.hashtag !== hashTagName? hashTagName: ''
+        hashtag: this.state.hashtag !== hashTagName ? hashTagName : ''
       }
     })
   };
@@ -331,18 +338,18 @@ export default class FormComponent extends React.Component {
               />
 
               <ButtonGroup>
-              <SearchButtonComponent executeFunc={this.proceedSearching}
-                                     readyToProceed={this.state.readyToProceed}
-                                     color="success"
-                                     name={this.state.readyToProceed? "Search Now!": "Search Again."}
-              />
+                <SearchButtonComponent executeFunc={this.proceedSearching}
+                                       readyToProceed={this.state.readyToProceed}
+                                       color="success"
+                                       name={this.state.readyToProceed ? "Search Now!" : "Search Again."}
+                />
 
-              <SearchButtonComponent executeFunc={this.resetAllSettings}
-                                     readyToProceed={this.state.readyToProceed}
-                                     color="danger"
-                                     name="✕ Reset all settings."
-                                     visibility={this.state.readyToProceed}
-              />
+                <SearchButtonComponent executeFunc={this.resetAllSettings}
+                                       readyToProceed={this.state.readyToProceed}
+                                       color="danger"
+                                       name="✕ Reset all settings."
+                                       visibility={this.state.readyToProceed}
+                />
               </ButtonGroup>
 
               <AllCasesButtonComponent showWholeBase={this.state.showWholeBase}
