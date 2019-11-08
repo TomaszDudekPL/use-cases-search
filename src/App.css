@@ -198,6 +198,7 @@ body::-webkit-scrollbar {
 
 .item-number_mod {
     margin-right: 30px;
+    color: #0d63af;
 }
 
 .form-button_mod {
@@ -343,4 +344,9 @@ body::-webkit-scrollbar {
     display: flex;
     justify-content: left;
     width: 100%;
+}
+
+.path-text-mod {
+    margin-right: 20px;
+    color: #0d63af;
 }

@@ -55,6 +55,7 @@ export default class SearchResultItems extends React.Component {
 
                     <div className="breadcrumb-item-mod">
                       <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
+                      <span className="path-text-mod">PATH TO FILE:</span>
                       <BreadcrumbItems arrWithData={arrWithData}/>
                     </div>
 
