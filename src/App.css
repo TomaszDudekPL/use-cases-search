@@ -86,7 +86,11 @@
 }
 
 .input-label_mod {
+    cursor: pointer;
+}
 
+.input-checkbox_mod {
+    cursor: pointer;
 }
 
 .double-consumer, .double-pro {
@@ -156,6 +160,7 @@ body::-webkit-scrollbar {
 .badge-mod {
     padding: 5px;
     display: inline;
+    cursor: pointer;
 }
 
 .list-item_mod {
