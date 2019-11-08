@@ -124,8 +124,8 @@ body::-webkit-scrollbar {
 
 .highlight-describeTag {
     background: none;
-    color: #f18911;
-    font-weight: 500;
+    color: #f1091c;
+    font-weight: 600;
     padding: unset;
     font-style: normal;
 }
@@ -167,7 +167,7 @@ body::-webkit-scrollbar {
     margin-left: 10px;
     color: #0d63af;
     font-weight: 500;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-style: italic;
 }
 
@@ -179,6 +179,11 @@ body::-webkit-scrollbar {
     color: #0d81fe;
     font-weight: 500;
     text-decoration: none;
+    display: inline;
+}
+
+.breadcrumb-link_mod {
+    display: inline;
 }
 
 .breadcrumb-link_mod a {
@@ -328,5 +333,14 @@ body::-webkit-scrollbar {
 }
 
 .use_case-text_mod {
-    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.breadcrumb-item-mod {
+    display: flex;
+    justify-content: left;
+    width: 100%;
 }

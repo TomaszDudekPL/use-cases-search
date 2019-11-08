@@ -42,7 +42,7 @@ export default class SearchResultItems extends React.Component {
             const fullUseCaseName_arr = /It: | Step /.test(uc) ? uc.match(/It:.+|Step.+/gmi) : [uc]; // It: something. OR Step 1of5: something.
             const str = /It: |Step /.test(fullUseCaseName_arr[0]) ? fullUseCaseName_arr[0].replace(/Step [0-9]+of[0-9]+:/, '').replace(/It:/, '') : fullUseCaseName_arr[0];
             // const describeTag_arr = /It: | Step /.test(uc) ? uc.match(/It:|Step [0-9]+of[0-9]+:/) : ['It:'];
-            const describeTag_arr = ['Use Case:'];
+            const describeTag_arr = ['UC:'];
             useCaseNameWithoutTag_arr.push(str);
 
             return (
@@ -52,9 +52,11 @@ export default class SearchResultItems extends React.Component {
                   <Breadcrumb className="list-item_mod"
                               onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
                   >
-                    <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
 
-                    <BreadcrumbItems arrWithData={arrWithData}/>
+                    <div className="breadcrumb-item-mod">
+                      <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
+                      <BreadcrumbItems arrWithData={arrWithData}/>
+                    </div>
 
                     <div className="use_case-text_mod">
                       <Highlighter
