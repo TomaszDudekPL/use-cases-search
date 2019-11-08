@@ -33,18 +33,17 @@ export default class SearchResultItems extends React.Component {
             uc = uc.charAt(0).toUpperCase() + uc.substring(1) + '.';
             uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
 
-            console.log('uc: ',uc);
+            // cut into chunks: hash tags, constant keywords, full use case name (with describe Tag name) and use cases without describe tag name.
+            let allHashTags = uc.match(/#\w+\./gm); // #hashtag1 #hashtag2
+            allHashTags = ['#Posting', '#Video'];
+            const useCaseNameWithoutTag_arr = [];
 
-            // cut into chunks: tags, constant keywords, use case name
-          let arrOfAllTagsFindInUseCaseDescription = uc.match(/#\w+\./gm); // #hashtag.
-          arrOfAllTagsFindInUseCaseDescription = ['#Posting', '#Video'];
-          const arrOfAllConstantKeyWordsFindInUseCaseDescription = uc.match(/!\w+\./gmi); // !keyWord.
-          const arrOfUseCaseNameFindInUseCaseDescription = /It: | Step /.test(uc)? uc.match(/It:.+|Step.+/gmi): [uc]; // It: something. OR Step 1of5: something.
-
-          console.log('arrOfUseCaseNameFindInUseCaseDescription: ', arrOfUseCaseNameFindInUseCaseDescription);
-          // highlight: It, Step, searched keywords.
-
-          // highlight in others colors: tags, constant keywords, use case name (whole)
+            const allKeyWords = uc.match(/!\w+\./gmi); // !keyWord1, !keyWord2.
+            const fullUseCaseName_arr = /It: | Step /.test(uc) ? uc.match(/It:.+|Step.+/gmi) : [uc]; // It: something. OR Step 1of5: something.
+            const str = /It: |Step /.test(fullUseCaseName_arr[0]) ? fullUseCaseName_arr[0].replace(/Step [0-9]+of[0-9]+:/, '').replace(/It:/, '') : fullUseCaseName_arr[0];
+            // const describeTag_arr = /It: | Step /.test(uc) ? uc.match(/It:|Step [0-9]+of[0-9]+:/) : ['It:'];
+            const describeTag_arr = ['Use Case:'];
+            useCaseNameWithoutTag_arr.push(str);
 
             return (
               <Row key={uc + Math.floor(Math.random() * 1000)}>
@@ -60,26 +59,33 @@ export default class SearchResultItems extends React.Component {
                     <div className="use_case-text_mod">
                       <Highlighter
                         className="list-text_mod"
+                        highlightClassName="highlight-describeTag"
+                        searchWords={describeTag_arr}
+                        autoEscape={true}
+                        textToHighlight={describeTag_arr[0]}
+                      />
+                      <Highlighter
+                        className="list-text_mod"
                         highlightClassName="highlight-text"
                         searchWords={showWholeBase ? [] : wantedWords}
                         autoEscape={true}
-                        textToHighlight={arrOfUseCaseNameFindInUseCaseDescription[0]}
+                        textToHighlight={useCaseNameWithoutTag_arr[0]}
                       />
                     </div>
 
-                  <div className="item-footer-mod">
-                    <div className="hashtags-title-mod">HASHTAGS:
-                    {arrOfAllTagsFindInUseCaseDescription? arrOfAllTagsFindInUseCaseDescription.map(singleTag => {
-                      return <span className="hashtag-item-mod"> {singleTag} </span>
-                    }): null}
-                    </div>
+                    <div className="item-footer-mod">
+                      <div className="hashtags-title-mod">HASHTAGS:
+                        {allHashTags ? allHashTags.map(singleTag => {
+                          return <span className="hashtag-item-mod"> {singleTag} </span>
+                        }) : null}
+                      </div>
 
-                    <div className="keywords-title-mod">KEY WORDS:
-                      {arrOfAllTagsFindInUseCaseDescription? arrOfAllTagsFindInUseCaseDescription.map(singleTag => {
-                        return <span className="keyword-item-mod"> {singleTag} </span>
-                      }): null}
+                      <div className="keywords-title-mod">KEY WORDS:
+                        {allHashTags ? allHashTags.map(singleTag => {
+                          return <span className="keyword-item-mod"> {singleTag} </span>
+                        }) : null}
+                      </div>
                     </div>
-                  </div>
 
 
                   </Breadcrumb>

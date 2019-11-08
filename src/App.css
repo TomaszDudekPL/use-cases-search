@@ -122,6 +122,14 @@ body::-webkit-scrollbar {
     padding: unset;
 }
 
+.highlight-describeTag {
+    background: none;
+    color: #f18911;
+    font-weight: 500;
+    padding: unset;
+    font-style: normal;
+}
+
 .jumbotron {
     padding: 10px;
 }
@@ -156,10 +164,11 @@ body::-webkit-scrollbar {
 }
 
 .list-text_mod {
-    margin-left: 40px;
+    margin-left: 10px;
     color: #0d63af;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.05rem;
+    font-style: italic;
 }
 
 .breadcrumb:hover {
@@ -305,14 +314,17 @@ body::-webkit-scrollbar {
 
 .hashtags-title-mod{
     color: #f18911;
+    font-weight: 500;
 }
 
 .keywords-title-mod {
     color: #f18911;
+    font-weight: 500;
 }
 
 .hashtag-item-mod, .keyword-item-mod {
     color: #2fb431;
+    font-weight: 500;
 }
 
 .use_case-text_mod {
