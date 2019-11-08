@@ -355,3 +355,7 @@ body::-webkit-scrollbar {
     margin-right: 20px;
     color: #0d63af;
 }
+
+.collapse-card-mod {
+    width: 100%;
+}

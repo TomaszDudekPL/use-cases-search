@@ -1,15 +1,31 @@
 import React from 'react';
-import {Breadcrumb, Col, Row} from 'reactstrap';
+import {Breadcrumb, Col, Row, Collapse, Card, CardBody} from 'reactstrap';
 import Highlighter from "react-highlight-words";
 import BreadcrumbItems from "./BreadcrumbItems";
 
 export default class SearchResultItems extends React.Component {
+
+  state= {
+    shouldBeOpen: ''
+  };
 
   onItemClickedHandler = (arrWithData, uc) => {
     return {
       arr: arrWithData,
       uc
     }
+  };
+
+  getDataId = (key) => () => {
+    this.setState(()=>{
+      return {
+        shouldBeOpen: key
+      }
+    })
+  };
+
+  shouldBeOpen = (key) => {
+    if(key === this.state.shouldBeOpen) return true;
   };
 
   itemClicked;
@@ -50,7 +66,9 @@ export default class SearchResultItems extends React.Component {
                 <Col sm="12" md={{size: 12, offset: 0}}>
 
                   <Breadcrumb className="list-item_mod"
-                              onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
+                              isOpen={false}
+                              // onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
+                              onClick={this.getDataId(uc)}
                   >
 
                     <div className="breadcrumb-item-mod">
@@ -88,6 +106,30 @@ export default class SearchResultItems extends React.Component {
                           return <span className="keyword-item-mod"> {singleTag} </span>
                         }) : null}
                       </div>
+                    </div>
+
+                    <div className="collapse-card-mod">
+                    <Collapse isOpen={this.shouldBeOpen(uc)}>
+                      <Card>
+                        <CardBody>
+                          <p>Anim pariatur cliche reprehenderit,
+                          enim eiusmod high life accusamus terry richardson ad squid. Nihil
+                          anim keffiyeh helvetica, craft beer labore wes anderson cred
+                          nesciunt sapiente ea proident.
+                          </p>
+                          <p>Anim pariatur cliche reprehenderit,
+                            enim eiusmod high life accusamus terry richardson ad squid. Nihil
+                            anim keffiyeh helvetica, craft beer labore wes anderson cred
+                            nesciunt sapiente ea proident.
+                          </p>
+                          <p>Anim pariatur cliche reprehenderit,
+                            enim eiusmod high life accusamus terry richardson ad squid. Nihil
+                            anim keffiyeh helvetica, craft beer labore wes anderson cred
+                            nesciunt sapiente ea proident.
+                          </p>
+                        </CardBody>
+                      </Card>
+                    </Collapse>
                     </div>
 
 
