@@ -36,7 +36,7 @@ const returnAllUseCasesWithWantedTag = (base, tag) => {
 
   let ucArr = new Set();
   let updatedBase = [];
-  const reg = new RegExp(tag);
+  const reg = new RegExp(`HSH_${tag}`);
 
   // console.log(tag);
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import {Breadcrumb, Col, Row, Collapse, Card, CardBody} from 'reactstrap';
+import {Breadcrumb, Card, CardBody, Col, Collapse, Row} from 'reactstrap';
 import Highlighter from "react-highlight-words";
 import BreadcrumbItems from "./BreadcrumbItems";
 
 export default class SearchResultItems extends React.Component {
 
-  state= {
+  state = {
     shouldBeOpen: ''
   };
 
@@ -17,7 +17,7 @@ export default class SearchResultItems extends React.Component {
   };
 
   getDataId = (key) => () => {
-    this.setState(()=>{
+    this.setState(() => {
       return {
         shouldBeOpen: key
       }
@@ -25,7 +25,7 @@ export default class SearchResultItems extends React.Component {
   };
 
   shouldBeOpen = (key) => {
-    if(key === this.state.shouldBeOpen) return true;
+    if (key === this.state.shouldBeOpen) return true;
   };
 
   itemClicked;
@@ -50,15 +50,24 @@ export default class SearchResultItems extends React.Component {
             uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
 
             // cut into chunks: hash tags, constant keywords, full use case name (with describe Tag name) and use cases without describe tag name.
-            let allHashTags = uc.match(/#\w+\./gm); // #hashtag1 #hashtag2
-            allHashTags = ['#Posting', '#Video'];
-            const useCaseNameWithoutTag_arr = [];
+            let allHashTags = uc.match(/HSH_\w+\./gm); // #hashtag1 #hashtag2
 
-            const allKeyWords = uc.match(/!\w+\./gmi); // !keyWord1, !keyWord2.
-            const fullUseCaseName_arr = /It: | Step /.test(uc) ? uc.match(/It:.+|Step.+/gmi) : [uc]; // It: something. OR Step 1of5: something.
-            const str = /It: |Step /.test(fullUseCaseName_arr[0]) ? fullUseCaseName_arr[0].replace(/Step [0-9]+of[0-9]+:/, '').replace(/It:/, '') : fullUseCaseName_arr[0];
+            allHashTags = allHashTags.map(hashTag => {
+              return hashTag.replace(/HSH_/, '#').replace(/\./, '');
+            });
+
+            let allKeyWords = uc.match(/![a-zA-Z0-9]+-[a-z0-9]+\.|![a-zA-Z0-9]+\./gmi); // !keyWord1, !keyWord2.
+
+            allKeyWords = allKeyWords.map(keyWord => {
+              return keyWord.replace(/\!/, '').replace(/\./, ',');
+            });
+
+            const fullUseCaseName_arr = /It: | Step /.test(uc) ? uc.match(/It:.+|Step.+/gmi) : [uc]; // It: something. OR Step 1of5: something OR Step: something
+            const str = /It: |Step /.test(fullUseCaseName_arr[0]) ? fullUseCaseName_arr[0].replace(/Step [0-9]+of[0-9]+:/, '').replace(/It:/, '').replace(/Step:/, '') : fullUseCaseName_arr[0];
             // const describeTag_arr = /It: | Step /.test(uc) ? uc.match(/It:|Step [0-9]+of[0-9]+:/) : ['It:'];
             const describeTag_arr = ['UC:'];
+
+            const useCaseNameWithoutTag_arr = [];
             useCaseNameWithoutTag_arr.push(str);
 
             return (
@@ -102,36 +111,25 @@ export default class SearchResultItems extends React.Component {
                       </div>
 
                       <div className="keywords-title-mod">KEY WORDS:
-                        {allHashTags ? allHashTags.map(singleTag => {
-                          return <span className="keyword-item-mod"> {singleTag} </span>
+                        {allKeyWords ? allKeyWords.map(singleKeyWord => {
+                          return <span className="keyword-item-mod"> {singleKeyWord} </span>
                         }) : null}
                       </div>
                     </div>
 
                     <div className="collapse-card-mod">
-                    <Collapse isOpen={this.shouldBeOpen(uc)}>
-                      <Card>
-                        <CardBody>
-                          <p>Anim pariatur cliche reprehenderit,
-                          enim eiusmod high life accusamus terry richardson ad squid. Nihil
-                          anim keffiyeh helvetica, craft beer labore wes anderson cred
-                          nesciunt sapiente ea proident.
-                          </p>
-                          <p>Anim pariatur cliche reprehenderit,
-                            enim eiusmod high life accusamus terry richardson ad squid. Nihil
-                            anim keffiyeh helvetica, craft beer labore wes anderson cred
-                            nesciunt sapiente ea proident.
-                          </p>
-                          <p>Anim pariatur cliche reprehenderit,
-                            enim eiusmod high life accusamus terry richardson ad squid. Nihil
-                            anim keffiyeh helvetica, craft beer labore wes anderson cred
-                            nesciunt sapiente ea proident.
-                          </p>
-                        </CardBody>
-                      </Card>
-                    </Collapse>
+                      <Collapse isOpen={this.shouldBeOpen(uc)}>
+                        <Card>
+                          <CardBody>
+                            <p>Anim pariatur cliche reprehenderit,
+                              enim eiusmod high life accusamus terry richardson ad squid. Nihil
+                              anim keffiyeh helvetica, craft beer labore wes anderson cred
+                              nesciunt sapiente ea proident.
+                            </p>
+                          </CardBody>
+                        </Card>
+                      </Collapse>
                     </div>
-
 
                   </Breadcrumb>
 
