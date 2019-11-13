@@ -11,28 +11,28 @@ export const BadgesComponent = ({chooseHashTag, state}) => {
 
         <h5 className="badge-mod">
           <Badge onClick={chooseHashTag('Registration')}
-                 color={hashtag === 'Registration' ? "danger" : "success"}
+                 color={hashtag === 'Registration' ? "success" : "warning"}
           >#Registration
           </Badge>
         </h5>
 
         <h5 className="badge-mod">
           <Badge onClick={chooseHashTag('Chat')}
-                 color={hashtag === 'Chat' ? "danger" : "success"}
+                 color={hashtag === 'Chat' ? "success" : "warning"}
           >#Chat
           </Badge>
         </h5>
 
         <h5 className="badge-mod">
           <Badge onClick={chooseHashTag('Post')}
-                 color={hashtag === 'Post' ? "danger" : "success"}
+                 color={hashtag === 'Post' ? "success" : "warning"}
           >#Post
           </Badge>
         </h5>
 
         <h5 className="badge-mod">
           <Badge onClick={chooseHashTag('Invite')}
-                 color={hashtag === 'Invite' ? "danger" : "success"}
+                 color={hashtag === 'Invite' ? "success" : "warning"}
           >#Invite
           </Badge>
         </h5>

@@ -82,8 +82,6 @@ export default class SearchResultItems extends React.Component {
 
                     <div className="breadcrumb-item-mod">
                       <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
-                      <span className="path-text-mod">PATH TO FILE:</span>
-                      <BreadcrumbItems arrWithData={arrWithData}/>
                     </div>
 
                     <div className="use_case-text_mod">
@@ -121,11 +119,8 @@ export default class SearchResultItems extends React.Component {
                       <Collapse isOpen={this.shouldBeOpen(uc)}>
                         <Card>
                           <CardBody>
-                            <p>Anim pariatur cliche reprehenderit,
-                              enim eiusmod high life accusamus terry richardson ad squid. Nihil
-                              anim keffiyeh helvetica, craft beer labore wes anderson cred
-                              nesciunt sapiente ea proident.
-                            </p>
+                            <span className="path-text-mod">PATH TO FILE:</span>
+                            <BreadcrumbItems arrWithData={arrWithData}/>
                           </CardBody>
                         </Card>
                       </Collapse>

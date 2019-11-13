@@ -121,14 +121,14 @@ body::-webkit-scrollbar {
 
 .highlight-text {
     background: none;
-    color: #2fb431;
+    color: #f18911;
     font-weight: bold;
     padding: unset;
 }
 
 .highlight-describeTag {
     background: none;
-    color: #f1091c;
+    color: #2fb431;
     font-weight: 600;
     padding: unset;
     font-style: normal;
@@ -171,13 +171,13 @@ body::-webkit-scrollbar {
 .list-text_mod {
     margin-left: 10px;
     color: #0d63af;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.1rem;
     font-style: italic;
 }
 
 .breadcrumb:hover {
-    background-color: #dbdee1;
+    outline: 2px solid #2fb431;
 }
 
 .breadcrumb_mod {
@@ -324,18 +324,21 @@ body::-webkit-scrollbar {
 }
 
 .hashtags-title-mod{
-    color: #f18911;
-    font-weight: 500;
+    color: #2fb431;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 .keywords-title-mod {
-    color: #f18911;
-    font-weight: 500;
+    color: #2fb431;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 .hashtag-item-mod, .keyword-item-mod {
-    color: #2fb431;
-    font-weight: 500;
+    color: #0d63af;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 .use_case-text_mod {
@@ -353,9 +356,16 @@ body::-webkit-scrollbar {
 
 .path-text-mod {
     margin-right: 20px;
-    color: #0d63af;
+    color: #2fb431;
 }
 
 .collapse-card-mod {
     width: 100%;
+}
+
+.card {
+    text-align: left;
+    background-color: #e9ecef;
+    border: unset;
+    padding-top: 5px;
 }
