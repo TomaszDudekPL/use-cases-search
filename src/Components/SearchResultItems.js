@@ -64,6 +64,8 @@ export default class SearchResultItems extends React.Component {
     // let itemClicked = this.props.itemClicked;
     let showWholeBase = this.props.showWholeBase;
 
+    // console.log('this.state.arrOfAllSteps: ', this.state.arrOfAllSteps);
+
     return (
       this.props.items ? this.props.items.map(arr => {
         let arrWithData = arr[0].split(/%5C|%2F/);
@@ -101,6 +103,16 @@ export default class SearchResultItems extends React.Component {
               useCaseNameWithoutTag_arr.push(str);
               const arrWithAllSteps = /Step /.test(uc) ? arr[1] : [];
               const randomNum = () => Math.floor(Math.random() * 1000);
+
+              // prepare steps to show in collapse dialog
+              let arrOfAllSteps = this.state.arrOfAllSteps;
+              const arrWithCleanSteps = [];
+              if(0 in arrOfAllSteps) {
+                arrOfAllSteps.forEach(step => {
+                  arrWithCleanSteps.push(step.match(/Step.+/gmi, '')[0]);
+                });
+                arrWithCleanSteps.sort();
+              }
 
               return (
                 <Row key={uc + randomNum()}>
@@ -153,6 +165,13 @@ export default class SearchResultItems extends React.Component {
                             <CardBody>
                               <span className="path-text-mod">PATH TO FILE:</span>
                               <BreadcrumbItems arrWithData={arrWithData}/>
+                              <div>
+                                {
+                                  arrWithCleanSteps? arrWithCleanSteps.map(step=> {
+                                    return <div>{step}</div>
+                                  }): null
+                                }
+                              </div>
                             </CardBody>
                           </Card>
                         </Collapse>
