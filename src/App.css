@@ -168,12 +168,24 @@ body::-webkit-scrollbar {
     font-weight: 600;
 }
 
-.list-text_mod {
+.list-text_mod1 {
     margin-left: 10px;
     color: #0d63af;
     font-weight: 600;
     font-size: 1.1rem;
-    font-style: italic;
+    /*font-style: italic;*/
+}
+
+.list-text_mod2 {
+    margin-left: 10px;
+    color: #0d63af;
+    font-weight: 600;
+    font-size: 1.0rem;
+    /*font-style: italic;*/
+}
+
+.breadcrumb {
+    background-color: #f4f7fa;
 }
 
 .breadcrumb:hover {
@@ -365,7 +377,11 @@ body::-webkit-scrollbar {
 
 .card {
     text-align: left;
-    background-color: #e9ecef;
+    background-color: #f4f7fa;
     border: unset;
     padding-top: 5px;
+}
+
+.use_case-text_mod {
+    margin-top: unset;
 }

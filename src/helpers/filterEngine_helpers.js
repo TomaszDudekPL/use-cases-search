@@ -20,7 +20,7 @@ const createArrayOfKeyWords = (string) => {
 };
 
 const returnNotEmptyValues = (searchValue) => {
-  if(searchValue) {
+  if (searchValue) {
     let arr = createArrayOfKeyWords(searchValue);
     arr = arr.filter(function (el) {
       return el !== null && el !== "";
@@ -32,28 +32,29 @@ const returnNotEmptyValues = (searchValue) => {
 
 const returnAllUseCasesWithWantedTag = (base, tag) => {
 
-  console.log('returnAllUseCasesWithWantedTag');
+  if (tag) {
+    console.log('returnAllUseCasesWithWantedTag');
 
-  let ucArr = new Set();
-  let updatedBase = [];
-  const reg = new RegExp(`HSH_${tag}`);
+    let ucArr = new Set();
+    let updatedBase = [];
+    const reg = new RegExp(`HSH_${tag}`);
 
-  // console.log(tag);
+    base.forEach(arrOfUC => {
 
-  base.forEach(arrOfUC => {
+      arrOfUC[1].forEach(uc => {
 
-    arrOfUC[1].forEach(uc => {
+        if (reg.test(uc)) ucArr.add(uc);
 
-      if (reg.test(uc)) ucArr.add(uc);
+      });
 
+      if (ucArr.size) updatedBase.push([arrOfUC[0], [...ucArr]]);
+      ucArr = new Set();
     });
 
-    if (ucArr.size) updatedBase.push([arrOfUC[0], [...ucArr]]);
-    ucArr = new Set();
-  });
+    return updatedBase;
+  }
 
-  // console.log('updatedBase: ',updatedBase);
-  return updatedBase;
+  return base;
 };
 
 const returnUpdatedListOfUseCases_ifOneWord = (base, searchValue) => {
@@ -74,7 +75,7 @@ const returnUpdatedListOfUseCases_ifOneWord = (base, searchValue) => {
     });
 
     if (ucArr.size) updatedList.push([arrOfUC[0], [...ucArr]]);
-        ucArr = new Set();
+    ucArr = new Set();
   });
 
   return {updatedList, wantedValue};
