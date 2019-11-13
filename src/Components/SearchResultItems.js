@@ -6,7 +6,8 @@ import BreadcrumbItems from "./BreadcrumbItems";
 export default class SearchResultItems extends React.Component {
 
   state = {
-    shouldBeOpen: ''
+    shouldBeOpen: '',
+    isOpen: false
   };
 
   onItemClickedHandler = (arrWithData, uc) => {
@@ -17,15 +18,31 @@ export default class SearchResultItems extends React.Component {
   };
 
   getDataId = (key) => () => {
-    this.setState(() => {
-      return {
-        shouldBeOpen: key
-      }
-    })
+
+    // if item is already opened then remove 'show' class to close item
+    if(key === this.state.shouldBeOpen && this.state.isOpen){
+      let elem = document.querySelector('.list-item_mod .show');
+      elem.classList.remove("show");
+      this.setState(() => {
+        return {
+          shouldBeOpen: '',
+          isOpen: !this.state.isOpen
+        }
+      })
+    } else if(key && !this.state.isOpen) {
+      this.setState(() => {
+        return {
+          shouldBeOpen: key,
+          isOpen: !this.state.isOpen
+        }
+      })
+    }
   };
 
   shouldBeOpen = (key) => {
-    if (key === this.state.shouldBeOpen) return true;
+    if (key === this.state.shouldBeOpen) {
+      return 'show'
+    }
   };
 
   itemClicked;
@@ -124,7 +141,7 @@ export default class SearchResultItems extends React.Component {
                       </div>
 
                       <div className="collapse-card-mod">
-                        <Collapse isOpen={this.shouldBeOpen(uc)}>
+                        <Collapse className={this.shouldBeOpen(uc)}>
                           <Card>
                             <CardBody>
                               <span className="path-text-mod">PATH TO FILE:</span>
