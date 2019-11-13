@@ -216,6 +216,7 @@ body::-webkit-scrollbar {
 .item-number_mod {
     margin-right: 30px;
     color: #0d63af;
+    font-size: 1.0rem;
 }
 
 .form-button_mod {

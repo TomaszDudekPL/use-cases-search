@@ -7,7 +7,8 @@ export default class SearchResultItems extends React.Component {
 
   state = {
     shouldBeOpen: '',
-    isOpen: false
+    isOpen: false,
+    arrOfAllSteps: []
   };
 
   onItemClickedHandler = (arrWithData, uc) => {
@@ -17,25 +18,29 @@ export default class SearchResultItems extends React.Component {
     }
   };
 
-  getDataId = (key) => () => {
+  getDataId = (uc, arrOfAllSteps) => () => {
 
     // if item is already opened then remove 'show' class to close item
-    if(key === this.state.shouldBeOpen && this.state.isOpen){
+    if (this.state.isOpen) {
+
       let elem = document.querySelector('.list-item_mod .show');
-      elem.classList.remove("show");
+      if (elem) elem.classList.remove("show");
+
       this.setState(() => {
         return {
-          shouldBeOpen: '',
-          isOpen: !this.state.isOpen
+          shouldBeOpen: uc !== this.state.shouldBeOpen ? uc : '',
+          isOpen: false
         }
       })
-    } else if(key && !this.state.isOpen) {
+    } else if (uc && !this.state.isOpen) {
+
       this.setState(() => {
         return {
-          shouldBeOpen: key,
-          isOpen: !this.state.isOpen
+          shouldBeOpen: uc,
+          isOpen: !this.state.isOpen,
+          arrOfAllSteps: arrOfAllSteps
         }
-      })
+      });
     }
   };
 
@@ -45,7 +50,7 @@ export default class SearchResultItems extends React.Component {
     }
   };
 
-  itemClicked;
+  // itemClicked;
 
   render() {
     let numberOfAllUC = 0;
@@ -56,7 +61,7 @@ export default class SearchResultItems extends React.Component {
 
     let numberState = numberOfAllUC;
     let wantedWords = this.props.wantedWords;
-    let itemClicked = this.props.itemClicked;
+    // let itemClicked = this.props.itemClicked;
     let showWholeBase = this.props.showWholeBase;
 
     return (
@@ -65,7 +70,7 @@ export default class SearchResultItems extends React.Component {
         return arr[1].map(uc => {
 
             // if use case have '!validation;' key words do not show this use case.
-            if (!(/\!validation;/.test(uc))) {
+            if (!(/!validation;/.test(uc))) {
 
               uc = uc.charAt(0).toUpperCase() + uc.substring(1) + '.';
               uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
@@ -83,7 +88,7 @@ export default class SearchResultItems extends React.Component {
 
               if (allKeyWords) {
                 allKeyWords = allKeyWords.map(keyWord => {
-                  return keyWord.replace(/\!/, '').replace(/\./, ',');
+                  return keyWord.replace(/!/, '').replace(/\./, ',');
                 });
               }
 
@@ -94,15 +99,16 @@ export default class SearchResultItems extends React.Component {
 
               const useCaseNameWithoutTag_arr = [];
               useCaseNameWithoutTag_arr.push(str);
+              const arrWithAllSteps = /Step /.test(uc) ? arr[1] : [];
+              const randomNum = () => Math.floor(Math.random() * 1000);
 
               return (
-                <Row key={uc + Math.floor(Math.random() * 1000)}>
+                <Row key={uc + randomNum()}>
                   <Col sm="12" md={{size: 12, offset: 0}}>
 
                     <Breadcrumb className="list-item_mod"
-                                isOpen={false}
-                      // onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
-                                onClick={this.getDataId(uc)}
+                             // onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
+                                onClick={this.getDataId(uc, arrWithAllSteps)}
                     >
 
                       <div className="breadcrumb-item-mod">
@@ -129,13 +135,14 @@ export default class SearchResultItems extends React.Component {
                       <div className="item-footer-mod">
                         <div className="hashtags-title-mod">HASHTAGS:
                           {allHashTags ? allHashTags.map(singleTag => {
-                            return <span className="hashtag-item-mod"> {singleTag} </span>
+                            return <span key={singleTag + randomNum()} className="hashtag-item-mod"> {singleTag} </span>
                           }) : null}
                         </div>
 
                         <div className="keywords-title-mod">KEY WORDS:
                           {allKeyWords ? allKeyWords.map(singleKeyWord => {
-                            return <span className="keyword-item-mod"> {singleKeyWord} </span>
+                            return <span key={singleKeyWord + randomNum()}
+                                         className="keyword-item-mod"> {singleKeyWord} </span>
                           }) : null}
                         </div>
                       </div>
@@ -157,6 +164,7 @@ export default class SearchResultItems extends React.Component {
                 </Row>
               )
             }
+            return '';
           }
         )
       }) : null
