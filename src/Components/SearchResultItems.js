@@ -18,7 +18,21 @@ export default class SearchResultItems extends React.Component {
     }
   };
 
-  getDataId = (uc, arrOfAllSteps) => () => {
+  getDataId = (uc, arrWithAllSteps, describeTag_arr) => () => {
+
+    // prepare steps to show in collapse dialog
+    const arrWithCleanSteps = [];
+    if (0 in arrWithAllSteps) {
+      arrWithAllSteps.forEach(step => {
+
+        const reg = new RegExp(describeTag_arr);
+        if (reg.test(step)) {
+          step = step.concat('_XOXO');
+        }
+        arrWithCleanSteps.push(step.match(/Step.+/gmi, '')[0]);
+      });
+      arrWithCleanSteps.sort();
+    }
 
     // if item is already opened then remove 'show' class to close item
     if (this.state.isOpen) {
@@ -38,7 +52,7 @@ export default class SearchResultItems extends React.Component {
         return {
           shouldBeOpen: uc,
           isOpen: !this.state.isOpen,
-          arrOfAllSteps: arrOfAllSteps
+          arrOfAllSteps: arrWithCleanSteps
         }
       });
     }
@@ -47,6 +61,14 @@ export default class SearchResultItems extends React.Component {
   shouldBeOpen = (key) => {
     if (key === this.state.shouldBeOpen) {
       return 'show'
+    }
+  };
+
+  showTagIfOpen = (key, describeTag_arr, describeTag_View) => {
+    if (key === this.state.shouldBeOpen) {
+      return describeTag_arr;
+    } else {
+      return describeTag_View;
     }
   };
 
@@ -63,8 +85,6 @@ export default class SearchResultItems extends React.Component {
     let wantedWords = this.props.wantedWords;
     // let itemClicked = this.props.itemClicked;
     let showWholeBase = this.props.showWholeBase;
-
-    // console.log('this.state.arrOfAllSteps: ', this.state.arrOfAllSteps);
 
     return (
       this.props.items ? this.props.items.map(arr => {
@@ -96,31 +116,21 @@ export default class SearchResultItems extends React.Component {
 
               const fullUseCaseName_arr = /It|Step/.test(uc) ? uc.match(/It:.+|Step.+/gmi) : [uc]; // It: something. OR Step 1of5: something OR Step: something
               const str = /It|Step/.test(fullUseCaseName_arr[0]) ? fullUseCaseName_arr[0].replace(/Step [0-9]+of[0-9]+:/, '').replace(/It:/, '').replace(/Step:/, '') : fullUseCaseName_arr[0];
-              // const describeTag_arr = /It: | Step /.test(uc) ? uc.match(/It:|Step [0-9]+of[0-9]+:/) : ['It:'];
-              const describeTag_arr = ['UseCase:'];
+              const describeTag_arr = /It: |Step /.test(uc) ? uc.match(/It:|Step [0-9]+of[0-9]+:/) : ['It:'];
+              const describeTag_View = ['UseCase:'];
 
               const useCaseNameWithoutTag_arr = [];
               useCaseNameWithoutTag_arr.push(str);
               const arrWithAllSteps = /Step /.test(uc) ? arr[1] : [];
               const randomNum = () => Math.floor(Math.random() * 1000);
 
-              // prepare steps to show in collapse dialog
-              let arrOfAllSteps = this.state.arrOfAllSteps;
-              const arrWithCleanSteps = [];
-              if(0 in arrOfAllSteps) {
-                arrOfAllSteps.forEach(step => {
-                  arrWithCleanSteps.push(step.match(/Step.+/gmi, '')[0]);
-                });
-                arrWithCleanSteps.sort();
-              }
-
               return (
                 <Row key={uc + randomNum()}>
                   <Col sm="12" md={{size: 12, offset: 0}}>
 
                     <Breadcrumb className="list-item_mod"
-                             // onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
-                                onClick={this.getDataId(uc, arrWithAllSteps)}
+                      // onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
+                                onClick={this.getDataId(uc, arrWithAllSteps, describeTag_arr[0])}
                     >
 
                       <div className="breadcrumb-item-mod">
@@ -131,9 +141,9 @@ export default class SearchResultItems extends React.Component {
                         <Highlighter
                           className={useCaseNameWithoutTag_arr[0].length > 140 ? "list-text_mod2" : "list-text_mod1"}
                           highlightClassName="highlight-describeTag"
-                          searchWords={describeTag_arr}
+                          searchWords={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)}
                           autoEscape={true}
-                          textToHighlight={describeTag_arr[0]}
+                          textToHighlight={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)[0]}
                         />
                         <Highlighter
                           className={useCaseNameWithoutTag_arr[0].length > 140 ? "list-text_mod2" : "list-text_mod1"}
@@ -165,11 +175,13 @@ export default class SearchResultItems extends React.Component {
                             <CardBody>
                               <span className="path-text-mod">PATH TO FILE:</span>
                               <BreadcrumbItems arrWithData={arrWithData}/>
-                              <div>
+                              <div className="collapse-steps">
                                 {
-                                  arrWithCleanSteps? arrWithCleanSteps.map(step=> {
-                                    return <div>{step}</div>
-                                  }): null
+                                  this.state.arrOfAllSteps ? this.state.arrOfAllSteps.map(step => {
+                                    const reg = new RegExp(/_XOXO/);
+                                    return <div
+                                      className={reg.test(step) ? "collapse-step_mod1" : "collapse-step_mod2"}>{step.replace(/_XOXO/, '')}</div>
+                                  }) : null
                                 }
                               </div>
                             </CardBody>

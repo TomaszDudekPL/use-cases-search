@@ -386,3 +386,17 @@ body::-webkit-scrollbar {
 .use_case-text_mod {
     margin-top: unset;
 }
+
+.collapse-steps {
+    margin-top: 15px;
+    letter-spacing: .5px;
+    font-size: .9rem;
+}
+
+.collapse-step_mod1 {
+    color: #00ae0a;
+}
+
+.collapse-step_mod2 {
+    color: #0d63af;
+}
