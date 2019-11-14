@@ -22,8 +22,8 @@ export default class SearchResultItems extends React.Component {
 
     // close item if is open
     if (this.state.isOpen) {
-        let elem = await document.querySelector('.list-item_mod .show');
-        if (elem)  await elem.classList.remove("show");
+      let elem = await document.querySelector('.list-item_mod .show');
+      if (elem) await elem.classList.remove("show");
     }
 
     // prepare steps to show in collapse dialog
@@ -157,8 +157,14 @@ export default class SearchResultItems extends React.Component {
 
                         <div className="keywords-title-mod">KEY WORDS:
                           {allKeyWords ? allKeyWords.map(singleKeyWord => {
-                            return <span key={singleKeyWord + randomNum()}
-                                         className="keyword-item-mod"> {singleKeyWord} </span>
+                            return <Highlighter
+                              key={singleKeyWord + randomNum()}
+                              className="keyword-item-mod"
+                              highlightClassName="highlight-text"
+                              searchWords={wantedWords}
+                              autoEscape={true}
+                              textToHighlight={singleKeyWord}
+                            />
                           }) : null}
                         </div>
                       </div>
