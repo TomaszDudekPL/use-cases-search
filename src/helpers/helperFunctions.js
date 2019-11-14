@@ -17,12 +17,14 @@ const preventActionHandler = (event) => {
   }
 };
 
-const saveToClipboard = (id) => {
-  return () => {
-    let copyText = document.getElementById(id);
-    copyText.select();
-    document.execCommand("copy");
-  }
+const saveToClipboard = () => {
+ return (e) => {
+   e.stopPropagation();
+    const id = e.target.value;
+      let copyText = document.getElementById(id);
+      copyText.select();
+      document.execCommand("copy");
+  };
 };
 
 const returnRunCommand = (ucInfoObj) => {

@@ -261,6 +261,7 @@ body::-webkit-scrollbar {
 #useCaseInput, #runThisUCInput, #runAllInput {
     outline: none;
     border: none;
+    background-color: #f4f7fa;
 }
 
 #useCasesSearch {
@@ -269,11 +270,11 @@ body::-webkit-scrollbar {
 }
 
 .jumbotron-button_mod {
-    visibility: hidden;
+    /*visibility: hidden;*/
 }
 
 .jumbotron-input_mod:hover + .jumbotron-button_mod, .jumbotron-button_mod:hover {
-    visibility: visible;
+    /*visibility: visible;*/
 }
 
 .jumbotron-label_mod {

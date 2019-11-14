@@ -1,7 +1,8 @@
 import React from 'react';
-import {Breadcrumb, Card, CardBody, Col, Collapse, Row} from 'reactstrap';
+import {Breadcrumb, Button, Card, CardBody, Col, Collapse, Input, InputGroup, Label, Row} from 'reactstrap';
 import Highlighter from "react-highlight-words";
 import BreadcrumbItems from "./BreadcrumbItems";
+import {returnRunCommand, saveToClipboard} from "../helpers/helperFunctions";
 
 export default class SearchResultItems extends React.Component {
 
@@ -189,6 +190,29 @@ export default class SearchResultItems extends React.Component {
                                   }) : null
                                 }
                               </div>
+                              <InputGroup size="sm">
+                                <Label className="jumbotron-label_mod">USE CASE:</Label>
+                                <Input placeholder="" type="text" spellCheck="false"
+                                       value={useCaseNameWithoutTag_arr[0]}
+                                       className="jumbotron-input_mod jumbotron-input-one_mod shadow-none" id="useCaseInput"/>
+                                <Button color="success" size="sm"
+                                        className="jumbotron-button_mod"
+                                        outline
+                                        value={"useCaseInput"}
+                                        onClick={saveToClipboard()}>Clipboard!</Button>
+                              </InputGroup>
+                              <InputGroup size="sm">
+                                <Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>
+                                <Input placeholder="" type="text" spellCheck="false"
+                                       value={returnRunCommand(this.onItemClickedHandler(arrWithData, uc))}
+                                       className="jumbotron-input_mod jumbotron-input-two_mod shadow-none" id="runThisUCInput"/>
+                                <Button color="success"
+                                        size="sm"
+                                        className="jumbotron-button_mod"
+                                        outline
+                                        value={"runThisUCInput"}
+                                        onClick={saveToClipboard()}>Clipboard!</Button>
+                              </InputGroup>
                             </CardBody>
                           </Card>
                         </Collapse>
