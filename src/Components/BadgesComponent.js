@@ -31,6 +31,13 @@ export const BadgesComponent = ({chooseHashTag, state}) => {
         </h5>
 
         <h5 className="badge-mod">
+          <Badge onClick={chooseHashTag('Group-Alerts')}
+                 color={hashtag === 'Group-Alerts' ? "success" : "warning"}
+          >#Group-Alerts
+          </Badge>
+        </h5>
+
+        <h5 className="badge-mod">
           <Badge onClick={chooseHashTag('Invite')}
                  color={hashtag === 'Invite' ? "success" : "warning"}
           >#Invite

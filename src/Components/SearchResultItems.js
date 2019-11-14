@@ -92,7 +92,7 @@ export default class SearchResultItems extends React.Component {
               uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
 
               // cut into chunks: hash tags, constant keywords, full use case name (with describe Tag name) and use cases without describe tag name.
-              let allHashTags = uc.match(/HSH_\w+\./gm); // #hashtag1 #hashtag2
+              let allHashTags = uc.match(/HSH_[a-zA-Z]+.[a-zA-Z]+/gm); // #hashtag1 #hashtag2
 
               if (allHashTags) {
                 allHashTags = allHashTags.map(hashTag => {
