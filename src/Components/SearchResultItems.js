@@ -173,7 +173,7 @@ export default class SearchResultItems extends React.Component {
                         <Collapse className={this.shouldBeOpen(uc)}>
                           <Card>
                             <CardBody>
-                              <span className="path-text-mod">PATH TO FILE:</span>
+                              <span className="collapse-descriptors">PATH TO FILE:</span>
                               <BreadcrumbItems arrWithData={arrWithData}/>
                               <div className="collapse-steps">
                                 {

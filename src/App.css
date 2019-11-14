@@ -367,10 +367,10 @@ body::-webkit-scrollbar {
     width: 100%;
 }
 
-.path-text-mod {
-    margin-right: 20px;
-    color: #2fb431;
-}
+/*.path-text-mod {*/
+/*    margin-right: 20px;*/
+/*    color: #2fb431;*/
+/*}*/
 
 .collapse-card-mod {
     width: 100%;
@@ -381,6 +381,16 @@ body::-webkit-scrollbar {
     background-color: #f4f7fa;
     border: unset;
     padding-top: 5px;
+}
+
+.card-body {
+    padding-bottom: 0;
+}
+
+.collapse-descriptors {
+    color: #f18911;
+    margin-right: 20px;
+    font-size: .9rem;
 }
 
 .use_case-text_mod {
