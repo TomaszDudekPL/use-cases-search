@@ -105,7 +105,8 @@ export default class FormComponent extends React.Component {
 
   clearPreviousView = () => {
     this.setState({
-      ucInfoObj: null
+      ucInfoObj: null,
+      wantedWords: []
     })
   };
 
@@ -127,9 +128,6 @@ export default class FormComponent extends React.Component {
           }
         }
       );
-      // console.log(this.state.base);
-
-      console.log('this.state.name: ', this.state.name);
 
       this.filterList(base, this.state.name);
     }
@@ -151,23 +149,14 @@ export default class FormComponent extends React.Component {
 
   filterList = (base, searchValue = '') => {
 
-    console.log('searchValue:', searchValue);
-    console.log('base: ', base);
-
-    // divide into consumer, pro, whole, none.
-    // let base = returnBaseDividedOnCategories(this.state);
-
     // clear previous searching result
     this.clearPreviousView();
 
     // preparing search key words
     let arrOfKeyWords = returnNotEmptyValues(searchValue);
 
-    console.log('arrOfKeyWords:', arrOfKeyWords);
-
     //searching by one word
-    if (!this.state.items.length && arrOfKeyWords.length === 1) {
-
+    if (arrOfKeyWords.length === 1) {
       console.log('searching with ONE word');
 
       this.setState({
