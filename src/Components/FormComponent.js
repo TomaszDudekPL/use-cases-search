@@ -362,6 +362,7 @@ export default class FormComponent extends React.Component {
               />
 
               <SearchResultItems items={this.state.items}
+                                 base={this.state.base}
                                  wantedWords={this.state.wantedWords}
                                  itemClicked={this.onItemClicked}
                                  showWholeBase={this.state.showWholeBase}>.</SearchResultItems>
