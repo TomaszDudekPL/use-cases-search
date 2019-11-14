@@ -18,7 +18,13 @@ export default class SearchResultItems extends React.Component {
     }
   };
 
-  getDataId = (uc, arrWithAllSteps, describeTag_arr) => () => {
+  onBreadcrumbClickHandler = (uc, arrWithAllSteps, describeTag_arr) => async () => {
+
+    // close item if is open
+    if (this.state.isOpen) {
+        let elem = await document.querySelector('.list-item_mod .show');
+        if (elem)  await elem.classList.remove("show");
+    }
 
     // prepare steps to show in collapse dialog
     const arrWithCleanSteps = [];
@@ -34,28 +40,16 @@ export default class SearchResultItems extends React.Component {
       arrWithCleanSteps.sort();
     }
 
-    // if item is already opened then remove 'show' class to close item
-    if (this.state.isOpen) {
-
-      let elem = document.querySelector('.list-item_mod .show');
-      if (elem) elem.classList.remove("show");
-
-      this.setState(() => {
-        return {
-          shouldBeOpen: uc !== this.state.shouldBeOpen ? uc : '',
-          isOpen: false
-        }
-      })
-    } else if (uc && !this.state.isOpen) {
-
-      this.setState(() => {
-        return {
-          shouldBeOpen: uc,
-          isOpen: !this.state.isOpen,
-          arrOfAllSteps: arrWithCleanSteps
-        }
-      });
-    }
+    // set: if you clicked different item set uc name in state, if the same then clean state (rerender run onBreadcrumbClickHandler once again and .show class will be removed)
+    // set: change isOpen state after each click (rerender) on opposite
+    // set: load all steps of clicked item
+    await this.setState(() => {
+      return {
+        shouldBeOpen: uc !== this.state.shouldBeOpen ? uc : '',
+        isOpen: !this.state.isOpen,
+        arrOfAllSteps: arrWithCleanSteps
+      }
+    });
   };
 
   shouldBeOpen = (key) => {
@@ -130,7 +124,7 @@ export default class SearchResultItems extends React.Component {
 
                     <Breadcrumb className="list-item_mod"
                       // onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
-                                onClick={this.getDataId(uc, arrWithAllSteps, describeTag_arr[0])}
+                                onClick={this.onBreadcrumbClickHandler(uc, arrWithAllSteps, describeTag_arr[0])}
                     >
 
                       <div className="breadcrumb-item-mod">
@@ -180,7 +174,10 @@ export default class SearchResultItems extends React.Component {
                                   this.state.arrOfAllSteps ? this.state.arrOfAllSteps.map(step => {
                                     const reg = new RegExp(/_XOXO/);
                                     return <div
-                                      className={reg.test(step) ? "collapse-step_mod1" : "collapse-step_mod2"}>{step.replace(/_XOXO/, '')}</div>
+                                      key={step}
+                                      className={reg.test(step) ? "collapse-step_mod1" : "collapse-step_mod2"}
+                                    >{step.replace(/_XOXO/, '')}
+                                    </div>
                                   }) : null
                                 }
                               </div>
