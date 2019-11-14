@@ -140,6 +140,9 @@ export default class FormComponent extends React.Component {
     console.log('resetAllSettings');
     this.setState(() => {
         return {
+          items: [],
+          name: '',
+          hashtag: '',
           readyToProceed: true
         }
       }
@@ -341,13 +344,13 @@ export default class FormComponent extends React.Component {
                 <SearchButtonComponent executeFunc={this.proceedSearching}
                                        readyToProceed={this.state.readyToProceed}
                                        color="success"
-                                       name={this.state.readyToProceed ? "Search Now!" : "Search Again."}
+                                       name={this.state.readyToProceed ? "search now!" : "re-search again"}
                 />
 
                 <SearchButtonComponent executeFunc={this.resetAllSettings}
                                        readyToProceed={this.state.readyToProceed}
                                        color="warning"
-                                       name="✕ Reset all settings."
+                                       name="✕ start from the beginning"
                                        visibility={this.state.readyToProceed}
                 />
               </ButtonGroup>

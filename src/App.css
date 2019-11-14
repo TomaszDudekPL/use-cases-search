@@ -220,6 +220,7 @@ body::-webkit-scrollbar {
 }
 
 .form-button_mod {
+    width: 300px;
     padding: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
