@@ -391,7 +391,14 @@ body::-webkit-scrollbar {
 .collapse-descriptors {
     color: #f18911;
     margin-right: 20px;
-    font-size: .9rem;
+}
+
+.descriptor_mod {
+    margin-right: unset;
+}
+
+.github-arrow {
+    margin-left: 20px;
 }
 
 .use_case-text_mod {
@@ -399,9 +406,8 @@ body::-webkit-scrollbar {
 }
 
 .collapse-steps {
-    margin-top: 15px;
+    margin-top: 1px;
     letter-spacing: .5px;
-    font-size: .9rem;
 }
 
 .collapse-step_mod1 {
