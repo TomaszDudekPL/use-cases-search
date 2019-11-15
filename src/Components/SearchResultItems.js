@@ -1,5 +1,5 @@
 import React from 'react';
-import {Breadcrumb, Button, Card, CardBody, Col, Collapse, Input, InputGroup, Label, Row} from 'reactstrap';
+import {Breadcrumb, Button, Card, CardBody, Col, Collapse, Input, InputGroup, Row} from 'reactstrap';
 import Highlighter from "react-highlight-words";
 import BreadcrumbItems from "./BreadcrumbItems";
 import {returnRunCommand, saveToClipboard} from "../helpers/helperFunctions";
@@ -67,8 +67,6 @@ export default class SearchResultItems extends React.Component {
     }
   };
 
-  // itemClicked;
-
   render() {
     let numberOfAllUC = 0;
 
@@ -115,7 +113,7 @@ export default class SearchResultItems extends React.Component {
               const describeTag_View = ['UseCase:'];
 
               const useCaseNameWithoutTag_arr = [];
-              useCaseNameWithoutTag_arr.push(str);
+              useCaseNameWithoutTag_arr.push(str.trim());
               const arrWithAllSteps = /Step /.test(uc) ? arr[1] : [];
               const randomNum = () => Math.floor(Math.random() * 1000);
 
@@ -198,14 +196,15 @@ export default class SearchResultItems extends React.Component {
                                         size="sm"
                                         outline
                                         className="collapse-button_mod"
-                                        value={"useCaseInput"}
+                                        value={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}
                                         onClick={saveToClipboard()}>Copy Use Case name</Button>
                                 <Input placeholder=""
                                        type="text"
                                        spellCheck="false"
                                        value={useCaseNameWithoutTag_arr[0]}
+                                       readOnly
                                        className="collapse-input_mod collapse-input-one_mod shadow-none"
-                                       id="useCaseInput"/>
+                                       id={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}/>
 
                               </InputGroup>
 
@@ -215,14 +214,15 @@ export default class SearchResultItems extends React.Component {
                                         size="sm"
                                         outline
                                         className="collapse-button_mod"
-                                        value={"runThisUCInput"}
+                                        value={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}
                                         onClick={saveToClipboard()}>Copy run command</Button>
                                 <Input placeholder=""
                                        type="text"
                                        spellCheck="false"
                                        value={returnRunCommand(this.onItemClickedHandler(arrWithData, uc))}
+                                       readOnly
                                        className="collapse-input_mod collapse-input-two_mod shadow-none"
-                                       id="runThisUCInput"/>
+                                       id={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}/>
 
                               </InputGroup>
                               </div>

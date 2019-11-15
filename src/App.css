@@ -234,7 +234,17 @@ body::-webkit-scrollbar {
 
 .collapse-input_mod {
     border-color: white;
-    /*text-align: center;*/
+    outline: none;
+    border: none;
+    user-select: none;
+}
+
+::selection {
+    color: #2fb431;
+}
+
+.form-control[readonly] {
+    background-color: #f4f7fa;
 }
 
 .collapse-input-one_mod {
@@ -271,11 +281,11 @@ body::-webkit-scrollbar {
     font-weight: lighter;
 }
 
-#useCaseInput, #runThisUCInput, #runAllInput {
-    outline: none;
-    border: none;
-    background-color: #f4f7fa;
-}
+/*#useCaseInput, #runThisUCInput, #runAllInput {*/
+/*    outline: none;*/
+/*    border: none;*/
+/*    background-color: #f4f7fa;*/
+/*}*/
 
 #useCasesSearch {
     color: #2fb431;
@@ -412,7 +422,7 @@ body::-webkit-scrollbar {
 }
 
 .collapse-steps {
-    margin-top: 1px;
+    margin-top: 15px;
     letter-spacing: .5px;
 }
 
