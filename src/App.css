@@ -240,7 +240,7 @@ body::-webkit-scrollbar {
 }
 
 ::selection {
-    color: #2fb431;
+    color: #ff1500;
 }
 
 .form-control[readonly] {
@@ -405,7 +405,7 @@ body::-webkit-scrollbar {
 }
 
 .collapse-descriptors {
-    color: #f18911;
+    color: #ff1500;
     margin-right: 20px;
 }
 
