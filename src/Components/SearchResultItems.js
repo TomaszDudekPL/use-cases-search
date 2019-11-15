@@ -190,29 +190,43 @@ export default class SearchResultItems extends React.Component {
                                   }) : null
                                 }
                               </div>
+
+                              <div className="collapse-inputGroup_mod">
                               <InputGroup size="sm">
-                                <Label className="jumbotron-label_mod">USE CASE:</Label>
-                                <Input placeholder="" type="text" spellCheck="false"
-                                       value={useCaseNameWithoutTag_arr[0]}
-                                       className="jumbotron-input_mod jumbotron-input-one_mod shadow-none" id="useCaseInput"/>
-                                <Button color="success" size="sm"
-                                        className="jumbotron-button_mod"
-                                        outline
-                                        value={"useCaseInput"}
-                                        onClick={saveToClipboard()}>Clipboard!</Button>
-                              </InputGroup>
-                              <InputGroup size="sm">
-                                <Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>
-                                <Input placeholder="" type="text" spellCheck="false"
-                                       value={returnRunCommand(this.onItemClickedHandler(arrWithData, uc))}
-                                       className="jumbotron-input_mod jumbotron-input-two_mod shadow-none" id="runThisUCInput"/>
+                                {/*<Label className="jumbotron-label_mod">USE CASE:</Label>*/}
                                 <Button color="success"
                                         size="sm"
-                                        className="jumbotron-button_mod"
                                         outline
-                                        value={"runThisUCInput"}
-                                        onClick={saveToClipboard()}>Clipboard!</Button>
+                                        className="collapse-button_mod"
+                                        value={"useCaseInput"}
+                                        onClick={saveToClipboard()}>Copy Use Case name</Button>
+                                <Input placeholder=""
+                                       type="text"
+                                       spellCheck="false"
+                                       value={useCaseNameWithoutTag_arr[0]}
+                                       className="collapse-input_mod collapse-input-one_mod shadow-none"
+                                       id="useCaseInput"/>
+
                               </InputGroup>
+
+                              <InputGroup size="sm">
+                                {/*<Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>*/}
+                                <Button color="success"
+                                        size="sm"
+                                        outline
+                                        className="collapse-button_mod"
+                                        value={"runThisUCInput"}
+                                        onClick={saveToClipboard()}>Copy run command</Button>
+                                <Input placeholder=""
+                                       type="text"
+                                       spellCheck="false"
+                                       value={returnRunCommand(this.onItemClickedHandler(arrWithData, uc))}
+                                       className="collapse-input_mod collapse-input-two_mod shadow-none"
+                                       id="runThisUCInput"/>
+
+                              </InputGroup>
+                              </div>
+
                             </CardBody>
                           </Card>
                         </Collapse>

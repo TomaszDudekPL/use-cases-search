@@ -232,30 +232,43 @@ body::-webkit-scrollbar {
     font-style: italic;
 }
 
-.jumbotron-input_mod {
+.collapse-input_mod {
     border-color: white;
-    text-align: center;
+    /*text-align: center;*/
 }
 
-.jumbotron-input-one_mod {
-    text-align: right;
+.collapse-input-one_mod {
+    text-align: left;
     font-weight: bolder;
-    color: #2fb431;
+    color: #0d63af;
 }
 
-.jumbotron-input-two_mod {
-    text-align: right;
+.collapse-input-two_mod {
+    text-align: left;
     font-weight: bolder;
-    color: #2fb431;
+    color: #0d63af;
 }
 
 .input-group {
     font-size: .5rem;
     outline: #f18911;
+    margin-top: 5px;
 }
 
-.jumbotron-button_mod {
+.collapse-inputGroup_mod {
+    margin-top: 30px;
+}
+
+.collapse-button_mod {
     border-radius: 5px;
+    margin-right: 10px;
+    font-weight: bolder;
+    width: 170px;
+}
+
+.collapse-button_mod:hover {
+    background-color: #277d29;
+    font-weight: lighter;
 }
 
 #useCaseInput, #runThisUCInput, #runAllInput {
@@ -267,14 +280,6 @@ body::-webkit-scrollbar {
 #useCasesSearch {
     color: #2fb431;
     font-weight: bolder;
-}
-
-.jumbotron-button_mod {
-    /*visibility: hidden;*/
-}
-
-.jumbotron-input_mod:hover + .jumbotron-button_mod, .jumbotron-button_mod:hover {
-    /*visibility: visible;*/
 }
 
 .jumbotron-label_mod {

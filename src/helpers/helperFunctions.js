@@ -45,7 +45,7 @@ const returnRunCommand = (ucInfoObj) => {
     }
 
     let urlToFile = ucInfoObj.arr.join('/').concat('.js');
-    return `node launcher.js -p 1 -r 1 -e ${env} -d ${urlToFile}`;
+    return `node launcher.js --env ${env} -d ${urlToFile}`;
   }
 };
 
