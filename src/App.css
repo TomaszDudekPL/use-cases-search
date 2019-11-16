@@ -205,19 +205,18 @@ body::-webkit-scrollbar {
 
 .jenkins-link_mod {
     color: #0d63af;
-    text-decoration: none;
     margin-left: 50px;
 }
 
 .environment_mod {
     color: #0d63af;
-    text-decoration: none;
     margin-left: 125px;
 }
 
 .jenkins-link_mod:hover, .github-link_mod:hover {
     color: #ff1500;
     font-weight: bolder;
+    text-decoration: none;
 }
 
 .item-number_mod {
