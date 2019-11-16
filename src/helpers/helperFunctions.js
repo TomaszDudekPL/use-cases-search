@@ -49,6 +49,49 @@ const returnRunCommand = (ucInfoObj) => {
   }
 };
 
+const returnLinkToJenkinsJob = (data, arr) => {
+
+  const jenkinsLink = 'https://10.32.9.218:7070/view/Selenium%20All/';
+
+  if (arr[0] === 'CONSUMER') {
+
+    switch (data) {
+      case 'CHAT':
+        return `${jenkinsLink}job/Selenium%20CON%20CHAT/`;
+      case 'GROUP_ALERTS':
+        return `${jenkinsLink}job/Selenium%20CON%20GROUPALERTS/`;
+      case 'GROUPS':
+        return `${jenkinsLink}job/Selenium%20CON%20GROUPS/`;
+      case 'OTHERS':
+        return `${jenkinsLink}job/Selenium%20CON%20OTHERS/`;
+      case 'PAGES':
+        return `${jenkinsLink}job/Selenium%20CON%20PAGES/`;
+      case 'POLLS':
+        return `${jenkinsLink}job/Selenium%20CON%20POLLS/`;
+      case 'REGISTRATION_CASES':
+        return `${jenkinsLink}job/Selenium%20CON%20REGISTRATIONCASES/`;
+      case 'REPORT':
+        return `${jenkinsLink}job/Selenium%20CON%20REPORT/`;
+      case 'REPOST_RESHARING':
+        return `${jenkinsLink}job/Selenium%20CON%20REPOST/`;
+      case 'SETTINGS':
+        return `${jenkinsLink}job/Selenium%20CON%20SETTINGS/`;
+      case 'SMART_SEARCH':
+        return `${jenkinsLink}job/Selenium%20CON%20SMARTSEARCH/`;
+      case 'SMOKE_TESTS':
+        return `${jenkinsLink}job/Selenium%20CON%20SMOKE%20TESTS/`;
+      case 'STORAGE':
+        return `${jenkinsLink}`;
+      default:
+        return `${jenkinsLink}`;
+    }
+
+  } else {
+    return `${jenkinsLink}`;
+  }
+
+};
+
 const calculateNumberOfUCForConsumer = (items) => {
   let numberOfUCForConsumer = 0;
   items.forEach(arr => {
@@ -69,6 +112,7 @@ export {
   preventActionHandler,
   saveToClipboard,
   returnRunCommand,
+  returnLinkToJenkinsJob,
   calculateNumberOfUCForConsumer,
   calculateNumberOfUCForPro,
   prepareMapOfSearchResults

@@ -172,8 +172,7 @@ export default class SearchResultItems extends React.Component {
                         <Collapse className={this.shouldBeOpen(uc)}>
                           <Card>
                             <CardBody>
-                              <span className="collapse-descriptors">FOLDER:</span>
-                              <BreadcrumbItems arrWithData={arrWithData}/><span className="collapse-descriptors github-arrow">{'⟵ GITHUB LINK'}</span>
+                              <BreadcrumbItems arrWithData={arrWithData}/>
                               <div className="collapse-steps">
                                 <span className={`collapse-descriptors ${!this.state.arrOfAllSteps.length? 'descriptor_mod': ''}`}>
                                   {this.state.arrOfAllSteps.length? 'STEPS OF SCENARIO:': ''}</span>

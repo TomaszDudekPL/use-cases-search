@@ -192,24 +192,31 @@ body::-webkit-scrollbar {
     outline: 2px solid #2fb431;
 }
 
-.breadcrumb_mod {
-    color: #0d81fe;
-    font-weight: 500;
-    text-decoration: none;
-    display: inline;
-}
-
 .breadcrumb-link_mod {
-    display: inline;
-}
-
-.breadcrumb-link_mod a {
-    color: #0d81fe;
-    text-decoration: none;
-}
-
-.breadcrumb-link_mod a:hover {
+    display: block;
     color: #2fb431;
+}
+
+.github-link_mod {
+    color: #0d63af;
+    text-decoration: none;
+    margin-left: 56px;
+}
+
+.jenkins-link_mod {
+    color: #0d63af;
+    text-decoration: none;
+    margin-left: 50px;
+}
+
+.environment_mod {
+    color: #0d63af;
+    text-decoration: none;
+    margin-left: 125px;
+}
+
+.jenkins-link_mod:hover, .github-link_mod:hover {
+    color: #ff1500;
     font-weight: bolder;
 }
 
@@ -384,11 +391,6 @@ body::-webkit-scrollbar {
     width: 100%;
 }
 
-/*.path-text-mod {*/
-/*    margin-right: 20px;*/
-/*    color: #2fb431;*/
-/*}*/
-
 .collapse-card-mod {
     width: 100%;
 }
@@ -405,7 +407,7 @@ body::-webkit-scrollbar {
 }
 
 .collapse-descriptors {
-    color: #ff1500;
+    color: #2fb431;
     margin-right: 20px;
 }
 
