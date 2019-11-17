@@ -1,7 +1,7 @@
 import React from 'react';
 import {Badge, Col, Row} from "reactstrap";
 
-export const KeyWordsComponent = ({keyWords, returnChosenKeyWords}) => {
+export const KeyWordsComponent = ({keyWords, returnChosenKeyWords, chosenKeyWords = []}) => {
 
   const collectAllKeyWords = (e) => {
     let keyWord = e.target.innerText;
@@ -16,8 +16,7 @@ export const KeyWordsComponent = ({keyWords, returnChosenKeyWords}) => {
             return (
               <h5 className="badge-mod" key={keyWord}>
                 <Badge onClick={collectAllKeyWords}
-                       className="keywords-badge_mod"
-                       value={keyWord}
+                       className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
                 >{keyWord}
                 </Badge>
               </h5>

@@ -435,8 +435,14 @@ body::-webkit-scrollbar {
     color: #0d63af;
 }
 
-.keywords-badge_mod {
+.keywords-badge_mod1 {
     background-color: #ffe6a3;
     margin-top: 9px;
-    color: #0d63af;
+    color: black;
+}
+
+.keywords-badge_mod2 {
+    background-color: #61ac69;
+    margin-top: 9px;
+    color: #fff
 }

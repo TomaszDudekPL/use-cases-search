@@ -31,7 +31,7 @@ firebase.initializeApp(firebaseConfig);
 
 export default class FormComponent extends React.Component {
 
-  collection = [];
+  collection = new Set();
 
   state = {
     initialState: null,
@@ -115,13 +115,14 @@ export default class FormComponent extends React.Component {
 
   resetAllSettings = (e) => {
     e.preventDefault();
-    console.log('resetAllSettings');
     this.setState(() => {
         return {
           items: [],
           name: '',
           hashtag: '',
-          readyToProceed: true
+          readyToProceed: true,
+          chosenKeyWords: [],
+          keyWords: []
         }
       }
     )
@@ -284,25 +285,34 @@ export default class FormComponent extends React.Component {
   };
 
   chooseHashTag = (hashTagName) => () => {
-    this.collection = [];
-    let base = returnBaseDividedOnCategories(this.state);
-    base = returnAllUseCasesWithWantedTag(base, hashTagName);
-    let keyWords = returnAllKeyWords(base);
 
-    this.setState(() => {
-      return {
-        hashtag: this.state.hashtag !== hashTagName ? hashTagName : '',
-        keyWords,
-        hashtagBase: base
-      }
-    })
+    if (this.state.base) {
+      this.collection = new Set();
+
+      let base = returnBaseDividedOnCategories(this.state);
+      base = returnAllUseCasesWithWantedTag(base, hashTagName);
+      let keyWords = returnAllKeyWords(base);
+
+      this.setState(() => {
+        return {
+          hashtag: this.state.hashtag !== hashTagName ? hashTagName : '',
+          hashtagBase: base,
+          chosenKeyWords: [],
+          keyWords,
+        }
+      })
+    }
   };
 
   returnChosenKeyWords = (keyWord) => {
-    this.collection.push(keyWord);
+    if (this.collection.has(keyWord)) {
+      this.collection.delete(keyWord)
+    } else {
+      this.collection.add(keyWord);
+    }
     this.setState(() => {
       return {
-        chosenKeyWords: this.collection
+        chosenKeyWords: [...this.collection]
       }
     })
   };
@@ -345,8 +355,11 @@ export default class FormComponent extends React.Component {
 
                 {/*<InstructComponent text="3. Use maximum 3 words to describe what exactly are you looking for:"/>*/}
 
-                <KeyWordsComponent returnChosenKeyWords={this.returnChosenKeyWords}
-                  keyWords={this.state.keyWords}/>
+                <KeyWordsComponent keyWords={this.state.keyWords}
+                                   returnChosenKeyWords={this.returnChosenKeyWords}
+                                   chosenKeyWords={this.state.chosenKeyWords}
+
+                />
 
               </div>
 

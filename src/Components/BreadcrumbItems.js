@@ -40,7 +40,7 @@ export default class BreadcrumbItems extends React.Component {
                    onClick={this.stopPropagation}
                    href={"https://github.com/sgrouples/Frontend-E2E-Tests/blob/master/test/specs/" + this.state.arrWithData.join('/') + '.js'}>{data + '.js'}</a>
               </div> : (index === 0) ?
-                <div className="breadcrumb-link_mod">ENV:<span className="environment_mod">{data}</span></div> : null
+                <div key={data} className="breadcrumb-link_mod">ENV:<span className="environment_mod">{data}</span></div> : null
 
           )
         }
