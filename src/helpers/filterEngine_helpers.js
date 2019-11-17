@@ -57,6 +57,26 @@ const returnAllUseCasesWithWantedTag = (base, tag) => {
   return base;
 };
 
+const returnAllKeyWords = (base) => {
+
+  // base - array of nested arrays. Each of them has arr of UCs on second position
+  let keyWords = new Set();
+
+  if (base.length) {
+    base.forEach((nestedArr) => {
+      nestedArr[1].forEach((useCase) => {
+        const arrOfKeyWords = useCase.match(/![a-zA-Z0-9]+-[a-z0-9]+;|![a-zA-Z0-9]+;/gmi);
+        arrOfKeyWords.forEach((keyWord) => {
+          keyWord = keyWord.replace(/!/, '').replace(/;/, '');
+          keyWords.add(keyWord);
+        })
+      })
+    });
+
+    return [...keyWords]
+  }
+};
+
 const returnUpdatedListOfUseCases_ifOneWord = (base, searchValue) => {
 
   let updatedList = [];
@@ -123,6 +143,7 @@ export {
   getLowerCaseFunc,
   returnNotEmptyValues,
   returnAllUseCasesWithWantedTag,
+  returnAllKeyWords,
   returnUpdatedListOfUseCases_ifOneWord,
   returnUpdatedListOfUseCases_ifMoreThenOneWord,
   returnBaseDividedOnCategories

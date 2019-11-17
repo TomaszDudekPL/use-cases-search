@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Form, FormGroup, ButtonGroup} from 'reactstrap';
+import {ButtonGroup, Container, Form, FormGroup} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import JumbotronComponent from "./JumbotronComponent";
 import CheckboxesComponent from "./CheckboxesComponent";
@@ -8,7 +8,6 @@ import * as firebase from "firebase/app";
 import "firebase/database";
 import firebaseConfig from '../firebaseConfig.js'
 import changeBaseEngine from '../helpers/changeBaseEngine'
-import InstructComponent from './InstructComponent'
 import BadgesComponent from './BadgesComponent'
 import SearchInputComponent from './SearchInputComponent'
 import SearchButtonComponent from './SearchButtonComponent'
@@ -19,11 +18,12 @@ import {
 } from '../helpers/helperFunctions'
 import {
   removeSpacesFunc,
-  returnNotEmptyValues,
-  returnUpdatedListOfUseCases_ifOneWord,
-  returnUpdatedListOfUseCases_ifMoreThenOneWord,
+  returnAllKeyWords,
+  returnAllUseCasesWithWantedTag,
   returnBaseDividedOnCategories,
-  returnAllUseCasesWithWantedTag
+  returnNotEmptyValues,
+  returnUpdatedListOfUseCases_ifMoreThenOneWord,
+  returnUpdatedListOfUseCases_ifOneWord
 } from '../helpers/filterEngine_helpers'
 
 firebase.initializeApp(firebaseConfig);
@@ -110,29 +110,6 @@ export default class FormComponent extends React.Component {
     })
   };
 
-  proceedSearching = (e) => {
-    e.preventDefault();
-    console.log('proceedSearching');
-
-    if ((this.state.name || this.state.hashtag) && this.state.base) {
-
-      // divide into consumer, pro, whole, none.
-      let base = returnBaseDividedOnCategories(this.state);
-
-      base = returnAllUseCasesWithWantedTag(base, this.state.hashtag);
-
-      this.setState(() => {
-          return {
-            readyToProceed: false,
-            base: base
-          }
-        }
-      );
-
-      this.filterList(base, this.state.name);
-    }
-  };
-
   resetAllSettings = (e) => {
     e.preventDefault();
     console.log('resetAllSettings');
@@ -145,6 +122,35 @@ export default class FormComponent extends React.Component {
         }
       }
     )
+  };
+
+  proceedSearching = (e) => {
+    let base;
+    e.preventDefault();
+    console.log('proceedSearching');
+
+    if ((this.state.name || this.state.hashtag) && this.state.base) {
+
+      if (!this.state.hashtagBase) {
+
+        // divide into consumer, pro, whole, none.
+        base = returnBaseDividedOnCategories(this.state);
+        base = returnAllUseCasesWithWantedTag(base, this.state.hashtag);
+
+      } else {
+        base = this.state.hashtagBase;
+      }
+
+      this.setState(() => {
+          return {
+            readyToProceed: false,
+            base
+          }
+        }
+      );
+
+      this.filterList(base, this.state.name);
+    }
   };
 
   filterList = (base, searchValue = '') => {
@@ -275,17 +281,22 @@ export default class FormComponent extends React.Component {
   };
 
   chooseHashTag = (hashTagName) => () => {
-    console.log('chooseHashTag click!');
+    let base = returnBaseDividedOnCategories(this.state);
+    base = returnAllUseCasesWithWantedTag(base, hashTagName);
+    let keyWords = returnAllKeyWords(base);
+
     this.setState(() => {
       return {
-        hashtag: this.state.hashtag !== hashTagName ? hashTagName : ''
+        hashtag: this.state.hashtag !== hashTagName ? hashTagName : '',
+        keyWords,
+        hashtagBase: base
       }
     })
   };
 
   render() {
 
-    console.log('hashtag: ', this.state.hashtag);
+    console.log('this.state.keyWords: ', this.state.keyWords);
 
     return (
       <div className="main-label">
@@ -305,7 +316,7 @@ export default class FormComponent extends React.Component {
 
               <div className="instruct-mod">
 
-                <InstructComponent text="1. First choose what kind of UC you are interested in:"/>
+                {/*<InstructComponent text="ENVIRONMENT:"/>*/}
                 <CheckboxesComponent consumer_chkbox={this.state.consumer_chkbox}
                                      pro_chkbox={this.state.pro_chkbox}
                                      numberOfAllUCforConsumer={this.state.numberOfAllUCforConsumer}
@@ -313,14 +324,13 @@ export default class FormComponent extends React.Component {
                                      handleChangeProChk={this.handleChangeProChk}
                                      numberOfAllUCforPro={this.state.numberOfAllUCforPro}
                 />
-                <InstructComponent
-                  text="2. Choose tag of what you are interested in to narrow down the results or just jump into next step."/>
+                {/*<InstructComponent text="HASHTAGS:"/>*/}
 
                 <BadgesComponent chooseHashTag={this.chooseHashTag}
                                  state={this.state}
                 />
 
-                <InstructComponent text="3. Use maximum 3 words to describe what exactly are you looking for:"/>
+                {/*<InstructComponent text="3. Use maximum 3 words to describe what exactly are you looking for:"/>*/}
 
               </div>
 
