@@ -9,6 +9,7 @@ import "firebase/database";
 import firebaseConfig from '../firebaseConfig.js'
 import changeBaseEngine from '../helpers/changeBaseEngine'
 import BadgesComponent from './BadgesComponent'
+import KeyWordsComponent from './KeyWordsComponent'
 import SearchInputComponent from './SearchInputComponent'
 import SearchButtonComponent from './SearchButtonComponent'
 import {
@@ -29,6 +30,8 @@ import {
 firebase.initializeApp(firebaseConfig);
 
 export default class FormComponent extends React.Component {
+
+  collection = [];
 
   state = {
     initialState: null,
@@ -281,6 +284,7 @@ export default class FormComponent extends React.Component {
   };
 
   chooseHashTag = (hashTagName) => () => {
+    this.collection = [];
     let base = returnBaseDividedOnCategories(this.state);
     base = returnAllUseCasesWithWantedTag(base, hashTagName);
     let keyWords = returnAllKeyWords(base);
@@ -294,9 +298,18 @@ export default class FormComponent extends React.Component {
     })
   };
 
+  returnChosenKeyWords = (keyWord) => {
+    this.collection.push(keyWord);
+    this.setState(() => {
+      return {
+        chosenKeyWords: this.collection
+      }
+    })
+  };
+
   render() {
 
-    console.log('this.state.keyWords: ', this.state.keyWords);
+    console.log('typeof chosenKeyWords: ', typeof this.state.chosenKeyWords, ' value: ', this.state.chosenKeyWords);
 
     return (
       <div className="main-label">
@@ -331,6 +344,9 @@ export default class FormComponent extends React.Component {
                 />
 
                 {/*<InstructComponent text="3. Use maximum 3 words to describe what exactly are you looking for:"/>*/}
+
+                <KeyWordsComponent returnChosenKeyWords={this.returnChosenKeyWords}
+                  keyWords={this.state.keyWords}/>
 
               </div>
 
