@@ -253,22 +253,26 @@ export default class FormComponent extends React.Component {
     this.showSearchValue(event);
   };
 
-  handleChangeConsumerChk = () => {
+  handleChangeConsumerChk = (e) => {
     let showWholeBase = false;
-    let checkedConsumerValue = document.getElementById('consumer-chkbox').checked;
+    let checkedConsumerValue = 'CONSUMER';
+    e.target.innerText = !this.state.consumer_chkbox ? `✓ ${checkedConsumerValue}` : checkedConsumerValue;
+
     this.setState({
       showWholeBase: showWholeBase,
-      consumer_chkbox: checkedConsumerValue,
+      consumer_chkbox: !this.state.consumer_chkbox,
       items: [],
       name: ''
     });
   };
 
-  handleChangeProChk = () => {
-    let checkedProValue = document.getElementById('pro-chkbox').checked;
+  handleChangeProChk = (e) => {
+    let checkedProValue = 'PRO';
+    e.target.innerText = this.state.pro_chkbox ? checkedProValue : `✓ ${checkedProValue}`;
+
     this.setState({
       showWholeBase: false,
-      pro_chkbox: checkedProValue,
+      pro_chkbox: !this.state.pro_chkbox,
       items: [],
       name: ''
     });
@@ -291,20 +295,32 @@ export default class FormComponent extends React.Component {
   chooseHashTag = (hashTagName) => () => {
 
     if (this.state.base) {
-      this.collection = new Set();
 
-      let base = returnBaseDividedOnCategories(this.state);
-      base = returnAllUseCasesWithWantedTag(base, hashTagName);
-      let keyWords = returnAllKeyWords(base);
+      if (this.state.hashtag === hashTagName) {
+        this.setState(() => {
+          return {
+            keyWords: [],
+            hashtag: '',
+            chosenKeyWords: []
+          }
+        })
+      } else {
 
-      this.setState(() => {
-        return {
-          hashtag: this.state.hashtag !== hashTagName ? hashTagName : '',
-          hashtagBase: base,
-          chosenKeyWords: [],
-          keyWords,
-        }
-      })
+        this.collection = new Set();
+
+        let base = returnBaseDividedOnCategories(this.state);
+        base = returnAllUseCasesWithWantedTag(base, hashTagName);
+        let keyWords = returnAllKeyWords(base);
+
+        this.setState(() => {
+          return {
+            hashtag: this.state.hashtag !== hashTagName ? hashTagName : '',
+            hashtagBase: base,
+            chosenKeyWords: [],
+            keyWords
+          }
+        })
+      }
     }
   };
 
@@ -322,8 +338,6 @@ export default class FormComponent extends React.Component {
   };
 
   render() {
-
-    console.log('typeof chosenKeyWords: ', typeof this.state.chosenKeyWords, ' value: ', this.state.chosenKeyWords);
 
     return (
       <div className="main-label">

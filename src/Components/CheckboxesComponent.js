@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, FormGroup, Input, Label, Row} from 'reactstrap';
+import {Badge, Col, Row} from 'reactstrap';
 
 export default class CheckboxesComponent extends React.Component {
 
@@ -8,29 +8,27 @@ export default class CheckboxesComponent extends React.Component {
     return (
       <Row className="bottom-margin">
         <Col>
-          <FormGroup check>
-            <div className="double-consumer">
-              <Label check className="input-label_mod">
-                <Input type="checkbox" id="consumer-chkbox" className="input-checkbox_mod"
-                       defaultChecked={this.props.consumer_chkbox}
-                       onChange={this.props.handleChangeConsumerChk}/>{' '}
-                CONSUMER <span
-                className="checkbox-counter blue-color font-weight-bolder">{this.props.numberOfAllUCforConsumer}</span>
-              </Label>
-            </div>
-            <div className="double-pro">
-              <Label check className="input-label_mod">
-                <Input type="checkbox" id="pro-chkbox" className="input-checkbox_mod"
-                       defaultChecked={this.props.pro_chkbox} onChange={this.props.handleChangeProChk}/>{' '}
-                PRO <span
-                className="checkbox-counter blue-color font-weight-bolder">{this.props.numberOfAllUCforPro}</span>
-              </Label>
-            </div>
-          </FormGroup>
+
+          <h3 className="badge-mod badge-env_mod1">
+            <Badge color={this.props.consumer_chkbox ? "success" : "warning"}
+                   onClick={this.props.handleChangeConsumerChk}
+                   id="badge1"
+            >✓ CONSUMER
+            </Badge>
+            <Badge color="danger" className={"badge-counter_mod1"}>{this.props.numberOfAllUCforConsumer}</Badge>
+          </h3>
+
+          <h3 className="badge-mod badge-env_mod2">
+            <Badge color={this.props.pro_chkbox ? "success" : "warning"}
+                   onClick={this.props.handleChangeProChk}
+                   id="badge2"
+            >PRO
+            </Badge>
+            <Badge color="danger" className={"badge-counter_mod2"}>{this.props.numberOfAllUCforPro}</Badge>
+          </h3>
+
         </Col>
       </Row>
     )
   }
-
-
 }

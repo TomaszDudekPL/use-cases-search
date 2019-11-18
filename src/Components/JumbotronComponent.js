@@ -8,20 +8,18 @@ export default class JumbotronComponent extends React.Component {
 
     return (
       <Jumbotron fluid className="jumbotron_mod">
-        <h1 className={(this.props.ucInfoObj && this.props.detailsSwitchView) || (this.props.name && this.props.detailsSwitchView) ? "display-7 form-mainLabel_mod1" : "display-7 form-mainLabel_mod2"}>USE CASES SEARCH</h1>
-        {[0] in this.props.items? <Button color="success" size="sm" className="print_view-button_mod" onClick={this.props.createPrintView(this.props.items)}>Print View of this list</Button>: null}
 
         {(this.props.name && !this.props.ucInfoObj) || (this.props.name && !this.props.detailsSwitchView) ? (
 
           <Row className="jumbotron-result_mod">
-            <Col sm="12" md={{size: 10, offset: 1}}>
-            {/*  <span className="jumbotron-label-text">FOR </span>*/}
-            {/*  <span className="jumbotron-label-number">{this.props.name.toUpperCase()}</span>*/}
-            {/*  <span className="jumbotron-label-text"> SEARCH TERM: </span>*/}
-            {/*  <span className="jumbotron-label-number">{this.props.calculateNumbersOfUC()}</span>*/}
-            {/*  <span*/}
-            {/*    className="jumbotron-label-text"> USE CASE{this.props.calculateNumbersOfUC() > 1 ? 'S' : ''} FOUND. </span>*/}
-            {/*  <br/>*/}
+            <Col sm="12" md={{size: 12, offset: 0}}>
+              {/*  <span className="jumbotron-label-text">FOR </span>*/}
+              {/*  <span className="jumbotron-label-number">{this.props.name.toUpperCase()}</span>*/}
+              {/*  <span className="jumbotron-label-text"> SEARCH TERM: </span>*/}
+              {/*  <span className="jumbotron-label-number">{this.props.calculateNumbersOfUC()}</span>*/}
+              {/*  <span*/}
+              {/*    className="jumbotron-label-text"> USE CASE{this.props.calculateNumbersOfUC() > 1 ? 'S' : ''} FOUND. </span>*/}
+              {/*  <br/>*/}
               <span className="jumbotron-label-text"> CONSUMER: </span>
               <span className="jumbotron-label-number">{calculateNumberOfUCForConsumer(this.props.items)}</span>
               <span className="jumbotron-label-text"> PRO: </span>
@@ -73,9 +71,14 @@ export default class JumbotronComponent extends React.Component {
           </Row>
         ) : null
         }
+
+        <h1 className={(this.props.ucInfoObj && this.props.detailsSwitchView) || (this.props.name && this.props.detailsSwitchView) ? "display-7 form-mainLabel_mod1" : "display-7 form-mainLabel_mod2"}>USE CASES SEARCH</h1>
+        {[0] in this.props.items? <Button color="success"
+                                          size="sm"
+                                          className="print_view-button_mod"
+                                          onClick={this.props.createPrintView(this.props.items)}>Print View of this list</Button>: null}
+
       </Jumbotron>
     )
   }
-
-
 }

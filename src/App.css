@@ -12,7 +12,7 @@
     border-radius: 10px;
     margin-top: 20px;
     background-color: white;
-    height: 122px;
+    height: 92px;
     position: fixed;
     width: 1400px;
     z-index: 5;
@@ -28,7 +28,8 @@
 .form-mainLabel_mod2 {
     font-size: 4rem;
     padding: 0;
-    margin-top: 20px;
+    position: relative;
+    top: 10px;
 }
 
 .instruct-mod {
@@ -150,7 +151,8 @@ body::-webkit-scrollbar {
 }
 
 .jumbotron-result_mod {
-    margin-top: -20px;
+    position: absolute;
+    left: 620px;
 }
 
 .main-label {
@@ -447,4 +449,39 @@ body::-webkit-scrollbar {
     margin-top: 9px;
     color: #fff;
     font-style: italic;
+}
+
+.badge-counter_mod1 {
+    font-size: .8rem;
+    margin-left: 10px;
+    position: absolute;
+    z-index: 3;
+    left: 130px;
+    bottom: 28px;
+}
+
+.badge-counter_mod2 {
+    font-size: .8rem;
+    margin-left: 10px;
+    position: absolute;
+    z-index: 3;
+    left: 50px;
+    bottom: 25px;
+}
+
+#badge1 {
+    width: 150px;
+}
+
+#badge2 {
+    width: 70px;
+}
+
+.badge-env_mod1 {
+    position: relative;
+    margin-right: 20px;
+}
+
+.badge-env_mod2 {
+    position: relative;
 }
