@@ -5,7 +5,7 @@ const InstructComponent = ({text}) => {
   return (
     <Row>
       <Col>
-        <h6 className="blue-color font-weight-bolder">{text}</h6>
+        <h5 className="blue-color font-weight-bolder">{text}</h5>
       </Col>
     </Row>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Badge, Col, Row} from "reactstrap";
+import InstructComponent from "./InstructComponent";
 
 export const KeyWordsComponent = ({keyWords, returnChosenKeyWords, chosenKeyWords = []}) => {
 
@@ -11,6 +12,9 @@ export const KeyWordsComponent = ({keyWords, returnChosenKeyWords, chosenKeyWord
   return (
     <Row className="bottom-margin">
       <Col sm="12" md={{size: 8, offset: 2}}>
+        {
+          keyWords? keyWords.length? <InstructComponent text="OPTIONAL KEY WORDS"/>: null: null
+        }
         {
           keyWords ? keyWords.map(keyWord => {
             return (

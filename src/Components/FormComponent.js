@@ -12,6 +12,8 @@ import BadgesComponent from './BadgesComponent'
 import KeyWordsComponent from './KeyWordsComponent'
 import SearchInputComponent from './SearchInputComponent'
 import SearchButtonComponent from './SearchButtonComponent'
+import InstructComponent from './InstructComponent'
+import SearchAlgorithmTextComponent from './SearchAlgorithmTextComponent'
 import {
   calculateNumberOfUCForConsumer,
   calculateNumberOfUCForPro,
@@ -357,7 +359,7 @@ export default class FormComponent extends React.Component {
 
               <div className="instruct-mod">
 
-                {/*<InstructComponent text="ENVIRONMENT:"/>*/}
+                <InstructComponent text="ENVIRONMENT"/>
                 <CheckboxesComponent consumer_chkbox={this.state.consumer_chkbox}
                                      pro_chkbox={this.state.pro_chkbox}
                                      numberOfAllUCforConsumer={this.state.numberOfAllUCforConsumer}
@@ -365,13 +367,11 @@ export default class FormComponent extends React.Component {
                                      handleChangeProChk={this.handleChangeProChk}
                                      numberOfAllUCforPro={this.state.numberOfAllUCforPro}
                 />
-                {/*<InstructComponent text="HASHTAGS:"/>*/}
+                <InstructComponent text="HASHTAGS"/>
 
                 <BadgesComponent chooseHashTag={this.chooseHashTag}
                                  state={this.state}
                 />
-
-                {/*<InstructComponent text="3. Use maximum 3 words to describe what exactly are you looking for:"/>*/}
 
                 <KeyWordsComponent keyWords={this.state.keyWords}
                                    returnChosenKeyWords={this.returnChosenKeyWords}
@@ -400,6 +400,8 @@ export default class FormComponent extends React.Component {
                                        visibility={this.state.readyToProceed}
                 />
               </ButtonGroup>
+
+              <SearchAlgorithmTextComponent state={this.state}/>
 
               <AllCasesButtonComponent showWholeBase={this.state.showWholeBase}
                                        showAllUseCases={this.showAllUseCases}
