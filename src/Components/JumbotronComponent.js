@@ -15,13 +15,13 @@ export default class JumbotronComponent extends React.Component {
 
           <Row className="jumbotron-result_mod">
             <Col sm="12" md={{size: 10, offset: 1}}>
-              <span className="jumbotron-label-text">FOR </span>
-              <span className="jumbotron-label-number">{this.props.name.toUpperCase()}</span>
-              <span className="jumbotron-label-text"> SEARCH TERM: </span>
-              <span className="jumbotron-label-number">{this.props.calculateNumbersOfUC()}</span>
-              <span
-                className="jumbotron-label-text"> USE CASE{this.props.calculateNumbersOfUC() > 1 ? 'S' : ''} FOUND. </span>
-              <br/>
+            {/*  <span className="jumbotron-label-text">FOR </span>*/}
+            {/*  <span className="jumbotron-label-number">{this.props.name.toUpperCase()}</span>*/}
+            {/*  <span className="jumbotron-label-text"> SEARCH TERM: </span>*/}
+            {/*  <span className="jumbotron-label-number">{this.props.calculateNumbersOfUC()}</span>*/}
+            {/*  <span*/}
+            {/*    className="jumbotron-label-text"> USE CASE{this.props.calculateNumbersOfUC() > 1 ? 'S' : ''} FOUND. </span>*/}
+            {/*  <br/>*/}
               <span className="jumbotron-label-text"> CONSUMER: </span>
               <span className="jumbotron-label-number">{calculateNumberOfUCForConsumer(this.props.items)}</span>
               <span className="jumbotron-label-text"> PRO: </span>

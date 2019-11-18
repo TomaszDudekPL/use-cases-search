@@ -12,7 +12,7 @@
     border-radius: 10px;
     margin-top: 20px;
     background-color: white;
-    height: 152px;
+    height: 122px;
     position: fixed;
     width: 1400px;
     z-index: 5;
@@ -82,7 +82,7 @@
 
 .form_mod {
     position: relative;
-    top: 160px
+    top: 108px
 }
 
 .input-label_mod {
@@ -139,7 +139,7 @@ body::-webkit-scrollbar {
 }
 
 .jumbotron-label-text {
-    color: black;
+    color: #2fb431;
     font-weight: bolder;
 }
 
@@ -439,10 +439,12 @@ body::-webkit-scrollbar {
     background-color: #ffe6a3;
     margin-top: 9px;
     color: black;
+    font-style: italic;
 }
 
 .keywords-badge_mod2 {
     background-color: #61ac69;
     margin-top: 9px;
-    color: #fff
+    color: #fff;
+    font-style: italic;
 }

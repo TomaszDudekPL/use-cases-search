@@ -20,6 +20,7 @@ import {
 import {
   removeSpacesFunc,
   returnAllKeyWords,
+  returnAllUseCasesWithWantedKeyWords,
   returnAllUseCasesWithWantedTag,
   returnBaseDividedOnCategories,
   returnNotEmptyValues,
@@ -140,6 +141,9 @@ export default class FormComponent extends React.Component {
         // divide into consumer, pro, whole, none.
         base = returnBaseDividedOnCategories(this.state);
         base = returnAllUseCasesWithWantedTag(base, this.state.hashtag);
+
+      } else if (this.state.chosenKeyWords.length) {
+        base = returnAllUseCasesWithWantedKeyWords(this.state.hashtagBase, this.state.chosenKeyWords);
 
       } else {
         base = this.state.hashtagBase;

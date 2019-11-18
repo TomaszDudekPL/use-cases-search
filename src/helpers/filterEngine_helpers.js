@@ -57,6 +57,36 @@ const returnAllUseCasesWithWantedTag = (base, tag) => {
   return base;
 };
 
+const returnAllUseCasesWithWantedKeyWords = (base, chosenKeyWords) => {
+
+  let ucArr = new Set();
+  let updatedBase = [];
+
+  const returnRegExp = (chosenKeyWords) => {
+    let regExp = '';
+    chosenKeyWords.forEach((keyWord, index, arr)=> {
+      regExp += (`!${keyWord}; ${index !==arr.length-1? '|': ''}`)
+    });
+    return regExp;
+  };
+
+  const reg = new RegExp(returnRegExp(chosenKeyWords));
+
+  base.forEach(arrOfUC => {
+
+    arrOfUC[1].forEach(uc => {
+
+      if (reg.test(uc)) ucArr.add(uc);
+
+    });
+
+    if (ucArr.size) updatedBase.push([arrOfUC[0], [...ucArr]]);
+    ucArr = new Set();
+  });
+
+  return updatedBase;
+};
+
 const returnAllKeyWords = (base) => {
 
   // base - array of nested arrays. Each of them has arr of UCs on second position
@@ -73,7 +103,7 @@ const returnAllKeyWords = (base) => {
       })
     });
 
-    return [...keyWords]
+    return [...keyWords].sort()
   }
 };
 
@@ -143,6 +173,7 @@ export {
   getLowerCaseFunc,
   returnNotEmptyValues,
   returnAllUseCasesWithWantedTag,
+  returnAllUseCasesWithWantedKeyWords,
   returnAllKeyWords,
   returnUpdatedListOfUseCases_ifOneWord,
   returnUpdatedListOfUseCases_ifMoreThenOneWord,
