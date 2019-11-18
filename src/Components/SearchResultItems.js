@@ -76,7 +76,7 @@ export default class SearchResultItems extends React.Component {
 
     let numberState = numberOfAllUC;
     let wantedWords = this.props.wantedWords;
-    // let itemClicked = this.props.itemClicked;
+    let chosenKeyWords = this.props.chosenKeyWords;
     let showWholeBase = this.props.showWholeBase;
 
     return (
@@ -160,7 +160,7 @@ export default class SearchResultItems extends React.Component {
                               key={singleKeyWord + randomNum()}
                               className="keyword-item-mod"
                               highlightClassName="highlight-text"
-                              searchWords={wantedWords}
+                              searchWords={chosenKeyWords}
                               autoEscape={true}
                               textToHighlight={singleKeyWord}
                             />

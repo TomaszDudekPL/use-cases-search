@@ -332,7 +332,7 @@ export default class FormComponent extends React.Component {
     }
     this.setState(() => {
       return {
-        chosenKeyWords: [...this.collection]
+        chosenKeyWords: [...this.collection].sort()
       }
     })
   };
@@ -411,6 +411,7 @@ export default class FormComponent extends React.Component {
                                  base={this.state.base}
                                  wantedWords={this.state.wantedWords}
                                  itemClicked={this.onItemClicked}
+                                 chosenKeyWords={this.state.chosenKeyWords}
                                  showWholeBase={this.state.showWholeBase}>.</SearchResultItems>
 
             </FormGroup>
