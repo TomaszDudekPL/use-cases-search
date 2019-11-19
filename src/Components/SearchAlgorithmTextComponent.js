@@ -18,30 +18,18 @@ export default class SearchAlgorithmTextComponent extends React.Component {
   };
 
   chosenKeyWords = (state) => {
-
     if(state.chosenKeyWords) {
-
       let arr = state.chosenKeyWords.map(keyWord => `"${keyWord}"`);
-
       if(arr.length) return <span>Show all Use Cases <span className="algorithm-only_mod">ONLY</span> with key words: <span className="algorithm-keyWord_mod">{arr.join( ' OR ' )}</span></span>;
     }
   };
 
   wantedWords = (state) => {
-    let result = `Narrow down results to Use Cases with words: `;
     if(state.name){
-
-      const arrOfWantedWords = state.name.split(' ');
-
-      if(arrOfWantedWords.length === 1) result = `Narrow down results to Use Cases with word: "${state.name}" in title.`;
-      if(arrOfWantedWords.length > 1){
-        arrOfWantedWords.forEach((item, index, arr)=>{
-          result += `"${item}"`;
-          if(index !== arr.length - 1) result += ' AND ';
-        });
-        result += ' in title.'
-      }
-      return result;
+      let arrOfWantedWords = state.name.split(' ');
+      arrOfWantedWords = arrOfWantedWords.map(wantedWord => `"${wantedWord}"`);
+      if(arrOfWantedWords.length > 1) return <span>Narrow down results to Use Cases with words: <span className="algorithm-keyWord_mod">{arrOfWantedWords.join( ' AND ' )}</span></span>;
+      if(arrOfWantedWords.length === 1) return <span>Narrow down results to Use Cases with word: <span className="algorithm-wantedWords_mod">"{state.name}"</span> in title.</span>;
     }
   };
 

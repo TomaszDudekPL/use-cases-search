@@ -499,7 +499,10 @@ body::-webkit-scrollbar {
     font-weight: bolder;
 }
 
-.algorithm-env_mod, .algorithm-hashtag_mod, .algorithm-keyWord_mod {
+.algorithm-env_mod,
+.algorithm-hashtag_mod,
+.algorithm-keyWord_mod,
+.algorithm-wantedWords_mod {
     color: #2fb431;
     font-weight: bolder;
 }
