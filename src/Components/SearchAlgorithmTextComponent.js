@@ -13,34 +13,47 @@ export default class SearchAlgorithmTextComponent extends React.Component {
 
   kindOfHashTag = (state) => {
     let result;
-    if(state.hashtag) result = <span>Narrow down results <span className="algorithm-only_mod">ONLY</span> to Use Cases with hashtag: <span className="algorithm-hashtag_mod">#{state.hashtag}</span></span>;
+    if (state.hashtag) result = <span>Show <span className="algorithm-only_mod">ONLY</span> UCs with <span className="algorithm-only_mod">hashtag: </span><span className="algorithm-hashtag_mod">#{state.hashtag}</span></span>;
     return result;
-  };
-
-  chosenKeyWords = (state) => {
-    if(state.chosenKeyWords) {
-      let arr = state.chosenKeyWords.map(keyWord => `"${keyWord}"`);
-      if(arr.length) return <span>Show all Use Cases <span className="algorithm-only_mod">ONLY</span> with key words: <span className="algorithm-keyWord_mod">{arr.join( ' OR ' )}</span></span>;
-    }
-  };
-
-  wantedWords = (state) => {
-    if(state.name){
-      let arrOfWantedWords = state.name.split(' ');
-      arrOfWantedWords = arrOfWantedWords.map(wantedWord => `"${wantedWord}"`);
-      if(arrOfWantedWords.length > 1) return <span>Narrow down results to Use Cases with words: <span className="algorithm-keyWord_mod">{arrOfWantedWords.join( ' AND ' )}</span></span>;
-      if(arrOfWantedWords.length === 1) return <span>Narrow down results to Use Cases with word: <span className="algorithm-wantedWords_mod">"{state.name}"</span> in title.</span>;
-    }
   };
 
   render() {
 
+    let keyWords = this.props.state.chosenKeyWords;
+    let wantedWords = this.props.state.name;
+    let arrOfWantedWords = wantedWords? wantedWords.split(' '): null;
+
     return (
       <div className="all-algorithms">
-        <h4 id="env-algorithm-text" className="algorithm-text">{this.categoriesOfEnvironment(this.props.state)}</h4>
-        <h4 id="hash_tags-algorithm-text" className="algorithm-text">{this.kindOfHashTag(this.props.state)}</h4>
-        <h4 id="key_words-algorithm-text" className="algorithm-text">{this.chosenKeyWords(this.props.state)}</h4>
-        <h4 id="wanted_words-algorithm-text" className="algorithm-text">{this.wantedWords(this.props.state)}</h4>
+        <h5 id="env-algorithm-text" className="algorithm-text">{this.categoriesOfEnvironment(this.props.state)}</h5>
+        <h5 id="hash_tags-algorithm-text" className="algorithm-text">{this.kindOfHashTag(this.props.state)}</h5>
+
+        {keyWords ? (
+          <h5 id="key_words-algorithm-text" className="algorithm-text">
+            {keyWords.length ?
+              <span>From them show
+                <span className="algorithm-only_mod"> ONLY </span>
+                {<span>UCs with <span className="algorithm-only_mod">{keyWords.length > 1 ?'key words: ': 'key word: '}</span></span>}</span>: null}
+            {keyWords.map((keyWord, index, arr) => {
+              return <span className="algorithm-keyWord_mod" key={keyWord}>"{keyWord}"{(index !== arr.length - 1) ?
+                <span className="algorithm-only_mod"> OR </span> : ''}</span>
+            })
+
+            }</h5>
+        ) : null}
+
+          {arrOfWantedWords? (
+            <h5 id="wanted_words-algorithm-text" className="algorithm-text">
+              {arrOfWantedWords.length > 1 ? <span>Narrow down the results to UCs with words: </span>: <span>Narrow down the results to UCs with word: </span>}
+              {arrOfWantedWords.map((word, index, arr)=>{
+                return <span className="algorithm-wantedWords_mod" key={word}>"{word}"{(index !== arr.length - 1) ?
+                  <span className="algorithm-only_mod"> AND </span>: ' '}</span>
+              })}
+              <span className="algorithm-only_mod">in title.</span>
+           </h5>
+
+            ): null}
+
       </div>
     )
   }
