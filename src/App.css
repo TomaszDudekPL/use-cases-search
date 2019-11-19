@@ -485,3 +485,21 @@ body::-webkit-scrollbar {
 .badge-env_mod2 {
     position: relative;
 }
+
+.all-algorithms {
+    margin-top: 15px
+}
+
+.algorithm-text {
+    color: #0d63af;
+}
+
+.algorithm-only_mod, .algorithm-or_mod {
+    color: #ff1500;
+    font-weight: bolder;
+}
+
+.algorithm-env_mod, .algorithm-hashtag_mod, .algorithm-keyWord_mod {
+    color: #2fb431;
+    font-weight: bolder;
+}

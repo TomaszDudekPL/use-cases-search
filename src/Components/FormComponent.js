@@ -386,6 +386,8 @@ export default class FormComponent extends React.Component {
                 name={this.state.name}
               />
 
+              <SearchAlgorithmTextComponent state={this.state}/>
+
               <ButtonGroup>
                 <SearchButtonComponent executeFunc={this.proceedSearching}
                                        readyToProceed={this.state.readyToProceed}
@@ -400,8 +402,6 @@ export default class FormComponent extends React.Component {
                                        visibility={this.state.readyToProceed}
                 />
               </ButtonGroup>
-
-              <SearchAlgorithmTextComponent state={this.state}/>
 
               <AllCasesButtonComponent showWholeBase={this.state.showWholeBase}
                                        showAllUseCases={this.showAllUseCases}
