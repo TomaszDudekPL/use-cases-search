@@ -34,6 +34,7 @@ const returnAllUseCasesWithWantedTag = (base, tag) => {
 
   if (tag) {
     console.log('returnAllUseCasesWithWantedTag');
+    tag = tag.replace(/#/, '');
 
     let ucArr = new Set();
     let updatedBase = [];
@@ -64,8 +65,8 @@ const returnAllUseCasesWithWantedKeyWords = (base, chosenKeyWords) => {
 
   const returnRegExp = (chosenKeyWords) => {
     let regExp = '';
-    chosenKeyWords.forEach((keyWord, index, arr)=> {
-      regExp += (`!${keyWord}; ${index !==arr.length-1? '|': ''}`)
+    chosenKeyWords.forEach((keyWord, index, arr) => {
+      regExp += (`!${keyWord}; ${index !== arr.length - 1 ? '|' : ''}`)
     });
     return regExp;
   };
@@ -95,7 +96,7 @@ const returnAllKeyWords = (base) => {
   if (base.length) {
     base.forEach((nestedArr) => {
       nestedArr[1].forEach((useCase) => {
-        const arrOfKeyWords = useCase.match(/![a-zA-Z0-9]+-[a-z0-9]+;|![a-zA-Z0-9]+;/gmi);
+        const arrOfKeyWords = useCase.match(/![a-zA-Z0-9]+-[a-zA-Z0-9]+;|![a-zA-Z0-9]+;/gmi);
         arrOfKeyWords.forEach((keyWord) => {
           keyWord = keyWord.replace(/!/, '').replace(/;/, '');
           keyWords.add(keyWord);
