@@ -160,7 +160,7 @@ export default class SearchResultItems extends React.Component {
                               key={singleKeyWord + randomNum()}
                               className="keyword-item-mod"
                               highlightClassName="highlight-text"
-                              searchWords={chosenKeyWords}
+                              searchWords={chosenKeyWords? chosenKeyWords: []}
                               autoEscape={true}
                               textToHighlight={singleKeyWord}
                             />

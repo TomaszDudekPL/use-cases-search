@@ -148,7 +148,9 @@ export default class FormComponent extends React.Component {
         base = returnAllUseCasesWithWantedKeyWords(this.state.hashtagBase, this.state.chosenKeyWords);
 
       } else {
-        base = this.state.hashtagBase;
+        // divide into consumer, pro, whole, none.
+        base = returnBaseDividedOnCategories(this.state);
+        base = this.state.hashtag ? this.state.hashtagBase: base;
       }
 
       this.setState(() => {
