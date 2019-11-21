@@ -13,7 +13,7 @@ export default class SearchAlgorithmTextComponent extends React.Component {
 
   kindOfHashTag = (state) => {
     let result;
-    if (state.hashtag) result = <span>Show <span className="algorithm-only_mod">ONLY</span> UCs with <span className="algorithm-only_mod">hashtag: </span><span className="algorithm-hashtag_mod">#{state.hashtag}</span></span>;
+    if (state.hashtag) result = <span>Show <span className="algorithm-only_mod">ONLY</span> UCs with <span className="algorithm-only_mod">hashtag: </span><span className="algorithm-hashtag_mod">{state.hashtag}</span></span>;
     return result;
   };
 

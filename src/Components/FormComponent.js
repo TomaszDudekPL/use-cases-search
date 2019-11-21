@@ -376,6 +376,7 @@ export default class FormComponent extends React.Component {
                 <KeyWordsComponent keyWords={this.state.keyWords}
                                    returnChosenKeyWords={this.returnChosenKeyWords}
                                    chosenKeyWords={this.state.chosenKeyWords}
+                                   chosenHashTag={this.state.hashtag}
 
                 />
 
