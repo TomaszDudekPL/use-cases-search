@@ -28,7 +28,7 @@ export default class SearchResultItems extends React.Component {
     }
 
     // prepare steps to show in collapse dialog
-    const arrWithCleanSteps = [];
+    let arrWithCleanSteps = [];
     if (0 in arrWithAllSteps) {
       arrWithAllSteps.forEach(step => {
 
@@ -38,7 +38,23 @@ export default class SearchResultItems extends React.Component {
         }
         arrWithCleanSteps.push(step.match(/Step.+/gmi, '')[0]);
       });
-      arrWithCleanSteps.sort();
+
+      // sorting arr for steps. Steps with numeration higher then 9 can not be first in arr but last.
+      const reg2 = new RegExp(/ [0-9]of/);
+      const newArr1 = [];
+      const newArr2 = [];
+
+      arrWithCleanSteps.forEach((step) => {
+        if (reg2.test(step)) {
+          newArr1.push(step);
+        } else {
+          newArr2.push(step);
+        }
+      });
+
+      newArr1.sort();
+      newArr2.sort();
+      arrWithCleanSteps = [...newArr1, ...newArr2];
     }
 
     // set: if you clicked different item set uc name in state, if the same then clean state (rerender run onBreadcrumbClickHandler once again and .show class will be removed)
@@ -160,7 +176,7 @@ export default class SearchResultItems extends React.Component {
                               key={singleKeyWord + randomNum()}
                               className="keyword-item-mod"
                               highlightClassName="highlight-text"
-                              searchWords={chosenKeyWords? chosenKeyWords: []}
+                              searchWords={chosenKeyWords ? chosenKeyWords : []}
                               autoEscape={true}
                               textToHighlight={singleKeyWord}
                             />
@@ -174,8 +190,9 @@ export default class SearchResultItems extends React.Component {
                             <CardBody>
                               <BreadcrumbItems arrWithData={arrWithData}/>
                               <div className="collapse-steps">
-                                <span className={`collapse-descriptors ${!this.state.arrOfAllSteps.length? 'descriptor_mod': ''}`}>
-                                  {this.state.arrOfAllSteps.length? 'STEPS OF SCENARIO:': ''}</span>
+                                <span
+                                  className={`collapse-descriptors ${!this.state.arrOfAllSteps.length ? 'descriptor_mod' : ''}`}>
+                                  {this.state.arrOfAllSteps.length ? 'STEPS OF SCENARIO:' : ''}</span>
                                 {
                                   this.state.arrOfAllSteps ? this.state.arrOfAllSteps.map(step => {
                                     const reg = new RegExp(/_XOXO/);
@@ -189,41 +206,41 @@ export default class SearchResultItems extends React.Component {
                               </div>
 
                               <div className="collapse-inputGroup_mod">
-                              <InputGroup size="sm">
-                                {/*<Label className="jumbotron-label_mod">USE CASE:</Label>*/}
-                                <Button color="success"
-                                        size="sm"
-                                        outline
-                                        className="collapse-button_mod"
-                                        value={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}
-                                        onClick={saveToClipboard()}>Copy Use Case name</Button>
-                                <Input placeholder=""
-                                       type="text"
-                                       spellCheck="false"
-                                       value={useCaseNameWithoutTag_arr[0]}
-                                       readOnly
-                                       className="collapse-input_mod collapse-input-one_mod shadow-none"
-                                       id={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}/>
+                                <InputGroup size="sm">
+                                  {/*<Label className="jumbotron-label_mod">USE CASE:</Label>*/}
+                                  <Button color="success"
+                                          size="sm"
+                                          outline
+                                          className="collapse-button_mod"
+                                          value={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}
+                                          onClick={saveToClipboard()}>Copy Use Case name</Button>
+                                  <Input placeholder=""
+                                         type="text"
+                                         spellCheck="false"
+                                         value={useCaseNameWithoutTag_arr[0]}
+                                         readOnly
+                                         className="collapse-input_mod collapse-input-one_mod shadow-none"
+                                         id={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}/>
 
-                              </InputGroup>
+                                </InputGroup>
 
-                              <InputGroup size="sm">
-                                {/*<Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>*/}
-                                <Button color="success"
-                                        size="sm"
-                                        outline
-                                        className="collapse-button_mod"
-                                        value={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}
-                                        onClick={saveToClipboard()}>Copy run command</Button>
-                                <Input placeholder=""
-                                       type="text"
-                                       spellCheck="false"
-                                       value={returnRunCommand(this.onItemClickedHandler(arrWithData, uc))}
-                                       readOnly
-                                       className="collapse-input_mod collapse-input-two_mod shadow-none"
-                                       id={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}/>
+                                <InputGroup size="sm">
+                                  {/*<Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>*/}
+                                  <Button color="success"
+                                          size="sm"
+                                          outline
+                                          className="collapse-button_mod"
+                                          value={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}
+                                          onClick={saveToClipboard()}>Copy run command</Button>
+                                  <Input placeholder=""
+                                         type="text"
+                                         spellCheck="false"
+                                         value={returnRunCommand(this.onItemClickedHandler(arrWithData, uc))}
+                                         readOnly
+                                         className="collapse-input_mod collapse-input-two_mod shadow-none"
+                                         id={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}/>
 
-                              </InputGroup>
+                                </InputGroup>
                               </div>
 
                             </CardBody>
