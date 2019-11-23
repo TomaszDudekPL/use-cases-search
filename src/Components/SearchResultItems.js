@@ -32,6 +32,7 @@ export default class SearchResultItems extends React.Component {
     if (0 in arrWithAllSteps) {
       arrWithAllSteps.forEach(step => {
 
+        // mark step which must be highlighted
         const reg = new RegExp(describeTag_arr);
         if (reg.test(step)) {
           step = step.concat('_XOXO');

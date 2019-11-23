@@ -12,6 +12,7 @@ import BadgesComponent from './BadgesComponent'
 import KeyWordsComponent from './KeyWordsComponent'
 import SearchInputComponent from './SearchInputComponent'
 import SearchButtonComponent from './SearchButtonComponent'
+import ResultNumberTextComponent from './ResultNumberTextComponent'
 import InstructComponent from './InstructComponent'
 import SearchAlgorithmTextComponent from './SearchAlgorithmTextComponent'
 import {
@@ -123,6 +124,7 @@ export default class FormComponent extends React.Component {
           items: [],
           name: '',
           hashtag: '',
+          searchButtonClicked: false,
           readyToProceed: true,
           chosenKeyWords: [],
           keyWords: []
@@ -156,7 +158,8 @@ export default class FormComponent extends React.Component {
       this.setState(() => {
           return {
             readyToProceed: false,
-            base
+            base,
+            searchButtonClicked: true
           }
         }
       );
@@ -405,6 +408,8 @@ export default class FormComponent extends React.Component {
                                        visibility={this.state.readyToProceed}
                 />
               </ButtonGroup>
+
+              <ResultNumberTextComponent state={this.state}/>
 
               <AllCasesButtonComponent showWholeBase={this.state.showWholeBase}
                                        showAllUseCases={this.showAllUseCases}
