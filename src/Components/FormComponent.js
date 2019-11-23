@@ -48,7 +48,7 @@ export default class FormComponent extends React.Component {
     numberOfAllUseCases: 0,
     wantedWords: [],
     ucInfoObj: null,
-    consumer_chkbox: true,
+    consumer_chkbox: false,
     pro_chkbox: false,
     detailsSwitchView: false,
     readyToProceed: true,
@@ -152,7 +152,7 @@ export default class FormComponent extends React.Component {
       } else {
         // divide into consumer, pro, whole, none.
         base = returnBaseDividedOnCategories(this.state);
-        base = this.state.hashtag ? this.state.hashtagBase: base;
+        base = this.state.hashtag ? this.state.hashtagBase : base;
       }
 
       this.setState(() => {
@@ -371,11 +371,13 @@ export default class FormComponent extends React.Component {
                                      handleChangeProChk={this.handleChangeProChk}
                                      numberOfAllUCforPro={this.state.numberOfAllUCforPro}
                 />
-                <InstructComponent text="HASHTAGS"/>
 
-                <BadgesComponent chooseHashTag={this.chooseHashTag}
-                                 state={this.state}
-                />
+                { this.state.consumer_chkbox || this.state.pro_chkbox?
+                  <div>
+                    <InstructComponent text="HASHTAGS"/>
+                    <BadgesComponent chooseHashTag={this.chooseHashTag} state={this.state}/>
+                  </div>: null
+                }
 
                 <KeyWordsComponent keyWords={this.state.keyWords}
                                    returnChosenKeyWords={this.returnChosenKeyWords}

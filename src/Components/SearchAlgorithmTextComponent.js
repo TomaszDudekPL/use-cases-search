@@ -25,11 +25,11 @@ export default class SearchAlgorithmTextComponent extends React.Component {
 
     return (
       <div className="all-algorithms">
-        <h5 id="env-algorithm-text" className="algorithm-text">{this.categoriesOfEnvironment(this.props.state)}</h5>
-        <h5 id="hash_tags-algorithm-text" className="algorithm-text">{this.kindOfHashTag(this.props.state)}</h5>
+        <h6 id="env-algorithm-text" className="algorithm-text">{this.categoriesOfEnvironment(this.props.state)}</h6>
+        <h6 id="hash_tags-algorithm-text" className="algorithm-text">{this.kindOfHashTag(this.props.state)}</h6>
 
         {keyWords ? (
-          <h5 id="key_words-algorithm-text" className="algorithm-text">
+          <h6 id="key_words-algorithm-text" className="algorithm-text">
             {keyWords.length ?
               <span>From them show
                 <span className="algorithm-only_mod"> ONLY </span>
@@ -39,18 +39,18 @@ export default class SearchAlgorithmTextComponent extends React.Component {
                 <span className="algorithm-only_mod"> OR </span> : ''}</span>
             })
 
-            }</h5>
+            }</h6>
         ) : null}
 
           {arrOfWantedWords? (
-            <h5 id="wanted_words-algorithm-text" className="algorithm-text">
+            <h6 id="wanted_words-algorithm-text" className="algorithm-text">
               {arrOfWantedWords.length > 1 ? <span>Narrow down the results to UCs with words: </span>: <span>Narrow down the results to UCs with word: </span>}
               {arrOfWantedWords.map((word, index, arr)=>{
                 return <span className="algorithm-wantedWords_mod" key={word}>"{word}"{(index !== arr.length - 1) ?
                   <span className="algorithm-only_mod"> AND </span>: ' '}</span>
               })}
               <span className="algorithm-only_mod">in title.</span>
-           </h5>
+           </h6>
 
             ): null}
 

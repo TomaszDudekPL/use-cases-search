@@ -13,7 +13,7 @@ export default class CheckboxesComponent extends React.Component {
             <Badge color={this.props.consumer_chkbox ? "success" : "warning"}
                    onClick={this.props.handleChangeConsumerChk}
                    id="badge1"
-            >✓ CONSUMER
+            >CONSUMER
             </Badge>
             <Badge color="danger" className={"badge-counter_mod1"}>{this.props.numberOfAllUCforConsumer}</Badge>
           </h3>

@@ -193,7 +193,7 @@ export default class SearchResultItems extends React.Component {
                               <div className="collapse-steps">
                                 <span
                                   className={`collapse-descriptors ${!this.state.arrOfAllSteps.length ? 'descriptor_mod' : ''}`}>
-                                  {this.state.arrOfAllSteps.length ? 'STEPS OF SCENARIO:' : ''}</span>
+                                  {this.state.arrOfAllSteps.length ? 'REST STEPS OF WHOLE TEST:' : ''}</span>
                                 {
                                   this.state.arrOfAllSteps ? this.state.arrOfAllSteps.map(step => {
                                     const reg = new RegExp(/_XOXO/);
