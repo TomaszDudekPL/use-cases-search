@@ -20,8 +20,8 @@ export default class ResultNumberTextComponent extends React.Component {
 
     return (
 
-        numberOfItems ? <div className="result-numbersOfItems_mod">Number of found Use Cases: {numberOfItems}</div>:
-          (hashtag && searchButtonClicked) || (name && searchButtonClicked)? <div className="noResult-numberOfItems_mod">NO RESULTS!</div>:
+        numberOfItems ? <div className="result-numbersOfItems_mod">Found: {numberOfItems}</div>:
+          (hashtag && searchButtonClicked) || (name && searchButtonClicked)? <div className="noResult-numberOfItems_mod">NO RESULTS</div>:
             null
     )
   }

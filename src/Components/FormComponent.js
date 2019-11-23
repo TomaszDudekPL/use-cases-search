@@ -352,10 +352,9 @@ export default class FormComponent extends React.Component {
                             ucInfoObj={this.state.ucInfoObj}
                             detailsSwitchView={this.state.detailsSwitchView}
                             items={this.state.items}
-                            showWholeBase={this.state.showWholeBase}
                             createPrintView={this.createPrintView}
-                            calculateNumbersOfUC={this.calculateNumbersOfUC}
-                            hideThisViewBtn={this.hideThisViewBtn}
+
+
         />
 
         <Container fluid>

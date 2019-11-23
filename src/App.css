@@ -506,3 +506,17 @@ body::-webkit-scrollbar {
     color: #2fb431;
     font-weight: bolder;
 }
+
+.noResult-numberOfItems_mod{
+    color: #ff1500;
+    font-size: larger;
+    font-weight: bolder;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.result-numbersOfItems_mod {
+    color: #2fb431;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
