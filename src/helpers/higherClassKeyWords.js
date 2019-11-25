@@ -10,5 +10,9 @@ export const higherClassKeyWords = {
   '#Group-Alerts': {
     firstClass: ['video'],
     secondClass: ['test-emoji', 'emoji-text', 'group-name', 'emojify', 'three-dots', 'avatar']
+  },
+  '#LIVE': {
+    firstClass: [],
+    secondClass: []
   }
 };

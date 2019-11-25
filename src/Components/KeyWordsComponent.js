@@ -40,12 +40,12 @@ export const KeyWordsComponent = ({keyWords, returnChosenKeyWords, chosenKeyWord
                   </Badge>
                 </h2>
               ) : (
-                <h6 className="badge-mod" key={keyWord}>
+                <h5 className="badge-mod" key={keyWord}>
                   <Badge onClick={collectAllKeyWords}
                          className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
                   >{keyWord}
                   </Badge>
-                </h6>
+                </h5>
               )
             )
           }) : null

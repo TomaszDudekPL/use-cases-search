@@ -96,7 +96,7 @@ const returnAllKeyWords = (base) => {
   if (base.length) {
     base.forEach((nestedArr) => {
       nestedArr[1].forEach((useCase) => {
-        const arrOfKeyWords = useCase.match(/![a-zA-Z0-9]+-[a-zA-Z0-9]+;|![a-zA-Z0-9]+;/gmi);
+        const arrOfKeyWords = useCase.match(/![a-zA-Z0-9-_]+;/gmi);
         arrOfKeyWords.forEach((keyWord) => {
           keyWord = keyWord.replace(/!/, '').replace(/;/, '');
           keyWords.add(keyWord);

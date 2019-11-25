@@ -116,7 +116,7 @@ export default class SearchResultItems extends React.Component {
                 });
               }
 
-              let allKeyWords = uc.match(/![a-zA-Z0-9]+-[a-z0-9]+\.|![a-zA-Z0-9]+\./gmi); // !keyWord1, !keyWord2.
+              let allKeyWords = uc.match(/![a-zA-Z0-9-_]+\./gmi); // !keyWord1, !keyWord2.
 
               if (allKeyWords) {
                 allKeyWords = allKeyWords.map(keyWord => {
