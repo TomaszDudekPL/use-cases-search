@@ -156,7 +156,7 @@ export default class SearchResultItems extends React.Component {
                           textToHighlight={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)[0]}
                         />
                         <Highlighter
-                          className={useCaseNameWithoutTag_arr[0].length > 140 ? "list-text_mod2" : "list-text_mod1"}
+                          className={useCaseNameWithoutTag_arr[0].length > 140 ? "list-text_mod2 font-roboto" : "list-text_mod1 font-roboto"}
                           highlightClassName="highlight-text"
                           searchWords={showWholeBase ? [] : wantedWords}
                           autoEscape={true}

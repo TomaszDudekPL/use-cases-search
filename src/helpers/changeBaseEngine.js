@@ -9,7 +9,7 @@ export default function (val) {
   const returnAllHashTags = (useCase) => {
 
     const allHashTags = [];
-    const arrOfHashTags = useCase.match(/HSH_[a-zA-Z0-9]+;|HSH_[a-zA-Z0-9]+-[a-zA-Z0-9]+;/gmi);
+    const arrOfHashTags = useCase.match(/HSH_[a-zA-Z0-9-_]+;/gmi);
 
     if (arrOfHashTags && arrOfHashTags.length) {
       arrOfHashTags.forEach((hashTag) => {

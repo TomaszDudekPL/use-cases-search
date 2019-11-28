@@ -14,5 +14,49 @@ export const higherClassKeyWords = {
   '#LIVE': {
     firstClass: [],
     secondClass: []
-  }
+  },
+  '#Purchase': {
+    firstClass: [],
+    secondClass: []
+  },
+  '#Friends': {
+    firstClass: [],
+    secondClass: []
+  },
+  '#Groups': {
+    firstClass: [],
+    secondClass: []
+  },
+  '#Antibot': {
+    firstClass: [],
+    secondClass: []
+  },
+  '#Landing_Pages': {
+    firstClass: [],
+    secondClass: []
+  },
+  '#Links': {
+    firstClass: [],
+    secondClass: []
+  },
+  '#Events': {
+    firstClass: [],
+    secondClass: []
+  },
+  '#Hashtags': {
+    firstClass: [],
+    secondClass: []
+  },
+  '#Notifications': {
+    firstClass: [],
+    secondClass: []
+  },
+  '#Post_Comment': {
+    firstClass: [],
+    secondClass: []
+  },
+  '#Public_Profile': {
+    firstClass: [],
+    secondClass: []
+  },
 };

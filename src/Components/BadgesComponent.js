@@ -13,7 +13,7 @@ export const BadgesComponent = ({chooseHashTag, state}) => {
 
   return (
     <Row className="bottom-margin">
-      <Col>
+      <Col sm="12" md={{size: 8, offset: 2}}>
 
         {
           (uniqHashTagsForConsumer && uniqHashTagsForConsumer.length) ? (

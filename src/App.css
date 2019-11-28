@@ -173,7 +173,7 @@ body::-webkit-scrollbar {
 .list-text_mod1 {
     margin-left: 10px;
     color: #0d63af;
-    font-weight: 600;
+    font-weight: 300;
     font-size: 1.1rem;
     /*font-style: italic;*/
 }
@@ -181,8 +181,8 @@ body::-webkit-scrollbar {
 .list-text_mod2 {
     margin-left: 10px;
     color: #0d63af;
-    font-weight: 600;
-    font-size: 1.0rem;
+    font-weight: 300;
+    font-size: .9rem;
     /*font-style: italic;*/
 }
 
@@ -519,4 +519,8 @@ body::-webkit-scrollbar {
     color: #2fb431;
     font-weight: bolder;
     margin-bottom: 10px;
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
 }
