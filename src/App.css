@@ -438,7 +438,7 @@ body::-webkit-scrollbar {
 }
 
 .keywords-badge_mod1 {
-    background-color: #ffe6a3;
+    background-color: white;
     margin-top: 9px;
     color: black;
     font-style: italic;
@@ -507,7 +507,7 @@ body::-webkit-scrollbar {
     font-weight: bolder;
 }
 
-.noResult-numberOfItems_mod{
+.noResult-numberOfItems_mod {
     color: #ff1500;
     font-size: larger;
     font-weight: bolder;
