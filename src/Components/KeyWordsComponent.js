@@ -21,42 +21,42 @@ export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKe
 
             if (0 <= arrWithKeyWord[1] && arrWithKeyWord[1] < 5) {
               return (
-                <h5 className="badge-mod" key={arrWithKeyWord[0]}>
+                <div className="badge-mod h5x" key={arrWithKeyWord[0]}>
                   <Badge onClick={collectAllKeyWords}
                          className={chosenKeyWords.includes(arrWithKeyWord[0]) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
                   >{arrWithKeyWord[0]}
                   </Badge>
-                </h5>
+                </div>
               )
             }
             if (5 <= arrWithKeyWord[1] && arrWithKeyWord[1] < 10) {
               return (
-                <h4 className="badge-mod" key={arrWithKeyWord[0]}>
+                <div className="badge-mod h4x" key={arrWithKeyWord[0]}>
                   <Badge onClick={collectAllKeyWords}
                          className={chosenKeyWords.includes(arrWithKeyWord[0]) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
                   >{arrWithKeyWord[0]}
                   </Badge>
-                </h4>
+                </div>
               )
             }
             if (10 <= arrWithKeyWord[1] && arrWithKeyWord[1] < 15) {
               return (
-                <h3 className="badge-mod" key={arrWithKeyWord[0]}>
+                <div className="badge-mod h3x" key={arrWithKeyWord[0]}>
                   <Badge onClick={collectAllKeyWords}
                          className={chosenKeyWords.includes(arrWithKeyWord[0]) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
                   >{arrWithKeyWord[0]}
                   </Badge>
-                </h3>
+                </div>
               )
             }
             if (15 <= arrWithKeyWord[1]) {
               return (
-                <h2 className="badge-mod" key={arrWithKeyWord[0]}>
+                <div className="badge-mod h2x" key={arrWithKeyWord[0]}>
                   <Badge onClick={collectAllKeyWords}
                          className={chosenKeyWords.includes(arrWithKeyWord[0]) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
                   >{arrWithKeyWord[0]}
                   </Badge>
-                </h2>
+                </div>
               )
             }
             return {};
