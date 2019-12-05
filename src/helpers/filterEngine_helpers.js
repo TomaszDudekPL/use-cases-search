@@ -111,26 +111,6 @@ const returnAllKeyWords = (base) => {
     return newObj;
   }
 
-  function returnObjWithClassesOfKeyWords (obj) {
-
-    const newObj = {
-      firstClass: [],
-      secondClass: [],
-      thirdClass: [],
-      fourthClass: []
-    };
-
-    for(let item in obj){
-      if (obj.hasOwnProperty(item)) {
-        if(0 <= obj[item] && obj[item] < 5) newObj.fourthClass.push(item);
-        if(5 <= obj[item] && obj[item] < 10) newObj.thirdClass.push(item);
-        if(10 <= obj[item] && obj[item] < 15) newObj.secondClass.push(item);
-        if(15 <= obj[item]) newObj.firstClass.push(item);
-      }
-    }
-    return newObj;
-  }
-
   // 1. Create array of all key words in use cases - now they are not uniq.
 
   if (base.length) {
@@ -153,10 +133,8 @@ const returnAllKeyWords = (base) => {
     const objWithCountedWords = countWords(arrOfAllKeyWords);
 
     // 4. Calculate percentage for each keyWord in relation to total -return object with these values
-    const objWithKeyWordsPercentage = returnPercentageOfEachKeyWord(objWithCountedWords, countPercent, oneHundredPercent);
+    return returnPercentageOfEachKeyWord(objWithCountedWords, countPercent, oneHundredPercent);
 
-    // 5. Return object with keyWords divided into four classes
-    return returnObjWithClassesOfKeyWords(objWithKeyWordsPercentage);
   }
 };
 
