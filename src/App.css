@@ -540,3 +540,11 @@ body::-webkit-scrollbar {
 .h2x {
     font-size: 2.4em;
 }
+
+.search-connector_text {
+    margin-bottom: 10px;
+}
+
+.search-connector-buttons {
+    font-weight: bolder;
+}
