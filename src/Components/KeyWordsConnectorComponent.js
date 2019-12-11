@@ -14,7 +14,8 @@ export default class KeyWordsConnectorComponent extends React.Component {
       {
         selected: innerText
       }
-    )
+    );
+    return this.props.getBackConnector(innerText);
   };
 
   render() {

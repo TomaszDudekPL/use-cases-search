@@ -58,33 +58,84 @@ const returnAllUseCasesWithWantedTag = (base, tag) => {
   return base;
 };
 
-const returnAllUseCasesWithWantedKeyWords = (base, chosenKeyWords) => {
+const returnAllUseCasesWithWantedKeyWords = (base, chosenKeyWords, connector) => {
 
   let ucArr = new Set();
   let updatedBase = [];
 
-  const returnRegExp = (chosenKeyWords) => {
-    let regExp = '';
-    chosenKeyWords.forEach((keyWord, index, arr) => {
-      regExp += (`!${keyWord}; ${index !== arr.length - 1 ? '|' : ''}`)
+  if (connector === 'OR') {
+
+    const returnRegExp = (chosenKeyWords) => {
+      let regExp = '';
+      chosenKeyWords.forEach((keyWord, index, arr) => {
+        regExp += (`!${keyWord}; ${index !== arr.length - 1 ? '|' : ''}`)
+      });
+      return regExp;
+    };
+
+    const reg = new RegExp(returnRegExp(chosenKeyWords));
+
+    base.forEach(arrOfUC => {
+
+      arrOfUC[1].forEach(uc => {
+
+        if (reg.test(uc)) ucArr.add(uc);
+
+      });
+
+      if (ucArr.size) updatedBase.push([arrOfUC[0], [...ucArr]]);
+      ucArr = new Set();
     });
-    return regExp;
-  };
 
-  const reg = new RegExp(returnRegExp(chosenKeyWords));
+  } else if (connector === 'WITHOUT') {
 
-  base.forEach(arrOfUC => {
+    const returnRegExp = (chosenKeyWords) => {
+      let regExp = '';
+      chosenKeyWords.forEach((keyWord, index, arr) => {
+        regExp += (`!${keyWord}; ${index !== arr.length - 1 ? '|' : ''}`)
+      });
+      return regExp;
+    };
 
-    arrOfUC[1].forEach(uc => {
+    const reg = new RegExp(returnRegExp(chosenKeyWords));
 
-      if (reg.test(uc)) ucArr.add(uc);
+    base.forEach(arrOfUC => {
+
+      arrOfUC[1].forEach(uc => {
+
+        if (!reg.test(uc)) ucArr.add(uc);
+
+      });
+
+      if (ucArr.size) updatedBase.push([arrOfUC[0], [...ucArr]]);
+      ucArr = new Set();
+    });
+
+  } else if (connector === 'WITH') {
+
+    let ucSet = new Set();
+
+    base.forEach(arrOfUC => {
+
+      arrOfUC[1].forEach(uc => {
+
+        let passed = chosenKeyWords.every(keyWord => {
+          const regExp = `!${keyWord};`;
+          const reg = new RegExp(regExp);
+          return reg.test(uc);
+        });
+
+        if (passed) ucSet.add(uc);
+
+
+      });
+
+      if (ucSet.size) updatedBase.push([arrOfUC[0], [...ucSet]]);
+      ucSet = new Set();
 
     });
 
-    if (ucArr.size) updatedBase.push([arrOfUC[0], [...ucArr]]);
-    ucArr = new Set();
-  });
-
+  }
   return updatedBase;
 };
 
@@ -97,13 +148,13 @@ const returnAllKeyWords = (base) => {
   const countWords = inputWords => inputWords.reduce((obj, word) => {
     obj[word] = (obj[word] || 0) + 1;
     return obj;
-  }, {} );
+  }, {});
 
-  const countPercent = (value, total) => ((value / total ) * 100).toPrecision(2);
+  const countPercent = (value, total) => ((value / total) * 100).toPrecision(2);
 
   function returnPercentageOfEachKeyWord(obj, callback, total) {
     const newObj = {};
-    for(let item in obj) {
+    for (let item in obj) {
       if (obj.hasOwnProperty(item)) {
         newObj[item] = Number.parseFloat(callback(obj[item], total));
       }
@@ -117,7 +168,7 @@ const returnAllKeyWords = (base) => {
     base.forEach((nestedArr) => {
       nestedArr[1].forEach((useCase) => {
         const arrOfKeyWords = useCase.match(/![a-zA-Z0-9-_]+;/gmi);
-        if(arrOfKeyWords) {
+        if (arrOfKeyWords) {
           arrOfKeyWords.forEach((keyWord) => {
             keyWord = keyWord.replace(/!/, '').replace(/;/, '');
             arrOfAllKeyWords.push(keyWord);

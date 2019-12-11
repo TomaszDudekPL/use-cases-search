@@ -148,7 +148,7 @@ export default class FormComponent extends React.Component {
         base = returnAllUseCasesWithWantedTag(base, this.state.hashtag);
 
       } else if (this.state.chosenKeyWords.length) {
-        base = returnAllUseCasesWithWantedKeyWords(this.state.hashtagBase, this.state.chosenKeyWords);
+        base = returnAllUseCasesWithWantedKeyWords(this.state.hashtagBase, this.state.chosenKeyWords, this.state.connector);
 
       } else {
         // divide into consumer, pro, whole, none.
@@ -345,6 +345,14 @@ export default class FormComponent extends React.Component {
     })
   };
 
+  getBackConnector = (connector) => {
+    this.setState(
+     {
+        connector
+      }
+    )
+  };
+
   render() {
 
     return (
@@ -388,6 +396,7 @@ export default class FormComponent extends React.Component {
                 />
 
                 <KeyWordsConnectorComponent keyWords={this.state.keyWords}
+                                            getBackConnector={this.getBackConnector}
 
                 />
 
