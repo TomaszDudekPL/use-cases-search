@@ -53,7 +53,8 @@ export default class FormComponent extends React.Component {
     pro_chkbox: false,
     detailsSwitchView: false,
     readyToProceed: true,
-    hashtag: ''
+    hashtag: '',
+    connector: 'OR'
   };
 
   componentDidMount() {

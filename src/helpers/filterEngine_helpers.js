@@ -127,7 +127,6 @@ const returnAllUseCasesWithWantedKeyWords = (base, chosenKeyWords, connector) =>
 
         if (passed) ucSet.add(uc);
 
-
       });
 
       if (ucSet.size) updatedBase.push([arrOfUC[0], [...ucSet]]);

@@ -4,7 +4,7 @@ import {Button, ButtonGroup, Col, Row} from "reactstrap";
 export default class KeyWordsConnectorComponent extends React.Component {
 
   state = {
-    selected: ''
+    selected: 'OR'
   };
 
   clickHandler = (e) => {
