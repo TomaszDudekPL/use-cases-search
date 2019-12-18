@@ -397,6 +397,7 @@ export default class FormComponent extends React.Component {
                 />
 
                 <KeyWordsConnectorComponent keyWords={this.state.keyWords}
+                                            chosenKeyWords={this.state.chosenKeyWords}
                                             getBackConnector={this.getBackConnector}
 
                 />

@@ -22,7 +22,7 @@ export default class KeyWordsConnectorComponent extends React.Component {
 
     return (
 
-      this.props.keyWords ? (
+      this.props.keyWords && this.props.chosenKeyWords.length ? (
 
         <Row className="bottom-margin">
           <Col sm="12" md={{size: 8, offset: 2}}>
