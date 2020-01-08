@@ -1,13 +1,48 @@
-const prepareMapOfSearchResults = (items) => {
+const prepareHTMLOfSearchResults = (items) => {
 
-  let myMap = new Map();
+  let keys_str = '';
+
   items.forEach((arr) => {
     let key = arr[0].replace(/%5C|%2F/g, '/');
-    let value = arr[1][0].replace(/;/g, '.');
-    myMap.set(key, value);
+    keys_str += '<br /><form>' + key + '</form>';
+
+    let useCases = '';
+
+    let newArr = arr[1].map(uc => {
+      uc = uc.replace(/;/g, '.').replace(/\|/, '/');
+      uc = uc.match(/It:.+|Step.+/gmi);
+      return uc[0];
+    });
+
+    // sorting arr for steps. Steps with numeration higher then 9 can not be first in arr but last.
+    const reg2 = new RegExp(/ [0-9]of/);
+    const newArr1 = [];
+    const newArr2 = [];
+
+    newArr.forEach((step) => {
+      if (reg2.test(step)) {
+        newArr1.push(step);
+      } else {
+        newArr2.push(step);
+      }
+    });
+
+    newArr1.sort();
+    newArr2.sort();
+    newArr = [...newArr1, ...newArr2];
+    // ----------------------------------------------------------------------------------------------
+
+    newArr.forEach(uc => {
+      useCases += '<p>' + uc + '</p>'
+    });
+
+    keys_str += useCases
+
   });
 
-  console.log('typeof map: ', typeof myMap, ' value: ', myMap);
+  let myWindow = window.open("", "_blank");
+  myWindow.document.write(keys_str);
+
 };
 
 const preventActionHandler = (event) => {
@@ -18,12 +53,12 @@ const preventActionHandler = (event) => {
 };
 
 const saveToClipboard = () => {
- return (e) => {
-   e.stopPropagation();
+  return (e) => {
+    e.stopPropagation();
     const id = e.target.value;
-      let copyText = document.getElementById(id);
-      copyText.select();
-      document.execCommand("copy");
+    let copyText = document.getElementById(id);
+    copyText.select();
+    document.execCommand("copy");
   };
 };
 
@@ -31,7 +66,7 @@ const returnRunCommand = (ucInfoObj) => {
   let env;
   if (ucInfoObj) {
 
-    switch(ucInfoObj.arr[0]){
+    switch (ucInfoObj.arr[0]) {
       case 'CONSUMER':
         env = 'master';
         break;
@@ -41,7 +76,8 @@ const returnRunCommand = (ucInfoObj) => {
       case 'LIVE':
         env = 'live';
         break;
-      default:  env = 'master';
+      default:
+        env = 'master';
     }
 
     let urlToFile = ucInfoObj.arr.join('/').concat('.js');
@@ -115,5 +151,5 @@ export {
   returnLinkToJenkinsJob,
   calculateNumberOfUCForConsumer,
   calculateNumberOfUCForPro,
-  prepareMapOfSearchResults
+  prepareHTMLOfSearchResults
 }

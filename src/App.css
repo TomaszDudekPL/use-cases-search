@@ -319,10 +319,9 @@ body::-webkit-scrollbar {
 }
 
 .print_view-button_mod {
-    display: none;
-    left: 1050px;
-    bottom: 90px;
-    position: absolute;
+    display: block;
+    float: right;
+    margin-right: 50px;
 }
 
 .all-cases-button_mod {

@@ -3,7 +3,6 @@ import {ButtonGroup, Container, Form, FormGroup} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import JumbotronComponent from "./JumbotronComponent";
 import CheckboxesComponent from "./CheckboxesComponent";
-import AllCasesButtonComponent from "./AllCasesButtonComponent";
 import * as firebase from "firebase/app";
 import "firebase/database";
 import firebaseConfig from '../firebaseConfig.js'
@@ -19,7 +18,7 @@ import SearchAlgorithmTextComponent from './SearchAlgorithmTextComponent'
 import {
   calculateNumberOfUCForConsumer,
   calculateNumberOfUCForPro,
-  prepareMapOfSearchResults
+  prepareHTMLOfSearchResults
 } from '../helpers/helperFunctions'
 import {
   removeSpacesFunc,
@@ -69,42 +68,6 @@ export default class FormComponent extends React.Component {
     changeBaseEngine.showWholeBase = false;
     this.setState(() => changedBase);
   }
-
-  showAllUseCases = () => {
-
-    let consumer_chkbox = this.state.consumer_chkbox;
-    let pro_chkbox = this.state.pro_chkbox;
-    let itemsToView = null;
-    let showWholeBase = !this.state.showWholeBase;
-
-    if (consumer_chkbox && pro_chkbox) {
-      itemsToView = this.state.base;
-    }
-    if (consumer_chkbox && !pro_chkbox) {
-      itemsToView = this.state.consumerList;
-    }
-    if (!consumer_chkbox && pro_chkbox) {
-      itemsToView = this.state.proList;
-    }
-    if (!consumer_chkbox && !pro_chkbox) {
-      itemsToView = [];
-      showWholeBase = false;
-    }
-
-    this.setState({
-      items: itemsToView,
-      showWholeBase: showWholeBase,
-      name: ''
-    })
-  };
-
-  hideAllUseCases = () => {
-    this.setState({
-      items: [],
-      showWholeBase: !this.state.showWholeBase,
-      name: ''
-    })
-  };
 
   showSearchValue = (event) => {
     this.setState({
@@ -294,7 +257,7 @@ export default class FormComponent extends React.Component {
   };
 
   createPrintView = (items) => () => {
-    prepareMapOfSearchResults(items);
+    prepareHTMLOfSearchResults(items);
   };
 
   calculateNumbersOfUC = (items = this.state.items) => {
@@ -427,12 +390,6 @@ export default class FormComponent extends React.Component {
               </ButtonGroup>
 
               <ResultNumberTextComponent state={this.state}/>
-
-              <AllCasesButtonComponent showWholeBase={this.state.showWholeBase}
-                                       showAllUseCases={this.showAllUseCases}
-                                       hideAllUseCases={this.hideAllUseCases}
-
-              />
 
               <SearchResultItems items={this.state.items}
                                  base={this.state.base}
