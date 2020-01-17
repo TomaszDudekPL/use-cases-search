@@ -225,7 +225,12 @@ export default class FormComponent extends React.Component {
       consumer_chkbox: !this.state.consumer_chkbox,
       pro_chkbox: false,
       items: [],
-      name: ''
+      name: '',
+      hashtag: '',
+      searchButtonClicked: false,
+      readyToProceed: true,
+      chosenKeyWords: [],
+      keyWords: []
     });
   };
 
@@ -234,7 +239,12 @@ export default class FormComponent extends React.Component {
       pro_chkbox: !this.state.pro_chkbox,
       consumer_chkbox: false,
       items: [],
-      name: ''
+      name: '',
+      hashtag: '',
+      searchButtonClicked: false,
+      readyToProceed: true,
+      chosenKeyWords: [],
+      keyWords: []
     });
   };
 
@@ -338,7 +348,7 @@ export default class FormComponent extends React.Component {
                 />
 
                 <KeyWordsConnectorComponent keyWords={this.state.keyWords}
-                                            chosenKeyWords={this.state.chosenKeyWords}
+                                            chosenHashTag={this.state.hashtag}
                                             getBackConnector={this.getBackConnector}
 
                 />

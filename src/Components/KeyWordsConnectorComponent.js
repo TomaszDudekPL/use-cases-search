@@ -22,12 +22,11 @@ export default class KeyWordsConnectorComponent extends React.Component {
 
     return (
 
-      this.props.keyWords && this.props.chosenKeyWords.length ? (
+      this.props.chosenHashTag ? (
 
         <Row className="bottom-margin">
           <Col sm="12" md={{size: 8, offset: 2}}>
-            <div className="blue-color font-weight-bolder search-connector_text">Apply your "SEARCH CONNECTOR" for Key
-              Words.
+            <div className="blue-color font-weight-bolder search-connector_text">KEY WORD CONNECTOR
             </div>
             <ButtonGroup onClick={this.clickHandler}>
               <Button outline color="primary" className="search-connector-buttons or-mod"
@@ -37,6 +36,7 @@ export default class KeyWordsConnectorComponent extends React.Component {
               <Button outline color="primary" className="search-connector-buttons"
                       active={this.state.selected === 'WITHOUT'}>WITHOUT</Button>
             </ButtonGroup>
+            <div className="blue-color font-weight-bolder margin-top"> </div>
 
           </Col>
         </Row>

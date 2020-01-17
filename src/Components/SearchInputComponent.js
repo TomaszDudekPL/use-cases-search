@@ -5,7 +5,7 @@ import {preventActionHandler} from "../helpers/helperFunctions";
 const SearchInputComponent = ({multipleFuncOnChangeHandler, name}) => {
   return (
     <Row>
-      <Col sm="12" md={{size: 12}} className="form-input_mod">
+      <Col sm="12" md={{size: 8, offset: 2}} className="form-input_mod">
         <Input type="search" spellCheck="false" value={name} name="search" id="useCasesSearch"
                bsSize="lg"
                placeholder="Narrow down the results..."
