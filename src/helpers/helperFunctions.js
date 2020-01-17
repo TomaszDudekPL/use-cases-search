@@ -33,7 +33,7 @@ const prepareHTMLOfSearchResults = (items) => {
     // ----------------------------------------------------------------------------------------------
 
     newArr.forEach(uc => {
-      useCases += '<p>' + uc + '</p>'
+      useCases += '<p style="color:black;width:100%;"> ' + uc + '</p>'
     });
 
     keys_str += useCases
@@ -41,7 +41,7 @@ const prepareHTMLOfSearchResults = (items) => {
   });
 
   let myWindow = window.open("", "_blank");
-  myWindow.document.write(keys_str);
+  myWindow.document.write('<section style="color:#b42012;display:flex;flex-direction:column;align-items:center;"><div>' + keys_str + '</div></section>');
 
 };
 
