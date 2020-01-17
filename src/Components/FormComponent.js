@@ -15,11 +15,7 @@ import SearchButtonComponent from './SearchButtonComponent'
 import ResultNumberTextComponent from './ResultNumberTextComponent'
 import InstructComponent from './InstructComponent'
 import SearchAlgorithmTextComponent from './SearchAlgorithmTextComponent'
-import {
-  calculateNumberOfUCForConsumer,
-  calculateNumberOfUCForPro,
-  prepareHTMLOfSearchResults
-} from '../helpers/helperFunctions'
+import { prepareHTMLOfSearchResults } from '../helpers/helperFunctions'
 import {
   removeSpacesFunc,
   returnAllKeyWords,
@@ -43,7 +39,6 @@ export default class FormComponent extends React.Component {
     base: null,
     consumerList: null,
     proList: null,
-    showWholeBase: false,
     name: '',
     numberOfAllUseCases: 0,
     wantedWords: [],
@@ -225,43 +220,26 @@ export default class FormComponent extends React.Component {
     this.showSearchValue(event);
   };
 
-  handleChangeConsumerChk = (e) => {
-    let showWholeBase = false;
-    let checkedConsumerValue = 'CONSUMER';
-    e.target.innerText = !this.state.consumer_chkbox ? `✓ ${checkedConsumerValue}` : checkedConsumerValue;
-
+  handleChangeConsumerChk = () => {
     this.setState({
-      showWholeBase: showWholeBase,
       consumer_chkbox: !this.state.consumer_chkbox,
+      pro_chkbox: false,
       items: [],
       name: ''
     });
   };
 
-  handleChangeProChk = (e) => {
-    let checkedProValue = 'PRO';
-    e.target.innerText = this.state.pro_chkbox ? checkedProValue : `✓ ${checkedProValue}`;
-
+  handleChangeProChk = () => {
     this.setState({
-      showWholeBase: false,
       pro_chkbox: !this.state.pro_chkbox,
+      consumer_chkbox: false,
       items: [],
       name: ''
     });
-  };
-
-  hideThisViewBtn = () => {
-    this.setState({
-      detailsSwitchView: false
-    })
   };
 
   createPrintView = (items) => () => {
     prepareHTMLOfSearchResults(items);
-  };
-
-  calculateNumbersOfUC = (items = this.state.items) => {
-    return calculateNumberOfUCForConsumer(items) + calculateNumberOfUCForPro(items);
   };
 
   chooseHashTag = (hashTagName) => () => {

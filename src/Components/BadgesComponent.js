@@ -3,8 +3,18 @@ import {Badge, Col, Row} from "reactstrap";
 
 export const BadgesComponent = ({chooseHashTag, state}) => {
 
-  let chosenHashtag = state.hashtag;
-  let uniqHashTagsForConsumer = state.uniqHashTagsForConsumer;
+  const chosenHashtag = state.hashtag;
+  const uniqHashTagsForConsumer = state.uniqHashTagsForConsumer;
+  const uniqHashTagsForPro = state.uniqHashTagsForPro;
+
+  const consumer_chkbox = state.consumer_chkbox;
+  const pro_chkbox = state.pro_chkbox;
+
+  const consumer_hashTags_exist = uniqHashTagsForConsumer && uniqHashTagsForConsumer.length;
+  const consumer =  consumer_hashTags_exist && consumer_chkbox && pro_chkbox === false;
+
+  const pro_hashTags_exist = uniqHashTagsForPro && uniqHashTagsForPro.length;
+  const pro =  pro_hashTags_exist && consumer_chkbox === false && pro_chkbox;
 
   const handleChooseHashtag = (e) => {
     let chosenHashtag = e.target.innerText;
@@ -16,7 +26,7 @@ export const BadgesComponent = ({chooseHashTag, state}) => {
       <Col sm="12" md={{size: 8, offset: 2}}>
 
         {
-          (uniqHashTagsForConsumer && uniqHashTagsForConsumer.length) ? (
+          consumer ? (
             uniqHashTagsForConsumer.map(hashtag => {
               return (
                 <h5 className="badge-mod" key={hashtag}>
@@ -25,8 +35,21 @@ export const BadgesComponent = ({chooseHashTag, state}) => {
                   >{hashtag}
                   </Badge>
                 </h5>
+
               )
-            })) : null
+            })
+          ) : pro ? (
+            uniqHashTagsForPro.map(hashtag => {
+              return (
+                <h5 className="badge-mod" key={hashtag}>
+                  <Badge onClick={handleChooseHashtag}
+                         color={hashtag === chosenHashtag ? "success" : "warning"}
+                  >{hashtag}
+                  </Badge>
+                </h5>
+              )
+            })
+          ): null
         }
 
       </Col>
