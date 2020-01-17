@@ -4,7 +4,7 @@ import {Button, ButtonGroup, Col, Row} from "reactstrap";
 export default class KeyWordsConnectorComponent extends React.Component {
 
   state = {
-    selected: 'OR'
+    selected: 'WITH'
   };
 
   clickHandler = (e) => {
@@ -30,10 +30,10 @@ export default class KeyWordsConnectorComponent extends React.Component {
               Words.
             </div>
             <ButtonGroup onClick={this.clickHandler}>
+              <Button outline color="primary" className="search-connector-buttons or-mod"
+                      active={this.state.selected === 'OR'}>OR</Button>
               <Button outline color="primary" className="search-connector-buttons"
                       active={this.state.selected === 'WITH'}>WITH</Button>
-              <Button outline color="primary" className="search-connector-buttons"
-                      active={this.state.selected === 'OR'}>OR</Button>
               <Button outline color="primary" className="search-connector-buttons"
                       active={this.state.selected === 'WITHOUT'}>WITHOUT</Button>
             </ButtonGroup>

@@ -53,7 +53,7 @@ export default class FormComponent extends React.Component {
     detailsSwitchView: false,
     readyToProceed: true,
     hashtag: '',
-    connector: 'OR'
+    connector: 'WITH'
   };
 
   componentDidMount() {
