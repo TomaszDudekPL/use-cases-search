@@ -208,12 +208,12 @@ export default class FormComponent extends React.Component {
     }
   };
 
-  onItemClicked = (ucInfoObj) => {
-    this.setState({
-      ucInfoObj: ucInfoObj,
-      detailsSwitchView: true
-    })
-  };
+  // onItemClicked = (ucInfoObj) => {
+  //   this.setState({
+  //     ucInfoObj: ucInfoObj,
+  //     detailsSwitchView: true
+  //   })
+  // };
 
   multipleFuncOnChangeHandler = (event) => {
     // this.filterList(event);
@@ -380,9 +380,9 @@ export default class FormComponent extends React.Component {
               <ResultNumberTextComponent state={this.state}/>
 
               <SearchResultItems items={this.state.items}
-                                 base={this.state.base}
+                                 consumerBase={this.state.consumerList}
+                                 proBase={this.state.proList}
                                  wantedWords={this.state.wantedWords}
-                                 itemClicked={this.onItemClicked}
                                  chosenKeyWords={this.state.chosenKeyWords}
                                  showWholeBase={this.state.showWholeBase}>.</SearchResultItems>
 

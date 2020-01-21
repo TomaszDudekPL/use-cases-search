@@ -19,7 +19,13 @@ export default class SearchResultItems extends React.Component {
     }
   };
 
-  onBreadcrumbClickHandler = (uc, arrWithAllSteps, describeTag_arr) => async () => {
+  onBreadcrumbClickHandler = (uc, pathToFile, describeTag_arr) => async () => {
+
+    let arrWithSteps = [];
+
+    if(describeTag_arr.includes('Step')){
+      arrWithSteps = this.getAllStepsFromFullBase(this.props.consumerBase, this.props.proBase, pathToFile);
+    }
 
     // close item if is open
     if (this.state.isOpen) {
@@ -29,8 +35,8 @@ export default class SearchResultItems extends React.Component {
 
     // prepare steps to show in collapse dialog
     let arrWithCleanSteps = [];
-    if (0 in arrWithAllSteps) {
-      arrWithAllSteps.forEach(step => {
+    if (0 in arrWithSteps) {
+      arrWithSteps.forEach(step => {
 
         // mark step which must be highlighted
         const reg = new RegExp(describeTag_arr);
@@ -84,6 +90,29 @@ export default class SearchResultItems extends React.Component {
     }
   };
 
+  getAllStepsFromFullBase = (consumerBase, proBase, pathToFile) => {
+
+    let arrWithSteps = [];
+
+    if(pathToFile.includes('CONSUMER')) {
+      for (let i = 0; i < consumerBase.length; i++) {
+        if (consumerBase[i][0] === pathToFile) {
+          arrWithSteps = consumerBase[i][1];
+          break;
+        }
+      }
+    } else if (pathToFile.includes('PRO')) {
+      for (let i = 0; i < proBase.length; i++) {
+        if (proBase[i][0] === pathToFile) {
+          arrWithSteps = proBase[i][1];
+          break;
+        }
+      }
+    }
+
+    return arrWithSteps;
+  };
+
   render() {
     let numberOfAllUC = 0;
 
@@ -131,7 +160,6 @@ export default class SearchResultItems extends React.Component {
 
               const useCaseNameWithoutTag_arr = [];
               useCaseNameWithoutTag_arr.push(str.trim());
-              const arrWithAllSteps = /Step /.test(uc) ? arr[1] : [];
               const randomNum = () => Math.floor(Math.random() * 1000);
 
               return (
@@ -140,7 +168,7 @@ export default class SearchResultItems extends React.Component {
 
                     <Breadcrumb className="list-item_mod"
                       // onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
-                                onClick={this.onBreadcrumbClickHandler(uc, arrWithAllSteps, describeTag_arr[0])}
+                                onClick={this.onBreadcrumbClickHandler(uc, arr[0], describeTag_arr[0])}
                     >
 
                       <div className="breadcrumb-item-mod">
