@@ -24,12 +24,11 @@ export default function (val) {
 
     const filePath = arr[0]; // string: path to file: "CONSUMER%2FGROUPS%2FGENERAL_GROUPS%2Fgroup_uc05"
     const arrOfUseCasesKeys = Object.keys(arr[1]); // array: files paths: ["HSH_Settings; !guest; !members; Step 2of7: Members settings; Temporary deactivation of Guest account", (...)]
+
+    // eslint-disable-next-line no-unused-vars
     const arrOfUseCasesValues = Object.values(arr[1]); // array: values: [ "BEFORE: (...)", "STEP 1: (...)", "STEP 2: (...)", "ASSERT: (...)", "END: (...)" ]
 
-    arr[1] = Object.keys(arr[1]); // <----------- THIS IS CLUE
-
-    // Najpierw: każdy Use Case zamknąć w dodatkową tablicę, a na drugim miejscu umieścić tablicę ze Step-ami
-    // Następnie: naprawić to co się zepsuje przez powyższe w innych plikach
+    arr[1] = Object.entries(arr[1]);
 
     number += arrOfUseCasesKeys.length;
 
@@ -55,8 +54,6 @@ export default function (val) {
 
     }
   });
-
-  // console.log('typeof consumerList: ', typeof consumerList, JSON.stringify(consumerList, null, 4));
 
   return {
     base: entries,

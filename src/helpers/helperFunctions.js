@@ -8,7 +8,9 @@ const prepareHTMLOfSearchResults = (items) => {
 
     let useCases = '';
 
-    let newArr = arr[1].map(uc => {
+    let newArr = arr[1].map(arrOfUseCaseAndItsSteps => {
+      let uc = arrOfUseCaseAndItsSteps[0];
+      console.log('typeof uc: ', typeof uc, JSON.stringify(uc, null, 4));
       uc = uc.replace(/;/g, '.').replace(/\|/, '/');
       uc = uc.match(/It:.+|Step.+/gmi);
       return uc[0];

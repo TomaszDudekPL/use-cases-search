@@ -97,14 +97,20 @@ export default class SearchResultItems extends React.Component {
     if(pathToFile.includes('CONSUMER')) {
       for (let i = 0; i < consumerBase.length; i++) {
         if (consumerBase[i][0] === pathToFile) {
-          arrWithSteps = consumerBase[i][1];
+          // eslint-disable-next-line no-loop-func
+          consumerBase[i][1].forEach(arrWithUCWithStepInDescriptor => {
+            arrWithSteps.push(arrWithUCWithStepInDescriptor[0]);
+          });
           break;
         }
       }
     } else if (pathToFile.includes('PRO')) {
       for (let i = 0; i < proBase.length; i++) {
         if (proBase[i][0] === pathToFile) {
-          arrWithSteps = proBase[i][1];
+          // eslint-disable-next-line no-loop-func
+          proBase[i][1].forEach(arrWithUCWithStepInDescriptor => {
+            arrWithSteps.push(arrWithUCWithStepInDescriptor[0]);
+          });
           break;
         }
       }
@@ -128,7 +134,8 @@ export default class SearchResultItems extends React.Component {
     return (
       this.props.items ? this.props.items.map(arr => {
         let arrWithData = arr[0].split(/%5C|%2F/);
-        return arr[1].map(uc => {
+        return arr[1].map(arrOfUseCaseAndItsSteps => {
+          let uc = arrOfUseCaseAndItsSteps[0];
 
             // if use case have '!validation;' key words do not show this use case.
             if (!(/!validation;/.test(uc))) {
