@@ -129,12 +129,14 @@ export default class SearchResultItems extends React.Component {
     let numberState = numberOfAllUC;
     let wantedWords = this.props.wantedWords;
     let chosenKeyWords = this.props.chosenKeyWords;
-    let showWholeBase = this.props.showWholeBase;
 
     return (
       this.props.items ? this.props.items.map(arr => {
-        let arrWithData = arr[0].split(/%5C|%2F/);
+        const arrWithData = arr[0].split(/%5C|%2F/);
         return arr[1].map(arrOfUseCaseAndItsSteps => {
+
+          const fileName = arrWithData[2];
+          const arrWithStepsOfCurrentUseCase = typeof arrOfUseCaseAndItsSteps[1] !== 'string'? arrOfUseCaseAndItsSteps[1]: [];
           let uc = arrOfUseCaseAndItsSteps[0];
 
             // if use case have '!validation;' key words do not show this use case.
@@ -193,7 +195,7 @@ export default class SearchResultItems extends React.Component {
                         <Highlighter
                           className={useCaseNameWithoutTag_arr[0].length > 140 ? "list-text_mod2 font-roboto" : "list-text_mod1 font-roboto"}
                           highlightClassName="highlight-text"
-                          searchWords={showWholeBase ? [] : wantedWords}
+                          searchWords={wantedWords}
                           autoEscape={true}
                           textToHighlight={useCaseNameWithoutTag_arr[0]}
                         />
@@ -225,10 +227,22 @@ export default class SearchResultItems extends React.Component {
                           <Card>
                             <CardBody>
                               <BreadcrumbItems arrWithData={arrWithData}/>
+
+                              <div className="collapse-steps collapse-descriptors">
+                                {arrWithStepsOfCurrentUseCase.length? <div>DESCRIPTION OF THIS TEST (step by step):</div>: null}
+                                {
+                                  arrWithStepsOfCurrentUseCase.map(step => {
+                                    return (
+                                      <div key={step} className="collapse-step_mod2">{step}</div>
+                                    )
+                                  })
+                                }
+                              </div>
+
                               <div className="collapse-steps">
                                 <span
                                   className={`collapse-descriptors ${!this.state.arrOfAllSteps.length ? 'descriptor_mod' : ''}`}>
-                                  {this.state.arrOfAllSteps.length ? 'REST STEPS OF WHOLE TEST:' : ''}</span>
+                                  {this.state.arrOfAllSteps.length ? `OTHER USE CASES IN FILE ${fileName}: ` : ''}</span>
                                 {
                                   this.state.arrOfAllSteps ? this.state.arrOfAllSteps.map(step => {
                                     const reg = new RegExp(/_XOXO/);
