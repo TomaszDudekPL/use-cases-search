@@ -228,8 +228,8 @@ export default class SearchResultItems extends React.Component {
                             <CardBody>
                               <BreadcrumbItems arrWithData={arrWithData}/>
 
-                              <div className="collapse-steps collapse-descriptors">
-                                {arrWithStepsOfCurrentUseCase.length? <div>DESCRIPTION OF THIS TEST (step by step):</div>: null}
+                              {arrWithStepsOfCurrentUseCase.length? <div className="collapse-steps collapse-descriptors test-description">
+                                {<div className="test-description-title">DESCRIPTION OF THIS TEST (step by step):</div>}
                                 {
                                   arrWithStepsOfCurrentUseCase.map(step => {
                                     return (
@@ -237,23 +237,21 @@ export default class SearchResultItems extends React.Component {
                                     )
                                   })
                                 }
-                              </div>
+                              </div>: null}
 
-                              <div className="collapse-steps">
-                                <span
-                                  className={`collapse-descriptors ${!this.state.arrOfAllSteps.length ? 'descriptor_mod' : ''}`}>
-                                  {this.state.arrOfAllSteps.length ? `OTHER USE CASES IN FILE ${fileName}: ` : ''}</span>
+                              {
+                                this.state.arrOfAllSteps.length? <div className="collapse-steps collapse-descriptors test-description">
+                                <div className="test-description-title">OTHER USE CASES (tests which are called "Steps") IN FILE {fileName}.js: </div>
                                 {
-                                  this.state.arrOfAllSteps ? this.state.arrOfAllSteps.map(step => {
+                                  this.state.arrOfAllSteps.map(step => {
                                     const reg = new RegExp(/_XOXO/);
                                     return <div
                                       key={step}
                                       className={reg.test(step) ? "collapse-step_mod1" : "collapse-step_mod2"}
                                     >{step.replace(/_XOXO/, '')}
                                     </div>
-                                  }) : null
-                                }
-                              </div>
+                                  })}</div>:null
+                              }
 
                               <div className="collapse-inputGroup_mod">
                                 <InputGroup size="sm">

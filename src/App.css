@@ -555,3 +555,16 @@ body::-webkit-scrollbar {
 .or-mod {
     width: 95px;
 }
+
+.test-description-title {
+    margin-bottom: 10px;
+}
+
+.test-description {
+    background-color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 15px;
+    font-weight: lighter;
+    padding: 10px;
+    width: 50%;
+}
