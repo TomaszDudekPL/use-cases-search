@@ -63,29 +63,6 @@ const saveToClipboard = () => {
   };
 };
 
-const returnRunCommand = (ucInfoObj) => {
-  let env;
-  if (ucInfoObj) {
-
-    switch (ucInfoObj.arr[0]) {
-      case 'CONSUMER':
-        env = 'master';
-        break;
-      case 'PRO':
-        env = 'master-pro';
-        break;
-      case 'LIVE':
-        env = 'live';
-        break;
-      default:
-        env = 'master';
-    }
-
-    let urlToFile = ucInfoObj.arr.join('/').concat('.js');
-    return `node launcher.js --env ${env} -d ${urlToFile}`;
-  }
-};
-
 const returnLinkToJenkinsJob = (data, arr) => {
 
   const jenkinsLink = 'https://10.32.9.218:7070/view/Selenium%20All/';
@@ -129,28 +106,27 @@ const returnLinkToJenkinsJob = (data, arr) => {
 
 };
 
-const calculateNumberOfUCForConsumer = (items) => {
-  let numberOfUCForConsumer = 0;
-  items.forEach(arr => {
-    numberOfUCForConsumer += /CONSUMER|LIVE/.test(arr[0]) ? arr[1].length : 0;
-  });
-  return numberOfUCForConsumer;
-};
-
-const calculateNumberOfUCForPro = (items) => {
-  let numberOfUCForPro = 0;
-  items.forEach(arr => {
-    numberOfUCForPro += /PRO/.test(arr[0]) ? arr[1].length : 0;
-  });
-  return numberOfUCForPro;
-};
+// const calculateNumberOfUCForConsumer = (items) => {
+//   let numberOfUCForConsumer = 0;
+//   items.forEach(arr => {
+//     numberOfUCForConsumer += /CONSUMER|LIVE/.test(arr[0]) ? arr[1].length : 0;
+//   });
+//   return numberOfUCForConsumer;
+// };
+//
+// const calculateNumberOfUCForPro = (items) => {
+//   let numberOfUCForPro = 0;
+//   items.forEach(arr => {
+//     numberOfUCForPro += /PRO/.test(arr[0]) ? arr[1].length : 0;
+//   });
+//   return numberOfUCForPro;
+// };
 
 export {
   preventActionHandler,
   saveToClipboard,
-  returnRunCommand,
   returnLinkToJenkinsJob,
-  calculateNumberOfUCForConsumer,
-  calculateNumberOfUCForPro,
+  // calculateNumberOfUCForConsumer,
+  // calculateNumberOfUCForPro,
   prepareHTMLOfSearchResults
 }
