@@ -16,7 +16,9 @@ export default class SearchResultItems extends React.Component {
 
   getImageFromFirebaseStorage = async (name, url) => {
 
-    if (!this.state.isOpen) {
+    if (!this.state.isOpen && !this.state[name]) {
+
+      console.log('GET STORAGE');
 
       const storage = firebase.storage();
       const pathReference = storage.ref(url);
@@ -34,7 +36,7 @@ export default class SearchResultItems extends React.Component {
         console.log('typeof error.code: ', typeof error.code, JSON.stringify(error.code, null, 4));
       });
 
-      this.setState({
+      await this.setState({
         [name]: firebaseURL
       });
     }
@@ -48,7 +50,7 @@ export default class SearchResultItems extends React.Component {
 
   onBreadcrumbClickHandler = (uc, pathToFile, describeTag_arr) => async () => {
 
-    this.getImageFromFirebaseStorage('greta', 'greta.jpg');
+    this.getImageFromFirebaseStorage(uc, 'greta.jpg');
 
     let arrWithSteps = [];
 
@@ -275,7 +277,7 @@ export default class SearchResultItems extends React.Component {
                                   </div>
 
                                   <div className="use-case-image">
-                                    {<img src={this.state.greta} alt="Smiley face"/>}
+                                    {<img src={this.state[uc]} alt="Smiley face"/>}
                                   </div>
 
                                 </div>
