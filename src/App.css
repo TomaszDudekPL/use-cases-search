@@ -38,7 +38,7 @@
     margin-bottom: 5px;
 }
 
-@media(max-width: 1300px) {
+@media (max-width: 1300px) {
 
     .form-mainLabel_mod1 {
         font-size: 3rem;
@@ -313,7 +313,7 @@ body::-webkit-scrollbar {
     font-weight: bolder;
 }
 
-.checkbox-counter{
+.checkbox-counter {
     color: #2fb431;
     font-size: .6rem;
 }
@@ -341,7 +341,7 @@ body::-webkit-scrollbar {
 }
 
 .bottom-margin {
-   margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .font-weight-bolder {
@@ -360,7 +360,7 @@ body::-webkit-scrollbar {
     margin-top: 5px;
 }
 
-.hashtags-title-mod{
+.hashtags-title-mod {
     color: #2fb431;
     font-weight: 600;
     letter-spacing: 1px;
@@ -408,7 +408,7 @@ body::-webkit-scrollbar {
 
 .collapse-descriptors {
     color: #f18911;
-    margin-right: 20px;
+    /*margin-right: 20px;*/
 }
 
 .descriptor_mod {
@@ -424,7 +424,7 @@ body::-webkit-scrollbar {
 }
 
 .collapse-steps {
-    margin-top: 15px;
+    /*margin-top: 15px;*/
     letter-spacing: .5px;
 }
 
@@ -548,6 +548,10 @@ body::-webkit-scrollbar {
     margin-top: 10px;
 }
 
+.margin-bottom {
+    margin-bottom: 10px;
+}
+
 .search-connector-buttons {
     font-weight: bolder;
 }
@@ -566,5 +570,24 @@ body::-webkit-scrollbar {
     border-radius: 15px;
     font-weight: lighter;
     padding: 10px;
-    width: 50%;
+}
+
+.uc-description_and_image-section {
+    display: flex;
+    margin-top: 10px;
+}
+
+.use-case-image {
+    margin-left: 5px;
+}
+
+.use-case-image img {
+    border-radius: 5px;
+}
+
+.steps-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 5px;
 }

@@ -1,8 +1,10 @@
 import React from 'react';
 import {Breadcrumb, Button, Card, CardBody, Col, Collapse, Input, InputGroup, Row} from 'reactstrap';
-import Highlighter from "react-highlight-words";
-import BreadcrumbItems from "./BreadcrumbItems";
-import {returnRunCommand, saveToClipboard} from "../helpers/helperFunctions";
+import Highlighter from 'react-highlight-words';
+import BreadcrumbItems from './BreadcrumbItems';
+import {returnRunCommand, saveToClipboard} from '../helpers/helperFunctions';
+import firebase from '@firebase/app';
+import '@firebase/storage';
 
 export default class SearchResultItems extends React.Component {
 
@@ -12,25 +14,52 @@ export default class SearchResultItems extends React.Component {
     arrOfAllSteps: []
   };
 
+  getImageFromFirebaseStorage = async (name, url) => {
+
+    if (!this.state.isOpen) {
+
+      const storage = firebase.storage();
+      const pathReference = storage.ref(url);
+
+      let firebaseURL = await pathReference.getDownloadURL().then(function(url) {
+
+        return url;
+
+        // Insert url into an <img> tag to "download"
+      }).catch(function(error) {
+
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+
+        console.log('typeof error.code: ', typeof error.code, JSON.stringify(error.code, null, 4));
+      });
+
+      this.setState({
+        [name]: firebaseURL
+      });
+    }
+  };
+
   onItemClickedHandler = (arrWithData, uc) => {
     return {
-      arr: arrWithData,
-      uc
-    }
+      arr: arrWithData, uc
+    };
   };
 
   onBreadcrumbClickHandler = (uc, pathToFile, describeTag_arr) => async () => {
 
+    this.getImageFromFirebaseStorage('greta', 'greta.jpg');
+
     let arrWithSteps = [];
 
-    if(describeTag_arr.includes('Step')){
+    if (describeTag_arr.includes('Step')) {
       arrWithSteps = this.getAllStepsFromFullBase(this.props.consumerBase, this.props.proBase, pathToFile);
     }
 
     // close item if is open
     if (this.state.isOpen) {
       let elem = await document.querySelector('.list-item_mod .show');
-      if (elem) await elem.classList.remove("show");
+      if (elem) await elem.classList.remove('show');
     }
 
     // prepare steps to show in collapse dialog
@@ -69,16 +98,14 @@ export default class SearchResultItems extends React.Component {
     // set: load all steps of clicked item
     await this.setState(() => {
       return {
-        shouldBeOpen: uc !== this.state.shouldBeOpen ? uc : '',
-        isOpen: !this.state.isOpen,
-        arrOfAllSteps: arrWithCleanSteps
-      }
+        shouldBeOpen: uc !== this.state.shouldBeOpen ? uc : '', isOpen: !this.state.isOpen, arrOfAllSteps: arrWithCleanSteps
+      };
     });
   };
 
   shouldBeOpen = (key) => {
     if (key === this.state.shouldBeOpen) {
-      return 'show'
+      return 'show';
     }
   };
 
@@ -94,7 +121,7 @@ export default class SearchResultItems extends React.Component {
 
     let arrWithSteps = [];
 
-    if(pathToFile.includes('CONSUMER')) {
+    if (pathToFile.includes('CONSUMER')) {
       for (let i = 0; i < consumerBase.length; i++) {
         if (consumerBase[i][0] === pathToFile) {
           // eslint-disable-next-line no-loop-func
@@ -130,14 +157,13 @@ export default class SearchResultItems extends React.Component {
     let wantedWords = this.props.wantedWords;
     let chosenKeyWords = this.props.chosenKeyWords;
 
-    return (
-      this.props.items ? this.props.items.map(arr => {
-        const arrWithData = arr[0].split(/%5C|%2F/);
-        return arr[1].map(arrOfUseCaseAndItsSteps => {
+    return (this.props.items ? this.props.items.map(arr => {
+          const arrWithData = arr[0].split(/%5C|%2F/);
+          return arr[1].map(arrOfUseCaseAndItsSteps => {
 
-          const fileName = arrWithData[2];
-          const arrWithStepsOfCurrentUseCase = typeof arrOfUseCaseAndItsSteps[1] !== 'string'? arrOfUseCaseAndItsSteps[1]: [];
-          let uc = arrOfUseCaseAndItsSteps[0];
+            const fileName = arrWithData[2];
+            const arrWithStepsOfCurrentUseCase = typeof arrOfUseCaseAndItsSteps[1] !== 'string' ? arrOfUseCaseAndItsSteps[1] : [];
+            let uc = arrOfUseCaseAndItsSteps[0];
 
             // if use case have '!validation;' key words do not show this use case.
             if (!(/!validation;/.test(uc))) {
@@ -171,143 +197,142 @@ export default class SearchResultItems extends React.Component {
               useCaseNameWithoutTag_arr.push(str.trim());
               const randomNum = () => Math.floor(Math.random() * 1000);
 
-              return (
-                <Row key={uc + randomNum()}>
-                  <Col sm="12" md={{size: 12, offset: 0}}>
+              return (<Row key={uc + randomNum()}>
+                    <Col sm="12" md={{size: 12, offset: 0}}>
 
-                    <Breadcrumb className="list-item_mod"
-                      // onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
-                                onClick={this.onBreadcrumbClickHandler(uc, arr[0], describeTag_arr[0])}
-                    >
+                      <Breadcrumb className="list-item_mod"
+                          // onClick={itemClicked.bind(null, this.onItemClickedHandler(arrWithData, uc))}
+                                  onClick={this.onBreadcrumbClickHandler(uc, arr[0], describeTag_arr[0])}
+                      >
 
-                      <div className="breadcrumb-item-mod">
-                        <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
-                      </div>
-
-                      <div className="use_case-text_mod">
-                        <Highlighter
-                          className={useCaseNameWithoutTag_arr[0].length > 140 ? "list-text_mod2" : "list-text_mod1"}
-                          highlightClassName="highlight-describeTag"
-                          searchWords={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)}
-                          autoEscape={true}
-                          textToHighlight={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)[0]}
-                        />
-                        <Highlighter
-                          className={useCaseNameWithoutTag_arr[0].length > 140 ? "list-text_mod2 font-roboto" : "list-text_mod1 font-roboto"}
-                          highlightClassName="highlight-text"
-                          searchWords={wantedWords}
-                          autoEscape={true}
-                          textToHighlight={useCaseNameWithoutTag_arr[0]}
-                        />
-                      </div>
-
-                      <div className="item-footer-mod">
-                        <div className="hashtags-title-mod">HASHTAGS:
-                          {allHashTags ? allHashTags.map(singleTag => {
-                            return <span key={singleTag + randomNum()} className="hashtag-item-mod"> {singleTag} </span>
-                          }) : null}
+                        <div className="breadcrumb-item-mod">
+                          <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
                         </div>
 
-                        <div className="keywords-title-mod">KEY WORDS:
-                          {allKeyWords ? allKeyWords.map(singleKeyWord => {
-                            return <Highlighter
-                              key={singleKeyWord + randomNum()}
-                              className="keyword-item-mod"
-                              highlightClassName="highlight-text"
-                              searchWords={chosenKeyWords ? chosenKeyWords : []}
+                        <div className="use_case-text_mod">
+                          <Highlighter
+                              className={useCaseNameWithoutTag_arr[0].length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
+                              highlightClassName="highlight-describeTag"
+                              searchWords={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)}
                               autoEscape={true}
-                              textToHighlight={singleKeyWord}
-                            />
-                          }) : null}
+                              textToHighlight={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)[0]}
+                          />
+                          <Highlighter
+                              className={useCaseNameWithoutTag_arr[0].length > 140 ? 'list-text_mod2 font-roboto' : 'list-text_mod1 font-roboto'}
+                              highlightClassName="highlight-text"
+                              searchWords={wantedWords}
+                              autoEscape={true}
+                              textToHighlight={useCaseNameWithoutTag_arr[0]}
+                          />
                         </div>
-                      </div>
 
-                      <div className="collapse-card-mod">
-                        <Collapse className={this.shouldBeOpen(uc)}>
-                          <Card>
-                            <CardBody>
-                              <BreadcrumbItems arrWithData={arrWithData}/>
+                        <div className="item-footer-mod">
+                          <div className="hashtags-title-mod">HASHTAGS:
+                            {allHashTags ? allHashTags.map(singleTag => {
+                              return <span key={singleTag + randomNum()} className="hashtag-item-mod"> {singleTag} </span>;
+                            }) : null}
+                          </div>
 
-                              {arrWithStepsOfCurrentUseCase.length? <div className="collapse-steps collapse-descriptors test-description">
-                                {<div className="test-description-title">DESCRIPTION OF THIS TEST (step by step):</div>}
-                                {
-                                  arrWithStepsOfCurrentUseCase.map(step => {
-                                    return (
-                                      <div key={step} className="collapse-step_mod2">{step}</div>
-                                    )
-                                  })
-                                }
-                              </div>: null}
+                          <div className="keywords-title-mod">KEY WORDS:
+                            {allKeyWords ? allKeyWords.map(singleKeyWord => {
+                              return <Highlighter
+                                  key={singleKeyWord + randomNum()}
+                                  className="keyword-item-mod"
+                                  highlightClassName="highlight-text"
+                                  searchWords={chosenKeyWords ? chosenKeyWords : []}
+                                  autoEscape={true}
+                                  textToHighlight={singleKeyWord}
+                              />;
+                            }) : null}
+                          </div>
+                        </div>
 
-                              {
-                                this.state.arrOfAllSteps.length? <div className="collapse-steps collapse-descriptors test-description">
-                                <div className="test-description-title">OTHER USE CASES (tests which are called "Steps") IN FILE {fileName}.js: </div>
-                                {
-                                  this.state.arrOfAllSteps.map(step => {
-                                    const reg = new RegExp(/_XOXO/);
-                                    return <div
-                                      key={step}
-                                      className={reg.test(step) ? "collapse-step_mod1" : "collapse-step_mod2"}
-                                    >{step.replace(/_XOXO/, '')}
-                                    </div>
-                                  })}</div>:null
-                              }
+                        <div className="collapse-card-mod">
+                          <Collapse className={this.shouldBeOpen(uc)}>
+                            <Card>
+                              <CardBody>
+                                <BreadcrumbItems arrWithData={arrWithData}/>
 
-                              <div className="collapse-inputGroup_mod">
-                                <InputGroup size="sm">
-                                  {/*<Label className="jumbotron-label_mod">USE CASE:</Label>*/}
-                                  <Button color="success"
-                                          size="sm"
-                                          outline
-                                          className="collapse-button_mod"
-                                          value={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}
-                                          onClick={saveToClipboard()}>Copy Use Case name</Button>
-                                  <Input placeholder=""
-                                         type="text"
-                                         spellCheck="false"
-                                         value={useCaseNameWithoutTag_arr[0]}
-                                         readOnly
-                                         className="collapse-input_mod collapse-input-one_mod shadow-none"
-                                         id={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}/>
+                                <div className="uc-description_and_image-section">
 
-                                </InputGroup>
+                                  <div className="steps-section">
+                                    {arrWithStepsOfCurrentUseCase.length ? <div className="collapse-steps collapse-descriptors test-description margin-bottom">
+                                      {<div className="test-description-title">DESCRIPTION OF THIS TEST (step by step):</div>}
+                                      {arrWithStepsOfCurrentUseCase.map(step => {
+                                        return (<div key={step} className="collapse-step_mod2">{step}</div>);
+                                      })}
+                                    </div> : null}
+                                    {this.state.arrOfAllSteps.length ? <div className="collapse-steps collapse-descriptors test-description">
+                                      <div className="test-description-title">OTHER USE CASES (tests which are called "Steps") IN FILE {fileName}.js:</div>
+                                      {this.state.arrOfAllSteps.map(step => {
+                                        const reg = new RegExp(/_XOXO/);
+                                        return <div
+                                            key={step}
+                                            className={reg.test(step) ? 'collapse-step_mod1' : 'collapse-step_mod2'}
+                                        >{step.replace(/_XOXO/, '')}
+                                        </div>;
+                                      })}</div> : null}
+                                  </div>
 
-                                <InputGroup size="sm">
-                                  {/*<Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>*/}
-                                  <Button color="success"
-                                          size="sm"
-                                          outline
-                                          className="collapse-button_mod"
-                                          value={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}
-                                          onClick={saveToClipboard()}>Copy run command</Button>
-                                  <Input placeholder=""
-                                         type="text"
-                                         spellCheck="false"
-                                         value={returnRunCommand(this.onItemClickedHandler(arrWithData, uc))}
-                                         readOnly
-                                         className="collapse-input_mod collapse-input-two_mod shadow-none"
-                                         id={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}/>
+                                  <div className="use-case-image">
+                                    {<img src={this.state.greta} alt="Smiley face"/>}
+                                  </div>
 
-                                </InputGroup>
-                              </div>
+                                </div>
 
-                            </CardBody>
-                          </Card>
-                        </Collapse>
-                      </div>
+                                <div className="collapse-inputGroup_mod">
+                                  <InputGroup size="sm">
+                                    {/*<Label className="jumbotron-label_mod">USE CASE:</Label>*/}
+                                    <Button color="success"
+                                            size="sm"
+                                            outline
+                                            className="collapse-button_mod"
+                                            value={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}
+                                            onClick={saveToClipboard()}>Copy Use Case name</Button>
+                                    <Input placeholder=""
+                                           type="text"
+                                           spellCheck="false"
+                                           value={useCaseNameWithoutTag_arr[0]}
+                                           readOnly
+                                           className="collapse-input_mod collapse-input-one_mod shadow-none"
+                                           id={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}/>
 
-                    </Breadcrumb>
+                                  </InputGroup>
 
-                  </Col>
-                </Row>
-              )
+                                  <InputGroup size="sm">
+                                    {/*<Label className="jumbotron-label_mod">COMMAND TO RUN THIS UC:</Label>*/}
+                                    <Button color="success"
+                                            size="sm"
+                                            outline
+                                            className="collapse-button_mod"
+                                            value={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}
+                                            onClick={saveToClipboard()}>Copy run command</Button>
+                                    <Input placeholder=""
+                                           type="text"
+                                           spellCheck="false"
+                                           value={returnRunCommand(this.onItemClickedHandler(arrWithData, uc))}
+                                           readOnly
+                                           className="collapse-input_mod collapse-input-two_mod shadow-none"
+                                           id={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}/>
+
+                                  </InputGroup>
+                                </div>
+
+                              </CardBody>
+                            </Card>
+                          </Collapse>
+                        </div>
+
+                      </Breadcrumb>
+
+                    </Col>
+                  </Row>);
             }
             return '';
-          }
-        )
-      }) : null
+          });
+        }) : null
 
-    )
+    );
   }
 }
 
