@@ -404,7 +404,8 @@ body::-webkit-scrollbar {
 }
 
 .card-body {
-    padding-bottom: 0;
+    padding-bottom: unset;
+    padding-top: unset;
 }
 
 .collapse-descriptors {

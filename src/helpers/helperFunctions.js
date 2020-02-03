@@ -106,27 +106,19 @@ const returnLinkToJenkinsJob = (data, arr) => {
 
 };
 
-// const calculateNumberOfUCForConsumer = (items) => {
-//   let numberOfUCForConsumer = 0;
-//   items.forEach(arr => {
-//     numberOfUCForConsumer += /CONSUMER|LIVE/.test(arr[0]) ? arr[1].length : 0;
-//   });
-//   return numberOfUCForConsumer;
-// };
-//
-// const calculateNumberOfUCForPro = (items) => {
-//   let numberOfUCForPro = 0;
-//   items.forEach(arr => {
-//     numberOfUCForPro += /PRO/.test(arr[0]) ? arr[1].length : 0;
-//   });
-//   return numberOfUCForPro;
-// };
+const getUrlToImageInFirebase = (arrWithData, name) => {
+
+  const useCaseName = name.match(/It:.+|Step.+/gmi)[0].replace(':','').replace('.', '');
+  const directoryPath = arrWithData.join('/');
+
+  return `gs://use-cases-search.appspot.com/${directoryPath}/${useCaseName}.jpg`
+
+};
 
 export {
   preventActionHandler,
   saveToClipboard,
   returnLinkToJenkinsJob,
-  // calculateNumberOfUCForConsumer,
-  // calculateNumberOfUCForPro,
-  prepareHTMLOfSearchResults
+  prepareHTMLOfSearchResults,
+  getUrlToImageInFirebase
 }

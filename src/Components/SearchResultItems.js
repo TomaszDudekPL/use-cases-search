@@ -2,7 +2,7 @@ import React from 'react';
 import {Breadcrumb, Button, Card, CardBody, Col, Collapse, Input, InputGroup, Row} from 'reactstrap';
 import Highlighter from 'react-highlight-words';
 import BreadcrumbItems from './BreadcrumbItems';
-import {saveToClipboard} from '../helpers/helperFunctions';
+import {saveToClipboard, getUrlToImageInFirebase} from '../helpers/helperFunctions';
 import firebase from '@firebase/app';
 import '@firebase/storage';
 
@@ -72,7 +72,7 @@ export default class SearchResultItems extends React.Component {
 
     }
 
-    this.getImageFromFirebaseStorage(uc, 'greta.jpg');
+    this.getImageFromFirebaseStorage(uc, arrWithData);
 
     // set: if you clicked different item set uc name in state, if the same then clean state (rerender run onBreadcrumbClickHandler once again and .show class will be removed)
     // set: change isOpen state after each click (rerender) on opposite
@@ -89,14 +89,15 @@ export default class SearchResultItems extends React.Component {
 
   };
 
-  getImageFromFirebaseStorage = async (name, url) => {
+  getImageFromFirebaseStorage = async (name, arrWithData) => {
 
     if (!this.state.isOpen && !this.state[name]) {
 
       console.log('GET STORAGE');
 
+      const urlOfImageInFirebase = getUrlToImageInFirebase(arrWithData, name);
       const storage = firebase.storage();
-      const pathReference = storage.ref(url);
+      const pathReference = storage.refFromURL(urlOfImageInFirebase);
 
       const firebaseURL = await pathReference.getDownloadURL().then(function(url) {
 
@@ -112,7 +113,7 @@ export default class SearchResultItems extends React.Component {
       });
 
       await this.setState({
-        [name]: firebaseURL
+        [name]: firebaseURL || 'https://firebasestorage.googleapis.com/v0/b/use-cases-search.appspot.com/o/CONSUMER%2FGROUP_ALERTS%2Fgroup_alerts_uc01%2FStep%202of4%20Can%20emojify%20post%20in%20group-alert%20dialog.jpg?alt=media&token=5ba8fd15-357c-4545-9620-ef075f299c18'
       });
     }
   };
@@ -308,7 +309,7 @@ export default class SearchResultItems extends React.Component {
                               </div>
 
                               <div className="use-case-image">
-                                {<img src={this.state[uc]} alt="Smiley face"/>}
+                                {<img src={this.state[uc]} alt="Smiley face" height="500" width="700"/>}
                               </div>
 
                             </div>
