@@ -235,14 +235,13 @@ export default class SearchResultItems extends React.Component {
               return (<Row key={uc + randomNum()}>
                 <Col sm="12" md={{size: 12, offset: 0}}>
 
-                  <Breadcrumb className="list-item_mod"
-                              onClick={this.onBreadcrumbClickHandler(uc, arr, describeTag_arr[0])}
-                  >
+                  <Breadcrumb className="list-item_mod">
+
+                    <div className="breadcrumb-header" onClick={this.onBreadcrumbClickHandler(uc, arr, describeTag_arr[0])}>
 
                     <div className="breadcrumb-item-mod">
                       <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
                     </div>
-
                     <div className="use_case-text_mod">
                       <Highlighter
                           className={useCaseNameWithoutTag_arr[0].length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
@@ -259,7 +258,6 @@ export default class SearchResultItems extends React.Component {
                           textToHighlight={useCaseNameWithoutTag_arr[0]}
                       />
                     </div>
-
                     <div className="item-footer-mod">
                       <div className="hashtags-title-mod">HASHTAGS:
                         {allHashTags ? allHashTags.map(singleTag => {
@@ -279,6 +277,8 @@ export default class SearchResultItems extends React.Component {
                           />;
                         }) : null}
                       </div>
+                    </div>
+
                     </div>
 
                     <div className="collapse-card-mod">

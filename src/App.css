@@ -275,6 +275,7 @@ body::-webkit-scrollbar {
 
 .collapse-inputGroup_mod {
     margin-top: 30px;
+    padding-bottom: 10px;
 }
 
 .collapse-button_mod {
@@ -321,7 +322,7 @@ body::-webkit-scrollbar {
 .print_view-button_mod {
     display: block;
     float: right;
-    margin-right: 50px;
+    margin-right: -200px;
 }
 
 .all-cases-button_mod {
@@ -590,4 +591,13 @@ body::-webkit-scrollbar {
     flex-direction: column;
     justify-content: space-between;
     margin-right: 5px;
+}
+.breadcrumb {
+    padding: unset;
+}
+
+.breadcrumb-header {
+    background-color: #eceff2;
+    width: 100%;
+    padding: 10px;
 }
