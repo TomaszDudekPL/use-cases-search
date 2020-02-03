@@ -1,48 +1,41 @@
-const prepareHTMLOfSearchResults = (items) => {
+const prepareHTMLOfSearchResults = (items, func) => {
 
   let keys_str = '';
 
   items.forEach((arr) => {
     let key = arr[0].replace(/%5C|%2F/g, '/');
-    keys_str += '<br /><form>' + key + '</form>';
+    keys_str += `<br /><form style="font-weight:bold">${key}</form>`;
 
     let useCases = '';
 
     let newArr = arr[1].map(arrOfUseCaseAndItsSteps => {
       let uc = arrOfUseCaseAndItsSteps[0];
+      let steps = arrOfUseCaseAndItsSteps[1];
       uc = uc.replace(/;/g, '.').replace(/\|/, '/');
       uc = uc.match(/It:.+|Step.+/gmi);
-      return uc[0];
+      return {
+        [uc[0]]: steps
+      };
     });
 
-    // sorting arr for steps. Steps with numeration higher then 9 can not be first in arr but last.
-    const reg2 = new RegExp(/ [0-9]of/);
-    const newArr1 = [];
-    const newArr2 = [];
+    newArr.forEach(obj_uc_steps => {
+      const entry = Object.entries(obj_uc_steps)[0];
+      useCases += `<p style="color:black;width:100%;${func?'font-weight:bold;':''}">${entry[0]}</p>`;
 
-    newArr.forEach((step) => {
-      if (reg2.test(step)) {
-        newArr1.push(step);
-      } else {
-        newArr2.push(step);
+      if(Array.isArray(entry[1]) && func === 'WITH DESCRIPTIONS') {
+        entry[1].forEach(steps => {
+          useCases += `<p style="color:black;width:100%;font-style:italic;margin-left:40px">${steps}</p>`
+        })
       }
+
     });
 
-    newArr1.sort();
-    newArr2.sort();
-    newArr = [...newArr1, ...newArr2];
-    // ----------------------------------------------------------------------------------------------
-
-    newArr.forEach(uc => {
-      useCases += '<p style="color:black;width:100%;"> ' + uc + '</p>'
-    });
-
-    keys_str += useCases
+    keys_str += useCases;
 
   });
 
   let myWindow = window.open("", "_blank");
-  myWindow.document.write('<section style="color:#b42012;display:flex;flex-direction:column;align-items:center;"><div>' + keys_str + '</div></section>');
+  myWindow.document.write(`<section style="color:#b42012;display:flex;flex-direction:column;align-items:center;"><div>${keys_str}</div></section>`);
 
 };
 

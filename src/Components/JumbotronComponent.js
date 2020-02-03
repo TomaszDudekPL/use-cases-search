@@ -17,7 +17,8 @@ export default class JumbotronComponent extends React.Component {
                                       </Button>
 
                                       <Button color="warning"
-                                              size="sm">WITH DESCRIPTIONS
+                                              size="sm"
+                                              onClick={this.props.createPrintView(this.props.items, 'WITH DESCRIPTIONS')}>WITH DESCRIPTIONS
                                       </Button>
                                   </ButtonGroup>: null}
 

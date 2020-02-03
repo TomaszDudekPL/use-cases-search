@@ -208,13 +208,6 @@ export default class FormComponent extends React.Component {
     }
   };
 
-  // onItemClicked = (ucInfoObj) => {
-  //   this.setState({
-  //     ucInfoObj: ucInfoObj,
-  //     detailsSwitchView: true
-  //   })
-  // };
-
   multipleFuncOnChangeHandler = (event) => {
     // this.filterList(event);
     this.showSearchValue(event);
@@ -248,8 +241,8 @@ export default class FormComponent extends React.Component {
     });
   };
 
-  createPrintView = (items) => () => {
-    prepareHTMLOfSearchResults(items);
+  createPrintView = (items, func) => () => {
+    prepareHTMLOfSearchResults(items, func);
   };
 
   chooseHashTag = (hashTagName) => () => {
