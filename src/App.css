@@ -322,7 +322,7 @@ body::-webkit-scrollbar {
 .print_view-button_mod {
     display: block;
     float: right;
-    margin-right: -200px;
+    margin-right: -300px;
 }
 
 .all-cases-button_mod {
