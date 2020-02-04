@@ -310,7 +310,7 @@ export default class SearchResultItems extends React.Component {
                               </div>
 
                               <div className="use-case-image">
-                                {<img src={this.state[uc]} alt="Smiley face"/>}
+                                {<img src={this.state[uc]} alt={uc}/>}
                               </div>
 
                             </div>

@@ -106,6 +106,7 @@ const getUrlToImageInFirebase = (arrWithData, name) => {
   .replace(/:/gm,'')
   .replace(/\./gm, '')
   .replace(/>/gm, '')
+  .replace(/\//gm, '-')
   .slice(0, 65);
 
   const directoryPath = arrWithData.join('/');
