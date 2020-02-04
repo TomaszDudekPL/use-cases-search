@@ -96,6 +96,7 @@ export default class SearchResultItems extends React.Component {
       console.log('GET STORAGE');
 
       const urlOfImageInFirebase = getUrlToImageInFirebase(arrWithData, name);
+      console.log('typeof urlOfImageInFirebase: ', typeof urlOfImageInFirebase, JSON.stringify(urlOfImageInFirebase, null, 4));
       const storage = firebase.storage();
       const pathReference = storage.refFromURL(urlOfImageInFirebase);
 
@@ -309,7 +310,7 @@ export default class SearchResultItems extends React.Component {
                               </div>
 
                               <div className="use-case-image">
-                                {<img src={this.state[uc]} alt="Smiley face" height="500" width="700"/>}
+                                {<img src={this.state[uc]} alt="Smiley face"/>}
                               </div>
 
                             </div>

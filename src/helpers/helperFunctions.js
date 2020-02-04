@@ -101,10 +101,16 @@ const returnLinkToJenkinsJob = (data, arr) => {
 
 const getUrlToImageInFirebase = (arrWithData, name) => {
 
-  const useCaseName = name.match(/It:.+|Step.+/gmi)[0].replace(':','').replace('.', '');
+  const useCaseName =
+      name.match(/It:.+|Step.+/gmi)[0]
+  .replace(/:/gm,'')
+  .replace(/\./gm, '')
+  .replace(/>/gm, '')
+  .slice(0, 65);
+
   const directoryPath = arrWithData.join('/');
 
-  return `gs://use-cases-search.appspot.com/${directoryPath}/${useCaseName}.jpg`
+  return `gs://use-cases-search.appspot.com/${directoryPath}.js/${useCaseName}.jpg`
 
 };
 

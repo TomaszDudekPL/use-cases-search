@@ -579,11 +579,15 @@ body::-webkit-scrollbar {
 }
 
 .use-case-image {
-    margin-left: 5px;
+    margin-left: 300px;
 }
 
 .use-case-image img {
     border-radius: 5px;
+    max-width: 800px;
+    max-height: 600px;
+    width: auto;
+    height: auto;
 }
 
 .steps-section {
