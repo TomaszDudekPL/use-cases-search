@@ -114,7 +114,7 @@ export default class SearchResultItems extends React.Component {
       });
 
       await this.setState({
-        [name]: firebaseURL || 'https://firebasestorage.googleapis.com/v0/b/use-cases-search.appspot.com/o/CONSUMER%2FGROUP_ALERTS%2Fgroup_alerts_uc01%2FStep%202of4%20Can%20emojify%20post%20in%20group-alert%20dialog.jpg?alt=media&token=5ba8fd15-357c-4545-9620-ef075f299c18'
+        [name]: firebaseURL || 'https://firebasestorage.googleapis.com/v0/b/use-cases-search.appspot.com/o/greta.jpg?alt=media&token=23552523-53c9-418c-a9dd-a7887cd46236'
       });
     }
   };
