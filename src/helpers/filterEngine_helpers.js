@@ -196,12 +196,14 @@ const returnUpdatedListOfUseCases_ifOneWord = (base, searchValue) => {
 
   base.forEach(arrOfUC => {
 
-    arrOfUC[1].forEach(uc => {
+    arrOfUC[1].forEach(arrWithUC => {
+
+      const uc = arrWithUC[0];
 
       wantedValue = getLowerCaseFunc(searchValue);
       wantedValue = removeSpacesFunc(wantedValue);
 
-      if (getLowerCaseFunc(uc).search(wantedValue) !== -1) ucArr.add(uc);
+      if (getLowerCaseFunc(uc).search(wantedValue) !== -1) ucArr.add(arrWithUC);
 
     });
 
