@@ -192,7 +192,7 @@ const returnUpdatedListOfUseCases_ifOneWord = (base, searchValue) => {
 
   let updatedList = [];
   let ucArr = new Set();
-  let wantedValue;
+  let wantedValue = '';
 
   base.forEach(arrOfUC => {
 
@@ -222,18 +222,24 @@ const returnUpdatedListOfUseCases_ifMoreThenOneWord = (base, arrOfKeyWords, firs
   base.forEach(arrOfUC => {
 
     arrOfUC[1].forEach(
-      function (uc) {
+      function (arrWithUC) {
+
+        const uc = arrWithUC[0];
+
         if (getLowerCaseFunc(uc).search(firstKeyWord) !== -1) {
           if (!arrOfKeyWords[1]) {
-            ucArr.add(uc);
+            ucArr.add(arrWithUC);
           }
+
           if (arrOfKeyWords[1]) {
             if (getLowerCaseFunc(uc).search(secondKeyWord) !== -1) {
+
               if (!arrOfKeyWords[2]) {
-                ucArr.add(uc);
+                ucArr.add(arrWithUC);
               } else if (arrOfKeyWords[1] && arrOfKeyWords[2]) {
+
                 if (getLowerCaseFunc(uc).search(thirdKeyWord) !== -1) {
-                  ucArr.add(uc);
+                  ucArr.add(arrWithUC);
                 }
               }
             }
