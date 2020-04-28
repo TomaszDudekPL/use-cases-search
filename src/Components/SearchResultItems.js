@@ -184,6 +184,19 @@ export default class SearchResultItems extends React.Component {
     return arrWithSteps;
   };
 
+  classesForSteps = (step) => {
+
+    let classStr = '';
+
+    if (step.includes('BEFORE:')) classStr = 'before-class';
+    if (step.includes('STEP ')) classStr = 'step-class';
+    if (step.includes('END:')) classStr = 'end-class';
+    if (step.includes('ASSERT:')) classStr = 'assert-class';
+
+    return `collapse-step_mod2 ${classStr}`;
+
+  }
+
   render() {
     let numberOfAllUC = 0;
 
@@ -293,9 +306,9 @@ export default class SearchResultItems extends React.Component {
 
                               <div className="steps-section">
                                 {arrWithStepsOfCurrentUseCase.length ? <div className="collapse-steps collapse-descriptors test-description margin-bottom">
-                                  {<div className="test-description-title">DESCRIPTION OF THIS TEST (step by step):</div>}
+                                  {<div className="test-description-title">TEST DESCRIPTION:</div>}
                                   {arrWithStepsOfCurrentUseCase.map(step => {
-                                    return (<div key={step} className="collapse-step_mod2">{step}</div>);
+                                    return (<div key={step} className={this.classesForSteps(step)}>{step}</div>);
                                   })}
                                 </div> : null}
 

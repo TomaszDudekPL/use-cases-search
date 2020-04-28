@@ -408,7 +408,7 @@ body::-webkit-scrollbar {
 }
 
 .collapse-descriptors {
-    color: #f18911;
+    color: #f15f11;
     /*margin-right: 20px;*/
 }
 
@@ -563,6 +563,7 @@ body::-webkit-scrollbar {
 
 .test-description-title {
     margin-bottom: 10px;
+    font-weight: bolder;
 }
 
 .test-description {
@@ -605,4 +606,32 @@ body::-webkit-scrollbar {
     background-color: #eceff2;
     width: 100%;
     padding: 10px;
+}
+
+.before-class, .end-class {
+    color: #115f11;
+    font-size: 1.1em;
+    font-weight: bolder;
+    font-style: italic;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.end-class {
+    color: #115f11;
+}
+
+.step-class {
+    color: green;
+    padding: 2px;
+    /*font-weight: bolder;*/
+    font-size: 1.08em;
+    font-style: italic;
+}
+
+.assert-class {
+    color: #a80425;
+    font-style: italic;
+    /*font-weight: bolder;*/
+    font-size: 0.9em;
+    padding: 1px;
 }
