@@ -310,7 +310,7 @@ export default class SearchResultItems extends React.Component {
                                 {arrWithStepsOfCurrentUseCase.length ? <div className="collapse-steps collapse-descriptors test-description margin-bottom">
                                   {<div className="test-description-title">TEST DESCRIPTION</div>}
                                   {arrWithStepsOfCurrentUseCase.map(step => {
-                                    return (<div key={step} className={this.classesForSteps(step)}>{step}</div>);
+                                    return (<div key={step + String(randomNum())} className={this.classesForSteps(step)}>{step}</div>);
                                   })}
                                 </div> : null}
 
