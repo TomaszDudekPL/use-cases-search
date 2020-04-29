@@ -261,9 +261,11 @@ export default class SearchResultItems extends React.Component {
                       <Highlighter
                           className={useCaseNameWithoutTag_arr[0].length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
                           highlightClassName="highlight-describeTag"
-                          searchWords={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)}
+                          // searchWords={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)}
+                          searchWords={describeTag_View}
                           autoEscape={true}
-                          textToHighlight={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)[0]}
+                          // textToHighlight={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)[0]}
+                          textToHighlight={describeTag_View[0]}
                       />
                       <Highlighter
                           className={useCaseNameWithoutTag_arr[0].length > 140 ? 'list-text_mod2 font-roboto' : 'list-text_mod1 font-roboto'}
@@ -306,19 +308,19 @@ export default class SearchResultItems extends React.Component {
 
                               <div className="steps-section">
                                 {arrWithStepsOfCurrentUseCase.length ? <div className="collapse-steps collapse-descriptors test-description margin-bottom">
-                                  {<div className="test-description-title">TEST DESCRIPTION:</div>}
+                                  {<div className="test-description-title">TEST DESCRIPTION</div>}
                                   {arrWithStepsOfCurrentUseCase.map(step => {
                                     return (<div key={step} className={this.classesForSteps(step)}>{step}</div>);
                                   })}
                                 </div> : null}
 
-                                {this.state.arrOfAllSteps.length ? <div className="collapse-steps collapse-descriptors test-description">
-                                  <div className="test-description-title">OTHER USE CASES (tests which are called "Steps") IN FILE {this.state.fileName}.js:</div>
-                                  {this.state.arrOfAllSteps.map(step => {
-                                    const reg = new RegExp(/_XOXO/);
-                                    return <div key={step} className={reg.test(step) ? 'collapse-step_mod1' : 'collapse-step_mod2'}>{step.replace(/_XOXO/, '')}</div>;
-                                  })}
-                                </div> : null}
+                                {/*{this.state.arrOfAllSteps.length ? <div className="collapse-steps collapse-descriptors test-description">*/}
+                                {/*  <div className="test-description-title">OTHER USE CASES (tests which are called "Steps") IN FILE {this.state.fileName}.js:</div>*/}
+                                {/*  {this.state.arrOfAllSteps.map(step => {*/}
+                                {/*    const reg = new RegExp(/_XOXO/);*/}
+                                {/*    return <div key={step} className={reg.test(step) ? 'collapse-step_mod1' : 'collapse-step_mod2'}>{step.replace(/_XOXO/, '')}</div>;*/}
+                                {/*  })}*/}
+                                {/*</div> : null}*/}
 
                               </div>
 

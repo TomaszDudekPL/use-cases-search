@@ -564,6 +564,7 @@ body::-webkit-scrollbar {
 .test-description-title {
     margin-bottom: 10px;
     font-weight: bolder;
+    text-align: center;
 }
 
 .test-description {
@@ -609,29 +610,33 @@ body::-webkit-scrollbar {
 }
 
 .before-class, .end-class {
-    color: #115f11;
+    background-color: #eceff2;
+    color: #0d63af;
     font-size: 1.1em;
     font-weight: bolder;
     font-style: italic;
     margin-top: 10px;
     margin-bottom: 10px;
+    text-align: center;
+    border-radius: 5px;
 }
+
 .end-class {
-    color: #115f11;
+    color: #2fb431;
 }
 
 .step-class {
-    color: green;
+    color: #2fb431;
     padding: 2px;
-    /*font-weight: bolder;*/
+    font-weight: bolder;
     font-size: 1.08em;
     font-style: italic;
 }
 
 .assert-class {
-    color: #a80425;
+    color: #0d63af;
     font-style: italic;
-    /*font-weight: bolder;*/
     font-size: 0.9em;
-    padding: 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
