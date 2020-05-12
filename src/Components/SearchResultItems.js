@@ -198,28 +198,42 @@ export default class SearchResultItems extends React.Component {
 
     return `collapse-step_mod2 ${classStr}`;
 
-  }
+  };
+
+  firstLetterToUpperCase = (str) => str.charAt(0).toUpperCase() + str.substring(1);
+
+  changeAllSemicolonsToDots = (str) => str.replace(/;/gmi, '.');
+
+  changeAllVerticalLinesToSlash = (str) => str.replace(/\|/gmi, '/');
+
+  transformUseCaseStringToProperForm = (uc) => {
+
+    uc = this.firstLetterToUpperCase(uc) + '.';
+    uc = this.changeAllSemicolonsToDots(uc);
+    uc = this.changeAllVerticalLinesToSlash(uc);
+
+    return uc;
+  };
+
+  countAllUseCases = () => {
+    let numberOfAllUC = 0;
+    this.props.items.forEach(arr => numberOfAllUC += arr[1].length);
+    return numberOfAllUC;
+  };
 
   render() {
-    let numberOfAllUC = 0;
 
-    this.props.items.forEach(arr => {
-      numberOfAllUC += arr[1].length;
-    });
-
+    let numberOfAllUC = this.countAllUseCases();
     let numberState = numberOfAllUC;
 
     return (this.props.items && this.props.items.map(arr => {
 
         return arr[1].map(arrOfUseCaseAndItsSteps => {
 
-          let uc = arrOfUseCaseAndItsSteps[0];
+          const uc = this.transformUseCaseStringToProperForm(arrOfUseCaseAndItsSteps[0]);
 
           // if use case have '!validation;' key words do not show this use case.
           if (!(/!validation;/.test(uc))) {
-
-            uc = uc.charAt(0).toUpperCase() + uc.substring(1) + '.';
-            uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
 
             return (
 
@@ -263,12 +277,15 @@ export default class SearchResultItems extends React.Component {
                   </Breadcrumb>
 
                 </Col>
-              </Row>);
+              </Row>
+            );
           }
           return '';
         });
+
       })
     );
+
   }
-}
+};
 
