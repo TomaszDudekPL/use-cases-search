@@ -1,8 +1,11 @@
 import React from 'react';
-import {Breadcrumb, Button, Card, CardBody, Col, Collapse, Input, InputGroup, Row} from 'reactstrap';
-import Highlighter from 'react-highlight-words';
+import {Breadcrumb, Card, CardBody, Col, Collapse, Row} from 'reactstrap';
 import BreadcrumbItems from './BreadcrumbItems';
-import {saveToClipboard, getUrlToImageInFirebase} from '../helpers/helperFunctions';
+import ResultItemFooter from './ResultItemFooter';
+import ResultItemHeader from './ResultItemHeader';
+import ResultItemStepsSection from './ResultItemStepsSection';
+import ResultItemImageSection from './ResultItemImageSection';
+import {getUrlToImageInFirebase, randomNum} from '../helpers/helperFunctions';
 import firebase from '@firebase/app';
 import '@firebase/storage';
 
@@ -100,12 +103,12 @@ export default class SearchResultItems extends React.Component {
       const storage = firebase.storage();
       const pathReference = storage.refFromURL(urlOfImageInFirebase);
 
-      const firebaseURL = await pathReference.getDownloadURL().then(function(url) {
+      const firebaseURL = await pathReference.getDownloadURL().then(function (url) {
 
         return url;
 
         // Insert url into an <img> tag to "download"
-      }).catch(function(error) {
+      }).catch(function (error) {
 
         // A full list of error codes is available at
         // https://firebase.google.com/docs/storage/web/handle-errors
@@ -147,13 +150,13 @@ export default class SearchResultItems extends React.Component {
     }
   };
 
-  showTagIfOpen = (key, describeTag_arr, describeTag_View) => {
-    if (key === this.state.shouldBeOpen) {
-      return describeTag_arr;
-    } else {
-      return describeTag_View;
-    }
-  };
+  // showTagIfOpen = (key, describeTag_arr, describeTag_View) => {
+  //   if (key === this.state.shouldBeOpen) {
+  //     return describeTag_arr;
+  //   } else {
+  //     return describeTag_View;
+  //   }
+  // };
 
   getAllStepsFromFullBase = (consumerBase, proBase, pathToFile) => {
 
@@ -205,98 +208,34 @@ export default class SearchResultItems extends React.Component {
     });
 
     let numberState = numberOfAllUC;
-    let wantedWords = this.props.wantedWords;
-    let chosenKeyWords = this.props.chosenKeyWords;
 
-    return (this.props.items ? this.props.items.map(arr => {
+    return (this.props.items && this.props.items.map(arr => {
 
-          return arr[1].map(arrOfUseCaseAndItsSteps => {
+        return arr[1].map(arrOfUseCaseAndItsSteps => {
 
-            const arrWithStepsOfCurrentUseCase = typeof arrOfUseCaseAndItsSteps[1] !== 'string' ? arrOfUseCaseAndItsSteps[1] : [];
-            let uc = arrOfUseCaseAndItsSteps[0];
+          let uc = arrOfUseCaseAndItsSteps[0];
 
-            // if use case have '!validation;' key words do not show this use case.
-            if (!(/!validation;/.test(uc))) {
+          // if use case have '!validation;' key words do not show this use case.
+          if (!(/!validation;/.test(uc))) {
 
-              uc = uc.charAt(0).toUpperCase() + uc.substring(1) + '.';
-              uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
+            uc = uc.charAt(0).toUpperCase() + uc.substring(1) + '.';
+            uc = uc.replace(/;/gmi, '.').replace(/\|/gmi, '/');
 
-              // cut into chunks: hash tags, constant keywords, full use case name (with describe Tag name) and use cases without describe tag name.
-              let allHashTags = uc.match(/HSH_[a-zA-Z]+.[a-zA-Z]+/gm); // #hashtag1 #hashtag2
+            return (
 
-              if (allHashTags) {
-                allHashTags = allHashTags.map(hashTag => {
-                  return hashTag.replace(/HSH_/, '#').replace(/\./, '');
-                });
-              }
-
-              let allKeyWords = uc.match(/![a-zA-Z0-9-_]+\./gmi); // !keyWord1, !keyWord2.
-
-              if (allKeyWords) {
-                allKeyWords = allKeyWords.map(keyWord => {
-                  return keyWord.replace(/!/, '').replace(/\./, ',');
-                });
-              }
-
-              const fullUseCaseName_arr = /It|Step/.test(uc) ? uc.match(/It:.+|Step.+/gmi) : [uc]; // It: something. OR Step 1of5: something OR Step: something
-              const str = /It|Step/.test(fullUseCaseName_arr[0]) ? fullUseCaseName_arr[0].replace(/Step [0-9]+of[0-9]+:/, '').replace(/It:/, '').replace(/Step:/, '') : fullUseCaseName_arr[0];
-              const describeTag_arr = /It: |Step /.test(uc) ? uc.match(/It:|Step [0-9]+of[0-9]+:/) : ['It:'];
-              const describeTag_View = ['UseCase:'];
-
-              const useCaseNameWithoutTag_arr = [];
-              useCaseNameWithoutTag_arr.push(str.trim());
-              const randomNum = () => Math.floor(Math.random() * 1000);
-
-              return (<Row key={uc + randomNum()}>
+              <Row key={uc + randomNum()}>
                 <Col sm="12" md={{size: 12, offset: 0}}>
 
                   <Breadcrumb className="list-item_mod">
 
-                    <div className="breadcrumb-header" onClick={this.onBreadcrumbClickHandler(uc, arr, describeTag_arr[0])}>
-
-                    <div className="breadcrumb-item-mod">
-                      <span className="item-number_mod">{(numberOfAllUC++) - (numberState - 1)}.</span>
-                    </div>
-                    <div className="use_case-text_mod">
-                      <Highlighter
-                          className={useCaseNameWithoutTag_arr[0].length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
-                          highlightClassName="highlight-describeTag"
-                          // searchWords={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)}
-                          searchWords={describeTag_View}
-                          autoEscape={true}
-                          // textToHighlight={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)[0]}
-                          textToHighlight={describeTag_View[0]}
-                      />
-                      <Highlighter
-                          className={useCaseNameWithoutTag_arr[0].length > 140 ? 'list-text_mod2 font-roboto' : 'list-text_mod1 font-roboto'}
-                          highlightClassName="highlight-text"
-                          searchWords={wantedWords}
-                          autoEscape={true}
-                          textToHighlight={useCaseNameWithoutTag_arr[0]}
-                      />
-                    </div>
-                    <div className="item-footer-mod">
-                      <div className="hashtags-title-mod">HASHTAGS:
-                        {allHashTags ? allHashTags.map(singleTag => {
-                          return <span key={singleTag + randomNum()} className="hashtag-item-mod"> {singleTag} </span>;
-                        }) : null}
-                      </div>
-
-                      <div className="keywords-title-mod">KEY WORDS:
-                        {allKeyWords ? allKeyWords.map(singleKeyWord => {
-                          return <Highlighter
-                              key={singleKeyWord + randomNum()}
-                              className="keyword-item-mod"
-                              highlightClassName="highlight-text"
-                              searchWords={chosenKeyWords ? chosenKeyWords : []}
-                              autoEscape={true}
-                              textToHighlight={singleKeyWord}
-                          />;
-                        }) : null}
-                      </div>
-                    </div>
-
-                    </div>
+                    <ResultItemHeader
+                      uc={uc}
+                      arr={arr}
+                      items={this.props.items}
+                      wantedWords={this.props.wantedWords}
+                      chosenKeyWords={this.props.chosenKeyWords}
+                      number={(numberOfAllUC++) - (numberState - 1)}
+                      onBreadcrumbClickHandler={this.onBreadcrumbClickHandler}/>
 
                     <div className="collapse-card-mod">
                       <Collapse className={this.shouldBeOpen(uc)}>
@@ -305,67 +244,16 @@ export default class SearchResultItems extends React.Component {
                             <BreadcrumbItems arrWithData={this.state.arrWithData}/>
 
                             <div className="uc-description_and_image-section">
-
-                              <div className="steps-section">
-                                {arrWithStepsOfCurrentUseCase.length ? <div className="collapse-steps collapse-descriptors test-description margin-bottom">
-                                  {<div className="test-description-title">TEST DESCRIPTION</div>}
-                                  {arrWithStepsOfCurrentUseCase.map(step => {
-                                    return (<div key={step + String(randomNum())} className={this.classesForSteps(step)}>{step}</div>);
-                                  })}
-                                </div> : null}
-
-                                {/*{this.state.arrOfAllSteps.length ? <div className="collapse-steps collapse-descriptors test-description">*/}
-                                {/*  <div className="test-description-title">OTHER USE CASES (tests which are called "Steps") IN FILE {this.state.fileName}.js:</div>*/}
-                                {/*  {this.state.arrOfAllSteps.map(step => {*/}
-                                {/*    const reg = new RegExp(/_XOXO/);*/}
-                                {/*    return <div key={step} className={reg.test(step) ? 'collapse-step_mod1' : 'collapse-step_mod2'}>{step.replace(/_XOXO/, '')}</div>;*/}
-                                {/*  })}*/}
-                                {/*</div> : null}*/}
-
-                              </div>
-
-                              <div className="use-case-image">
-                                {<img src={this.state[uc]} alt={uc}/>}
-                              </div>
-
+                              <ResultItemStepsSection arrOfUseCaseAndItsSteps={arrOfUseCaseAndItsSteps}
+                                                      classesForSteps={this.classesForSteps}/>
+                              <ResultItemImageSection uc={uc}
+                                                      src={this.state[uc]}/>
                             </div>
 
-                            <div className="collapse-inputGroup_mod">
-                              <InputGroup size="sm">
-                                {/*<Label className="jumbotron-label_mod">USE CASE:</Label>*/}
-                                <Button color="success"
-                                        size="sm"
-                                        outline
-                                        className="collapse-button_mod"
-                                        value={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}
-                                        onClick={saveToClipboard()}>Copy Use Case name</Button>
-                                <Input placeholder=""
-                                       type="text"
-                                       spellCheck="false"
-                                       value={useCaseNameWithoutTag_arr[0]}
-                                       readOnly
-                                       className="collapse-input_mod collapse-input-one_mod shadow-none"
-                                       id={`useCaseInput_${useCaseNameWithoutTag_arr[0]}`}/>
-
-                              </InputGroup>
-
-                              <InputGroup size="sm">
-                                <Button color="success"
-                                        size="sm"
-                                        outline
-                                        className="collapse-button_mod"
-                                        value={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}
-                                        onClick={saveToClipboard()}>Copy run command</Button>
-                                <Input placeholder=""
-                                       type="text"
-                                       spellCheck="false"
-                                       value={this.onItemClickedHandler(this.state.arrWithData, uc)}
-                                       readOnly
-                                       className="collapse-input_mod collapse-input-two_mod shadow-none"
-                                       id={`runThisUCInput_${useCaseNameWithoutTag_arr[0]}`}/>
-
-                              </InputGroup>
-                            </div>
+                            <ResultItemFooter
+                              arrWithData={this.state.arrWithData}
+                              uc={uc}
+                              onItemClickedHandler={this.onItemClickedHandler}/>
 
                           </CardBody>
                         </Card>
@@ -376,11 +264,10 @@ export default class SearchResultItems extends React.Component {
 
                 </Col>
               </Row>);
-            }
-            return '';
-          });
-        }) : null
-
+          }
+          return '';
+        });
+      })
     );
   }
 }

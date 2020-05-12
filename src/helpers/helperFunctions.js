@@ -20,9 +20,9 @@ const prepareHTMLOfSearchResults = (items, func) => {
 
     newArr.forEach(obj_uc_steps => {
       const entry = Object.entries(obj_uc_steps)[0];
-      useCases += `<p style="color:black;width:100%;${func?'font-weight:bold;':''}">${entry[0]}</p>`;
+      useCases += `<p style="color:black;width:100%;${func ? 'font-weight:bold;' : ''}">${entry[0]}</p>`;
 
-      if(Array.isArray(entry[1]) && func === 'WITH DESCRIPTIONS') {
+      if (Array.isArray(entry[1]) && func === 'WITH DESCRIPTIONS') {
         entry[1].forEach(steps => {
           useCases += `<p style="color:black;width:100%;font-style:italic;margin-left:40px">${steps}</p>`
         })
@@ -102,17 +102,20 @@ const returnLinkToJenkinsJob = (data, arr) => {
 const getUrlToImageInFirebase = (arrWithData, name) => {
 
   const findID = name.match(/ID_.{2}/);
-  const ID = findID? findID[0].replace('ID_', ''): 'NO_ID';
+  const ID = findID ? findID[0].replace('ID_', '') : 'NO_ID';
   const directoryPath = arrWithData.join('/');
 
   return `gs://use-cases-search.appspot.com/${directoryPath}.js/${ID}.jpg`
 
 };
 
+const randomNum = () => Math.floor(Math.random() * 1000);
+
 export {
   preventActionHandler,
   saveToClipboard,
   returnLinkToJenkinsJob,
   prepareHTMLOfSearchResults,
-  getUrlToImageInFirebase
+  getUrlToImageInFirebase,
+  randomNum
 }
