@@ -1,64 +1,47 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import {randomNum} from '../helpers/helperFunctions';
+import {randomNum, returnUseCaseNameBody_arr, returnUseCaseTagName_arr, getRidOfTagName, returnKeyWords_arr, returnHashTags_arr} from '../helpers/helperFunctions';
 
 export default class ResultItemHeader extends React.Component {
 
+  defaultDescribeTagName_arr = ['UseCase:'];
+
   render() {
 
-    const uc = this.props.uc;
+    const rawUC = this.props.uc;
     const arr = this.props.arr;
     const ordinalNumber = this.props.number;
     const wantedWords = this.props.wantedWords;
     const chosenKeyWords = this.props.chosenKeyWords;
-    const describeTag_arr = /It: |Step /.test(uc) ? uc.match(/It:|Step [0-9]+of[0-9]+:/) : ['It:'];
-    const describeTag_View = ['UseCase:'];
     const onBreadcrumbClickHandler = this.props.onBreadcrumbClickHandler;
-
-    const fullUseCaseName_arr = /It|Step/.test(uc) ? uc.match(/It:.+|Step.+/gmi) : [uc]; // It: something. OR Step 1of5: something OR Step: something
-    const str = /It|Step/.test(fullUseCaseName_arr[0]) ? fullUseCaseName_arr[0].replace(/Step [0-9]+of[0-9]+:/, '').replace(/It:/, '').replace(/Step:/, '') : fullUseCaseName_arr[0];
-    const useCaseNameWithoutTag_arr = [];
-    useCaseNameWithoutTag_arr.push(str.trim());
-
-    let allKeyWords = uc.match(/![a-zA-Z0-9-_]+\./gmi); // !keyWord1, !keyWord2.
-
-    if (allKeyWords) {
-      allKeyWords = allKeyWords.map(keyWord => {
-        return keyWord.replace(/!/, '').replace(/\./, ',');
-      });
-    }
-
-    // cut into chunks: hash tags, constant keywords, full use case name (with describe Tag name) and use cases without describe tag name.
-    let allHashTags = uc.match(/HSH_[a-zA-Z]+.[a-zA-Z]+/gm); // #hashtag1 #hashtag2
-
-    if (allHashTags) {
-      allHashTags = allHashTags.map(hashTag => {
-        return hashTag.replace(/HSH_/, '#').replace(/\./, '');
-      });
-    }
+    const describeTag_arr = returnUseCaseTagName_arr(rawUC);
+    const useCaseBody_arr = returnUseCaseNameBody_arr(rawUC);
+    const useCaseNameWithoutTag_str = getRidOfTagName(useCaseBody_arr);
+    let allKeyWords = returnKeyWords_arr(rawUC);
+    let allHashTags = returnHashTags_arr(rawUC);
 
     return (
-      <div className="breadcrumb-header" onClick={onBreadcrumbClickHandler(uc, arr, describeTag_arr[0])}>
+      <div className="breadcrumb-header" onClick={onBreadcrumbClickHandler(rawUC, arr, describeTag_arr[0])}>
 
         <div className="breadcrumb-item-mod">
           <span className="item-number_mod">{ordinalNumber}.</span>
         </div>
         <div className="use_case-text_mod">
           <Highlighter
-            className={useCaseNameWithoutTag_arr[0].length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
+            className={useCaseNameWithoutTag_str.length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
             highlightClassName="highlight-describeTag"
             // searchWords={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)}
-            searchWords={describeTag_View}
+            searchWords={this.defaultDescribeTagName_arr}
             autoEscape={true}
             // textToHighlight={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)[0]}
-            textToHighlight={describeTag_View[0]}
+            textToHighlight={this.defaultDescribeTagName_arr[0]}
           />
           <Highlighter
-            className={useCaseNameWithoutTag_arr[0].length > 140 ? 'list-text_mod2 font-roboto' : 'list-text_mod1 font-roboto'}
+            className={useCaseNameWithoutTag_str.length > 140 ? 'list-text_mod2 font-roboto' : 'list-text_mod1 font-roboto'}
             highlightClassName="highlight-text"
             searchWords={wantedWords}
             autoEscape={true}
-            textToHighlight={useCaseNameWithoutTag_arr[0]}
+            textToHighlight={useCaseNameWithoutTag_str}
           />
         </div>
         <div className="item-footer-mod">

@@ -111,11 +111,63 @@ const getUrlToImageInFirebase = (arrWithData, name) => {
 
 const randomNum = () => Math.floor(Math.random() * 1000);
 
+const returnUseCaseNameBody_arr = (rawUC) => {
+  // Get rid of everything before It or Step tag: It: something. OR Step 1of5: something OR Step: something
+  return /It|Step/.test(rawUC) ? rawUC.match(/It:.+|Step.+/gmi) : [rawUC];
+}
+
+const returnUseCaseTagName_arr = (rawUC) => {
+  // Get rid of everything before and after It or Step tag and return clean tag name.
+  return /It: |Step /.test(rawUC) ? rawUC.match(/It:|Step [0-9]+of[0-9]+:/) : ['It:'];
+}
+
+const getRidOfTagName = (useCaseBody_arr) => {
+  // Get rid of tag name from uc body: It:, Step 1of5 etc.
+  if (/It|Step/.test(useCaseBody_arr[0])) {
+    return useCaseBody_arr[0]
+      .replace(/Step [0-9]+of[0-9]+:/, '')
+      .replace(/It:/, '')
+      .replace(/Step:/, '')
+      .trim();
+  } else {
+    return useCaseBody_arr[0].trim();
+  }
+}
+
+const returnKeyWords_arr = (rawUC) => {
+  // Return array with all raw keywords from full use case: !keyWord1., !!!keyWord2.
+  const rawKeyWords_arr = rawUC.match(/![a-zA-Z0-9-_]+\./gmi); // !keyWord1, !keyWord2.
+
+  // Return array with all keywords without exclamation marks and change dots into comma at the end: !keyWord1., !!!keyWord2.
+  if (rawKeyWords_arr && rawKeyWords_arr[0]) {
+    return rawKeyWords_arr.map(keyWord => {
+      return keyWord.replace(/!/, '').replace(/\./, ',');
+    });
+  }
+}
+
+const returnHashTags_arr = (rawUC) => {
+  // Return array with all raw hashtags from full use case: HSH_hashtag1. HSH_hashtag2.
+  const rawHashTags_arr = rawUC.match(/HSH_[a-zA-Z]+.[a-zA-Z]+/gm);
+
+  // Return array with all hashtags and change HSH part into hash:# then remove dots at the end: #hashtag1 #hashtag2
+  if (rawHashTags_arr && rawHashTags_arr[0]) {
+    return rawHashTags_arr.map(hashTag => {
+      return hashTag.replace(/HSH_/, '#').replace(/\./, '');
+    });
+  }
+}
+
 export {
   preventActionHandler,
   saveToClipboard,
   returnLinkToJenkinsJob,
   prepareHTMLOfSearchResults,
   getUrlToImageInFirebase,
-  randomNum
+  randomNum,
+  returnUseCaseNameBody_arr,
+  returnUseCaseTagName_arr,
+  getRidOfTagName,
+  returnKeyWords_arr,
+  returnHashTags_arr
 }

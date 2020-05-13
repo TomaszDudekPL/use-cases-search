@@ -1,33 +1,16 @@
 import React from 'react';
 import {Button, Input, InputGroup} from 'reactstrap';
-import {saveToClipboard} from "../helpers/helperFunctions";
+import {saveToClipboard, returnUseCaseNameBody_arr, getRidOfTagName} from '../helpers/helperFunctions';
 
 export default class ResultItemFooter extends React.Component {
-
-  returnUseCaseNameBody_arr = (rawUC) => {
-    // Get rid of everything before It/Step mark: It: something. OR Step 1of5: something OR Step: something
-    return /It|Step/.test(rawUC) ? rawUC.match(/It:.+|Step.+/gmi) : [rawUC];
-  }
-
-  getRidOfTagName = (useCaseBody_arr) => {
-    // Get rid of tag name from uc body: It:, Step 1of5 etc.
-    if (/It|Step/.test(useCaseBody_arr[0])) {
-      return useCaseBody_arr[0]
-                  .replace(/Step [0-9]+of[0-9]+:/, '')
-                  .replace(/It:/, '')
-                  .replace(/Step:/, '');
-    } else {
-      return useCaseBody_arr[0];
-    }
-  }
 
   render() {
 
     const rawUC = this.props.uc;
     const arrWithData = this.props.arrWithData;
     const onItemClickedHandler = this.props.onItemClickedHandler;
-    const useCaseBody_arr = this.returnUseCaseNameBody_arr(rawUC);
-    const useCaseNameWithoutTag_str = this.getRidOfTagName(useCaseBody_arr).trim();
+    const useCaseBody_arr = returnUseCaseNameBody_arr(rawUC);
+    const useCaseNameWithoutTag_str = getRidOfTagName(useCaseBody_arr);
 
     return (
       <div className="collapse-inputGroup_mod">
