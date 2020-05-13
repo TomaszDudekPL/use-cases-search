@@ -5,30 +5,29 @@ import {randomNum, returnUseCaseNameBody_arr, returnUseCaseTagName_arr, getRidOf
 export default class ResultItemHeader extends React.Component {
 
   defaultDescribeTagName_arr = ['UseCase:'];
+  rawUC = this.props.uc;
+  arr = this.props.arr;
+  ordinalNumber = this.props.number;
+  wantedWords = this.props.wantedWords;
+  chosenKeyWords = this.props.chosenKeyWords;
+  onBreadcrumbClickHandler = this.props.onBreadcrumbClickHandler;
+  allHashTags = returnHashTags_arr(this.rawUC);
+  describeTag_arr = returnUseCaseTagName_arr(this.rawUC);
+  useCaseBody_arr = returnUseCaseNameBody_arr(this.rawUC);
+  useCaseNameWithoutTag_str = getRidOfTagName(this.useCaseBody_arr);
+  allKeyWords = returnKeyWords_arr(this.rawUC);
 
   render() {
 
-    const rawUC = this.props.uc;
-    const arr = this.props.arr;
-    const ordinalNumber = this.props.number;
-    const wantedWords = this.props.wantedWords;
-    const chosenKeyWords = this.props.chosenKeyWords;
-    const onBreadcrumbClickHandler = this.props.onBreadcrumbClickHandler;
-    const describeTag_arr = returnUseCaseTagName_arr(rawUC);
-    const useCaseBody_arr = returnUseCaseNameBody_arr(rawUC);
-    const useCaseNameWithoutTag_str = getRidOfTagName(useCaseBody_arr);
-    let allKeyWords = returnKeyWords_arr(rawUC);
-    let allHashTags = returnHashTags_arr(rawUC);
-
     return (
-      <div className="breadcrumb-header" onClick={onBreadcrumbClickHandler(rawUC, arr, describeTag_arr[0])}>
+      <div className="breadcrumb-header" onClick={this.onBreadcrumbClickHandler(this.rawUC, this.arr, this.describeTag_arr[0])}>
 
         <div className="breadcrumb-item-mod">
-          <span className="item-number_mod">{ordinalNumber}.</span>
+          <span className="item-number_mod">{this.ordinalNumber}.</span>
         </div>
         <div className="use_case-text_mod">
           <Highlighter
-            className={useCaseNameWithoutTag_str.length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
+            className={this.useCaseNameWithoutTag_str.length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
             highlightClassName="highlight-describeTag"
             // searchWords={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)}
             searchWords={this.defaultDescribeTagName_arr}
@@ -37,27 +36,27 @@ export default class ResultItemHeader extends React.Component {
             textToHighlight={this.defaultDescribeTagName_arr[0]}
           />
           <Highlighter
-            className={useCaseNameWithoutTag_str.length > 140 ? 'list-text_mod2 font-roboto' : 'list-text_mod1 font-roboto'}
+            className={this.useCaseNameWithoutTag_str.length > 140 ? 'list-text_mod2 font-roboto' : 'list-text_mod1 font-roboto'}
             highlightClassName="highlight-text"
-            searchWords={wantedWords}
+            searchWords={this.wantedWords}
             autoEscape={true}
-            textToHighlight={useCaseNameWithoutTag_str}
+            textToHighlight={this.useCaseNameWithoutTag_str}
           />
         </div>
         <div className="item-footer-mod">
           <div className="hashtags-title-mod">HASHTAGS:
-            {allHashTags ? allHashTags.map(singleTag => {
+            {this.allHashTags ? this.allHashTags.map(singleTag => {
               return <span key={singleTag + randomNum()} className="hashtag-item-mod"> {singleTag} </span>;
             }) : null}
           </div>
 
           <div className="keywords-title-mod">KEY WORDS:
-            {allKeyWords ? allKeyWords.map(singleKeyWord => {
+            {this.allKeyWords ? this.allKeyWords.map(singleKeyWord => {
               return <Highlighter
                 key={singleKeyWord + randomNum()}
                 className="keyword-item-mod"
                 highlightClassName="highlight-text"
-                searchWords={chosenKeyWords ? chosenKeyWords : []}
+                searchWords={this.chosenKeyWords ? this.chosenKeyWords : []}
                 autoEscape={true}
                 textToHighlight={singleKeyWord}
               />;

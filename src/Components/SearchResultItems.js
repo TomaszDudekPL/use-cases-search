@@ -221,10 +221,11 @@ export default class SearchResultItems extends React.Component {
     return numberOfAllUC;
   };
 
+  numberOfAllUC = this.countAllUseCases();
+
   render() {
 
-    let numberOfAllUC = this.countAllUseCases();
-    let numberState = numberOfAllUC;
+    const numberState = this.numberOfAllUC;
 
     return (this.props.items && this.props.items.map(arr => {
 
@@ -248,7 +249,7 @@ export default class SearchResultItems extends React.Component {
                       items={this.props.items}
                       wantedWords={this.props.wantedWords}
                       chosenKeyWords={this.props.chosenKeyWords}
-                      number={(numberOfAllUC++) - (numberState - 1)}
+                      number={(this.numberOfAllUC++) - (numberState - 1)}
                       onBreadcrumbClickHandler={this.onBreadcrumbClickHandler}/>
 
                     <div className="collapse-card-mod">

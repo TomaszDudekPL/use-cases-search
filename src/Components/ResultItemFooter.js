@@ -4,13 +4,13 @@ import {saveToClipboard, returnUseCaseNameBody_arr, getRidOfTagName} from '../he
 
 export default class ResultItemFooter extends React.Component {
 
-  render() {
+  rawUC = this.props.uc;
+  arrWithData = this.props.arrWithData;
+  onItemClickedHandler = this.props.onItemClickedHandler;
+  useCaseBody_arr = returnUseCaseNameBody_arr(this.rawUC);
+  useCaseNameWithoutTag_str = getRidOfTagName(this.useCaseBody_arr);
 
-    const rawUC = this.props.uc;
-    const arrWithData = this.props.arrWithData;
-    const onItemClickedHandler = this.props.onItemClickedHandler;
-    const useCaseBody_arr = returnUseCaseNameBody_arr(rawUC);
-    const useCaseNameWithoutTag_str = getRidOfTagName(useCaseBody_arr);
+  render() {
 
     return (
       <div className="collapse-inputGroup_mod">
@@ -20,15 +20,15 @@ export default class ResultItemFooter extends React.Component {
                   size="sm"
                   outline
                   className="collapse-button_mod"
-                  value={`useCaseInput_${useCaseNameWithoutTag_str}`}
+                  value={`useCaseInput_${this.useCaseNameWithoutTag_str}`}
                   onClick={saveToClipboard()}>Copy Use Case name</Button>
           <Input placeholder=""
                  type="text"
                  spellCheck="false"
-                 value={useCaseNameWithoutTag_str}
+                 value={this.useCaseNameWithoutTag_str}
                  readOnly
                  className="collapse-input_mod collapse-input-one_mod shadow-none"
-                 id={`useCaseInput_${useCaseNameWithoutTag_str}`}/>
+                 id={`useCaseInput_${this.useCaseNameWithoutTag_str}`}/>
 
         </InputGroup>
 
@@ -37,15 +37,15 @@ export default class ResultItemFooter extends React.Component {
                   size="sm"
                   outline
                   className="collapse-button_mod"
-                  value={`runThisUCInput_${useCaseNameWithoutTag_str}`}
+                  value={`runThisUCInput_${this.useCaseNameWithoutTag_str}`}
                   onClick={saveToClipboard()}>Copy run command</Button>
           <Input placeholder=""
                  type="text"
                  spellCheck="false"
-                 value={onItemClickedHandler(arrWithData, rawUC)}
+                 value={this.onItemClickedHandler(this.arrWithData, this.rawUC)}
                  readOnly
                  className="collapse-input_mod collapse-input-two_mod shadow-none"
-                 id={`runThisUCInput_${useCaseNameWithoutTag_str}`}/>
+                 id={`runThisUCInput_${this.useCaseNameWithoutTag_str}`}/>
 
         </InputGroup>
       </div>
