@@ -425,6 +425,8 @@ body::-webkit-scrollbar {
 }
 
 .collapse-steps {
+    border-style: dotted;
+    border-color: #2fb431;
     /*margin-top: 15px;*/
     letter-spacing: .5px;
 }
@@ -581,6 +583,10 @@ body::-webkit-scrollbar {
 }
 
 .use-case-image {
+    border-style: dotted;
+    border-color: #2fb431;
+    border-radius: 20px;
+    padding: 20px;
     margin-left: 5px;
 }
 

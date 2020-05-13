@@ -52,7 +52,7 @@ export default class ResultItemHeader extends React.Component {
             }) : null}
           </div>
 
-            <div className="hashtags-title-mod">USE CASE ID:
+            <div className="hashtags-title-mod">UC SEARCH ID:
                  <span key={randomNum()} className="hashtag-item-mod"> {this.useCaseID} </span>
             </div>
 

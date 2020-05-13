@@ -22,7 +22,7 @@ export default class ResultItemFooter extends React.Component {
                   outline
                   className="collapse-button_mod"
                   value={`useCaseInput_${this.useCaseID}`}
-                  onClick={saveToClipboard()}>Copy ID</Button>
+                  onClick={saveToClipboard()}>Copy Search ID</Button>
           <Input placeholder=""
                  type="text"
                  spellCheck="false"
