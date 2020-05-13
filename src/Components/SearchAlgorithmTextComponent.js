@@ -2,22 +2,6 @@ import React from 'react';
 
 export default class SearchAlgorithmTextComponent extends React.Component {
 
-  categoriesOfEnvironment = ({consumer_chkbox, pro_chkbox}) => {
-    let result;
-    if (consumer_chkbox && pro_chkbox === false) result = <span>Find all Use Cases <span className="algorithm-only_mod">ONLY</span> for <span className="algorithm-env_mod">CONSUMER</span></span>;
-    if (consumer_chkbox === false && pro_chkbox) result = <span>Find all Use Cases <span className="algorithm-only_mod">ONLY</span> for <span className="algorithm-env_mod">PRO</span></span>;
-    if (consumer_chkbox === false && pro_chkbox === false) result = <span>First choose <span className="algorithm-env_mod">ENV</span>, you are interested in.</span>;
-    if (consumer_chkbox && pro_chkbox) result = <span>Find all Use Cases for both environments: <span className="algorithm-env_mod">CONSUMER</span> and <span className="algorithm-env_mod">PRO</span></span>;
-    return result;
-  };
-
-  kindOfHashTag = ({hashtag}) => {
-    let result;
-    if (hashtag) result = <span>Show <span className="algorithm-only_mod">ONLY</span> UCs with <span
-      className="algorithm-only_mod">hashtag: </span><span className="algorithm-hashtag_mod">{hashtag}</span></span>;
-    return result;
-  };
-
   render() {
 
     let connector = this.props.state.connector;
