@@ -5,7 +5,7 @@ import ResultItemFooter from './ResultItemFooter';
 import ResultItemHeader from './ResultItemHeader';
 import ResultItemStepsSection from './ResultItemStepsSection';
 import ResultItemImageSection from './ResultItemImageSection';
-import {getUrlToImageInFirebase, randomNum} from '../helpers/helperFunctions';
+import {getUrlToImageInFirebase, randomNum, returnUseCaseID_str} from '../helpers/helperFunctions';
 import firebase from '@firebase/app';
 import '@firebase/storage';
 
@@ -232,6 +232,7 @@ export default class SearchResultItems extends React.Component {
         return arr[1].map(arrOfUseCaseAndItsSteps => {
 
           const uc = this.transformUseCaseStringToProperForm(arrOfUseCaseAndItsSteps[0]);
+          const useCaseID = returnUseCaseID_str(uc);
 
           // if use case have '!validation;' key words do not show this use case.
           if (!(/!validation;/.test(uc))) {
@@ -245,6 +246,7 @@ export default class SearchResultItems extends React.Component {
 
                     <ResultItemHeader
                       uc={uc}
+                      useCaseID={useCaseID}
                       arr={arr}
                       items={this.props.items}
                       wantedWords={this.props.wantedWords}
@@ -268,6 +270,7 @@ export default class SearchResultItems extends React.Component {
                             <ResultItemFooter
                               arrWithData={this.state.arrWithData}
                               uc={uc}
+                              useCaseID={useCaseID}
                               onItemClickedHandler={this.onItemClickedHandler}/>
 
                           </CardBody>

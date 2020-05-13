@@ -10,6 +10,7 @@ export default class ResultItemHeader extends React.Component {
   ordinalNumber = this.props.number;
   wantedWords = this.props.wantedWords;
   chosenKeyWords = this.props.chosenKeyWords;
+  useCaseID = this.props.useCaseID;
   onBreadcrumbClickHandler = this.props.onBreadcrumbClickHandler;
   allHashTags = returnHashTags_arr(this.rawUC);
   describeTag_arr = returnUseCaseTagName_arr(this.rawUC);
@@ -44,11 +45,16 @@ export default class ResultItemHeader extends React.Component {
           />
         </div>
         <div className="item-footer-mod">
+
           <div className="hashtags-title-mod">HASHTAGS:
             {this.allHashTags ? this.allHashTags.map(singleTag => {
               return <span key={singleTag + randomNum()} className="hashtag-item-mod"> {singleTag} </span>;
             }) : null}
           </div>
+
+            <div className="hashtags-title-mod">USE CASE ID:
+                 <span key={randomNum()} className="hashtag-item-mod"> {this.useCaseID} </span>
+            </div>
 
           <div className="keywords-title-mod">KEY WORDS:
             {this.allKeyWords ? this.allKeyWords.map(singleKeyWord => {
@@ -62,6 +68,7 @@ export default class ResultItemHeader extends React.Component {
               />;
             }) : null}
           </div>
+
         </div>
 
       </div>

@@ -5,6 +5,7 @@ import {saveToClipboard, returnUseCaseNameBody_arr, getRidOfTagName} from '../he
 export default class ResultItemFooter extends React.Component {
 
   rawUC = this.props.uc;
+  useCaseID = this.props.useCaseID;
   arrWithData = this.props.arrWithData;
   onItemClickedHandler = this.props.onItemClickedHandler;
   useCaseBody_arr = returnUseCaseNameBody_arr(this.rawUC);
@@ -14,6 +15,24 @@ export default class ResultItemFooter extends React.Component {
 
     return (
       <div className="collapse-inputGroup_mod">
+
+        <InputGroup size="sm">
+          <Button color="success"
+                  size="sm"
+                  outline
+                  className="collapse-button_mod"
+                  value={`useCaseInput_${this.useCaseID}`}
+                  onClick={saveToClipboard()}>Copy ID</Button>
+          <Input placeholder=""
+                 type="text"
+                 spellCheck="false"
+                 value={this.useCaseID}
+                 readOnly
+                 className="collapse-input_mod collapse-input-one_mod shadow-none"
+                 id={`useCaseInput_${this.useCaseID}`}/>
+
+        </InputGroup>
+
         <InputGroup size="sm">
           {/*<Label className="jumbotron-label_mod">USE CASE:</Label>*/}
           <Button color="success"

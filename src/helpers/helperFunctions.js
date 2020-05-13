@@ -9,12 +9,15 @@ const prepareHTMLOfSearchResults = (items, func) => {
     let useCases = '';
 
     let newArr = arr[1].map(arrOfUseCaseAndItsSteps => {
+
       let uc = arrOfUseCaseAndItsSteps[0];
       let steps = arrOfUseCaseAndItsSteps[1];
       uc = uc.replace(/;/g, '.').replace(/\|/, '/');
-      uc = uc.match(/It:.+|Step.+/gmi);
+      uc = uc.match(/ucs_id:.+/gmi)[0];
+      uc = uc.replace(/ucs_id/, 'uc search id');
+
       return {
-        [uc[0]]: steps
+        [uc]: steps
       };
     });
 
@@ -158,6 +161,16 @@ const returnHashTags_arr = (rawUC) => {
   }
 }
 
+const returnUseCaseID_str = (rawUC) => {
+  // Return raw use case ID from full use case: ucs_id: 34ka2wm78p82.
+  const rawUseCaseID_str = rawUC.match(/ucs_id: [a-z0-9]+./gm)[0];
+
+  // Return use case ID without tag and dot at the end: 34ka2wm78p82
+  if (rawUseCaseID_str) {
+      return rawUseCaseID_str.replace(/ucs_id: /, '').replace(/\./, '');
+  }
+}
+
 export {
   preventActionHandler,
   saveToClipboard,
@@ -169,5 +182,6 @@ export {
   returnUseCaseTagName_arr,
   getRidOfTagName,
   returnKeyWords_arr,
-  returnHashTags_arr
+  returnHashTags_arr,
+  returnUseCaseID_str
 }
