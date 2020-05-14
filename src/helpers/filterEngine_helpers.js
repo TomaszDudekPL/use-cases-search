@@ -1,3 +1,17 @@
+import {
+  changeAllSemicolonsToDots,
+  changeAllVerticalLinesToSlash,
+  firstLetterToUpperCase,
+  getRidOfTagName,
+  returnHashTags_arr,
+  returnKeyWords_arr,
+  returnUseCaseID_str,
+  returnUseCaseNameBody_arr,
+  returnUseCaseTagName_arr,
+  returnRunCommand,
+  returnLinkToJenkinsJob
+} from "./helperFunctions";
+
 const returnBaseDividedOnCategories = (state) => {
 
   let base;
@@ -257,6 +271,61 @@ const returnUpdatedListOfUseCases_ifMoreThenOneWord = (base, arrOfKeyWords, firs
   return updatedList;
 };
 
+const createObjectWithSearchResult = (base) => {
+
+  const obj = {};
+  let number = 0;
+
+  base.forEach(arr => {
+
+    const path = arr[0];
+    const arrWithData = path.split(/%5C|%2F/);
+    const fileName = `${arrWithData[arrWithData.length - 1]}.js`;
+    const runCommand = returnRunCommand(arrWithData);
+    const environment = arrWithData[0];
+    const mainDirectory = arrWithData[1];
+    const githubLinkToFile = `https://github.com/sgrouples/Frontend-E2E-Tests/blob/master/test/specs/${arrWithData.join('/')}.js`;
+    const jenkinsLinkToJob = returnLinkToJenkinsJob(mainDirectory, [environment]);
+
+    arr[1].forEach(fullUC => {
+
+      if (fullUC[0]) {
+
+        let uc = changeAllSemicolonsToDots(fullUC[0]);
+        uc = changeAllVerticalLinesToSlash(uc);
+
+        const useCaseID_str = returnUseCaseID_str(uc);
+        const allHashTags_arr = returnHashTags_arr(uc);
+        const allKeyWords_arr = returnKeyWords_arr(uc);
+        const describeTag_str = returnUseCaseTagName_arr(uc)[0];
+        const useCaseBody_arr = returnUseCaseNameBody_arr(uc);
+        const useCaseNameWithoutTag_str = firstLetterToUpperCase(getRidOfTagName(useCaseBody_arr)) + '.';
+        if(useCaseID_str) number++;
+
+        obj[useCaseID_str] = {
+          ordinalNumber: number,
+          env: environment,
+          describeTag: describeTag_str,
+          useCaseBody: useCaseNameWithoutTag_str,
+          hashTags: allHashTags_arr,
+          keyWords: allKeyWords_arr,
+          steps: fullUC[1],
+          mainDirectory: [mainDirectory, jenkinsLinkToJob],
+          fileName: [fileName, githubLinkToFile],
+          runCommand: runCommand,
+          useCaseID: useCaseID_str,
+          checked: false,
+          focused: false
+        };
+
+      }
+
+    });
+  });
+
+  return obj;
+}
+
 export {
   removeSpacesFunc,
   getLowerCaseFunc,
@@ -266,5 +335,6 @@ export {
   returnAllKeyWords,
   returnUpdatedListOfUseCases_ifOneWord,
   returnUpdatedListOfUseCases_ifMoreThenOneWord,
-  returnBaseDividedOnCategories
+  returnBaseDividedOnCategories,
+  createObjectWithSearchResult
 }

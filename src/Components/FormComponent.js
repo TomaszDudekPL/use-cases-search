@@ -24,7 +24,8 @@ import {
   returnBaseDividedOnCategories,
   returnNotEmptyValues,
   returnUpdatedListOfUseCases_ifMoreThenOneWord,
-  returnUpdatedListOfUseCases_ifOneWord
+  returnUpdatedListOfUseCases_ifOneWord,
+  // createObjectWithSearchResult
 } from '../helpers/filterEngine_helpers'
 
 firebase.initializeApp(firebaseConfig);
@@ -193,6 +194,10 @@ export default class FormComponent extends React.Component {
     }
 
     if (!arrOfKeyWords.length && this.state.hashtag) {
+
+      // to implement
+      //   base = createObjectWithSearchResult(base);
+
       this.setState(() => {
         return {
           items: base

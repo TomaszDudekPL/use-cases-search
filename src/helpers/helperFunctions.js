@@ -171,6 +171,35 @@ const returnUseCaseID_str = (rawUC) => {
   }
 }
 
+const firstLetterToUpperCase = (str) => str.charAt(0).toUpperCase() + str.substring(1);
+
+const changeAllSemicolonsToDots = (str) => str.replace(/;/gmi, '.');
+
+const changeAllVerticalLinesToSlash = (str) => str.replace(/\|/gmi, '/');
+
+const returnRunCommand = (arrWithData) => {
+
+  let env;
+
+  switch (arrWithData[0]) {
+    case 'CONSUMER':
+      env = 'master';
+      break;
+    case 'PRO':
+      env = 'master-pro';
+      break;
+    case 'LIVE':
+      env = 'live';
+      break;
+    default:
+      env = 'master';
+  }
+
+  let urlToFile = arrWithData.join('/').concat('.js');
+  return `node launcher.js --env ${env} -d ${urlToFile}`;
+
+};
+
 export {
   preventActionHandler,
   saveToClipboard,
@@ -183,5 +212,9 @@ export {
   getRidOfTagName,
   returnKeyWords_arr,
   returnHashTags_arr,
-  returnUseCaseID_str
+  returnUseCaseID_str,
+  returnRunCommand,
+  firstLetterToUpperCase,
+  changeAllSemicolonsToDots,
+  changeAllVerticalLinesToSlash
 }
