@@ -25,7 +25,7 @@ import {
   returnNotEmptyValues,
   returnUpdatedListOfUseCases_ifMoreThenOneWord,
   returnUpdatedListOfUseCases_ifOneWord,
-  // createObjectWithSearchResult
+  createObjectWithSearchResult
 } from '../helpers/filterEngine_helpers'
 
 firebase.initializeApp(firebaseConfig);
@@ -119,7 +119,7 @@ export default class FormComponent extends React.Component {
       this.setState(() => {
           return {
             readyToProceed: false,
-            base,
+            // base,
             searchButtonClicked: true
           }
         }
@@ -150,13 +150,16 @@ export default class FormComponent extends React.Component {
 
         const {updatedList, wantedValue} = returnUpdatedListOfUseCases_ifOneWord(base, searchValue);
 
+        const searchResult_obj = createObjectWithSearchResult(updatedList);
+
         console.log('wantedValue: ', wantedValue);
         console.log('updatedList: ', updatedList);
 
         // ready results to be rendered
         this.setState({
           items: updatedList,
-          wantedWords: [wantedValue]
+          wantedWords: [wantedValue],
+          searchResult_obj
         });
 
       }
@@ -183,11 +186,13 @@ export default class FormComponent extends React.Component {
       if (secondKeyWord || thirdKeyWord) {
 
         let updatedList = returnUpdatedListOfUseCases_ifMoreThenOneWord(base, arrOfKeyWords, firstKeyWord, secondKeyWord, thirdKeyWord);
+        const searchResult_obj = createObjectWithSearchResult(updatedList);
 
         // if something will be wrong with searching with two or more key words move this setState func to TARGET comment place in filterEngine_helpers
         this.setState({
           items: updatedList,
-          wantedWords: wantedWords
+          wantedWords: wantedWords,
+          searchResult_obj
         });
       }
 
@@ -196,11 +201,12 @@ export default class FormComponent extends React.Component {
     if (!arrOfKeyWords.length && this.state.hashtag) {
 
       // to implement
-      //   base = createObjectWithSearchResult(base);
+      const searchResult_obj = createObjectWithSearchResult(base);
 
       this.setState(() => {
         return {
-          items: base
+          items: base,
+          searchResult_obj
         }
       })
     }
