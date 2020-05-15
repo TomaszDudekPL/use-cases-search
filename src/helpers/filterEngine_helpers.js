@@ -324,6 +324,8 @@ const createObjectWithSearchResult = (base) => {
           focused: false
         };
 
+        localStorage.setItem(useCaseID_str, JSON.stringify({checked: false, focused: false}))
+
       }
 
     });
