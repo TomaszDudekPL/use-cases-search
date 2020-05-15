@@ -1,6 +1,6 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import {randomNum, returnUseCaseNameBody_arr, returnUseCaseTagName_arr, getRidOfTagName, returnKeyWords_arr, returnHashTags_arr} from '../helpers/helperFunctions';
+import {randomNum} from '../helpers/helperFunctions';
 
 export default class ResultItemHeader extends React.Component {
 
@@ -21,7 +21,8 @@ export default class ResultItemHeader extends React.Component {
   render() {
 
     return (
-      <div className="breadcrumb-header" onClick={this.onBreadcrumbClickHandler(this.useCaseBody_str, this.directoryPath, this.describeTag, this.image_url)}>
+      <div className="breadcrumb-header"
+           onClick={this.onBreadcrumbClickHandler(this.useCaseBody_str, this.directoryPath, this.describeTag, this.image_url)}>
 
         <div className="breadcrumb-item-mod">
           <span className="item-number_mod">{this.ordinalNumber}.</span>
@@ -52,9 +53,9 @@ export default class ResultItemHeader extends React.Component {
             }) : null}
           </div>
 
-            <div className="hashtags-title-mod">UC SEARCH ID:
-                 <span key={randomNum()} className="hashtag-item-mod"> {this.useCaseID} </span>
-            </div>
+          <div className="hashtags-title-mod">UC SEARCH ID:
+            <span key={randomNum()} className="hashtag-item-mod"> {this.useCaseID} </span>
+          </div>
 
           <div className="keywords-title-mod">KEY WORDS:
             {this.allKeyWords ? this.allKeyWords.map(singleKeyWord => {

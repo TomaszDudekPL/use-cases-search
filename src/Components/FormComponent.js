@@ -15,8 +15,9 @@ import SearchButtonComponent from './SearchButtonComponent'
 import ResultNumberTextComponent from './ResultNumberTextComponent'
 import InstructComponent from './InstructComponent'
 import SearchAlgorithmTextComponent from './SearchAlgorithmTextComponent'
-import { prepareHTMLOfSearchResults } from '../helpers/helperFunctions'
+import {prepareHTMLOfSearchResults} from '../helpers/helperFunctions'
 import {
+  createObjectWithSearchResult,
   removeSpacesFunc,
   returnAllKeyWords,
   returnAllUseCasesWithWantedKeyWords,
@@ -24,8 +25,7 @@ import {
   returnBaseDividedOnCategories,
   returnNotEmptyValues,
   returnUpdatedListOfUseCases_ifMoreThenOneWord,
-  returnUpdatedListOfUseCases_ifOneWord,
-  createObjectWithSearchResult
+  returnUpdatedListOfUseCases_ifOneWord
 } from '../helpers/filterEngine_helpers'
 
 firebase.initializeApp(firebaseConfig);
@@ -304,7 +304,7 @@ export default class FormComponent extends React.Component {
 
   getBackConnector = (connector) => {
     this.setState(
-     {
+      {
         connector
       }
     )
@@ -338,11 +338,11 @@ export default class FormComponent extends React.Component {
                                      numberOfAllUCforPro={this.state.numberOfAllUCforPro}
                 />
 
-                { this.state.consumer_chkbox || this.state.pro_chkbox?
+                {this.state.consumer_chkbox || this.state.pro_chkbox ?
                   <div>
                     <InstructComponent text="HASHTAGS"/>
                     <BadgesComponent chooseHashTag={this.chooseHashTag} state={this.state}/>
-                  </div>: null
+                  </div> : null
                 }
 
                 <KeyWordsComponent keyWords={this.state.keyWords}
@@ -382,10 +382,9 @@ export default class FormComponent extends React.Component {
                 />
               </ButtonGroup>
 
-              <ResultNumberTextComponent state={this.state}/>
+              <ResultNumberTextComponent searchResult_arr={this.state.searchResult_arr}/>
 
-              <SearchResultItems items={this.state.items}
-                                 searchResult_arr={this.state.searchResult_arr}
+              <SearchResultItems searchResult_arr={this.state.searchResult_arr}
                                  consumerBase={this.state.consumerList}
                                  proBase={this.state.proList}
                                  wantedWords={this.state.wantedWords}

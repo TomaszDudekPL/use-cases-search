@@ -4,8 +4,6 @@ import BreadcrumbItems from './BreadcrumbItems';
 import ResultItemFooter from './ResultItemFooter';
 import ResultItemHeader from './ResultItemHeader';
 import ResultItemStepsSection from './ResultItemStepsSection';
-import ResultItemImageSection from './ResultItemImageSection';
-// import {getUrlToImageInFirebase, randomNum, returnUseCaseID_str} from '../helpers/helperFunctions';
 import firebase from '@firebase/app';
 import '@firebase/storage';
 
@@ -99,11 +97,8 @@ export default class SearchResultItems extends React.Component {
     if (!this.state.isOpen && !this.state[name]) {
 
       console.log('GET STORAGE');
-
-      // const urlOfImageInFirebase = getUrlToImageInFirebase(arrWithData, name);
-      // console.log('typeof urlOfImageInFirebase: ', typeof urlOfImageInFirebase, JSON.stringify(urlOfImageInFirebase, null, 4));
       const storage = firebase.storage();
-      const pathReference = storage.refFromURL("gs://use-cases-search.appspot.com/CONSUMER/GROUP_ALERTS/group_alerts_uc01.js/02.jpg");
+      const pathReference = storage.refFromURL(image_url);
       const firebaseURL = await pathReference.getDownloadURL().then(function (url) {
 
         return url;
@@ -123,41 +118,11 @@ export default class SearchResultItems extends React.Component {
     }
   };
 
-  onItemClickedHandler = (arrWithData = []) => {
-
-    let env;
-
-    switch (arrWithData[0]) {
-      case 'CONSUMER':
-        env = 'master';
-        break;
-      case 'PRO':
-        env = 'master-pro';
-        break;
-      case 'LIVE':
-        env = 'live';
-        break;
-      default:
-        env = 'master';
-    }
-
-    let urlToFile = arrWithData.join('/').concat('.js');
-    return `node launcher.js --env ${env} -d ${urlToFile}`;
-  };
-
   shouldBeOpen = (key) => {
     if (key === this.state.shouldBeOpen) {
       return 'show';
     }
   };
-
-  // showTagIfOpen = (key, describeTag_arr, describeTag_View) => {
-  //   if (key === this.state.shouldBeOpen) {
-  //     return describeTag_arr;
-  //   } else {
-  //     return describeTag_View;
-  //   }
-  // };
 
   getAllStepsFromFullBase = (consumerBase, proBase, pathToFile) => {
 
@@ -201,95 +166,68 @@ export default class SearchResultItems extends React.Component {
 
   };
 
-  firstLetterToUpperCase = (str) => str.charAt(0).toUpperCase() + str.substring(1);
-
-  changeAllSemicolonsToDots = (str) => str.replace(/;/gmi, '.');
-
-  changeAllVerticalLinesToSlash = (str) => str.replace(/\|/gmi, '/');
-
-  transformUseCaseStringToProperForm = (uc) => {
-
-    uc = this.firstLetterToUpperCase(uc) + '.';
-    uc = this.changeAllSemicolonsToDots(uc);
-    uc = this.changeAllVerticalLinesToSlash(uc);
-
-    return uc;
-  };
-
-  countAllUseCases = () => {
-    let numberOfAllUC = 0;
-    this.props.items.forEach(arr => numberOfAllUC += arr[1].length);
-    return numberOfAllUC;
-  };
-
-  numberOfAllUC = this.countAllUseCases();
-
   render() {
 
     return (this.props.searchResult_arr && this.props.searchResult_arr.map(arr => {
 
-          // if use case have '!validation;' key words do not show this use case.
-          // if (!(/!validation;/.test(uc))) {
+        return (
 
-            return (
+          <Row key={arr[0]}>
+            <Col sm="12" md={{size: 12, offset: 0}}>
 
-              <Row key={arr[0]}>
-                <Col sm="12" md={{size: 12, offset: 0}}>
+              <Breadcrumb className="list-item_mod">
 
-                  <Breadcrumb className="list-item_mod">
+                <ResultItemHeader
+                  uc={arr[1].useCaseBody}
+                  useCaseID={arr[1].useCaseID}
+                  hashTags={arr[1].hashTags}
+                  keyWords={arr[1].keyWords}
+                  describeTag={arr[1].describeTag}
+                  image_url={arr[1].image_url}
+                  directoryPath={arr[1].directoryPath}
+                  wantedWords={this.props.wantedWords}
+                  chosenKeyWords={this.props.chosenKeyWords}
+                  ordinalNumber={arr[1].ordinalNumber}
+                  onBreadcrumbClickHandler={this.onBreadcrumbClickHandler}/>
 
-                    <ResultItemHeader
-                      uc={arr[1].useCaseBody}
-                      useCaseID={arr[1].useCaseID}
-                      hashTags={arr[1].hashTags}
-                      keyWords={arr[1].keyWords}
-                      describeTag={arr[1].describeTag}
-                      image_url={arr[1].image_url}
-                      directoryPath={arr[1].directoryPath}
-                      // arr={arr}
-                      // items={this.props.items}
-                      wantedWords={this.props.wantedWords}
-                      chosenKeyWords={this.props.chosenKeyWords}
-                      ordinalNumber={arr[1].ordinalNumber}
-                      onBreadcrumbClickHandler={this.onBreadcrumbClickHandler}/>
+                <div className="collapse-card-mod">
+                  <Collapse className={this.shouldBeOpen(arr[1].useCaseBody)}>
+                    <Card>
+                      <CardBody>
+                        <BreadcrumbItems
+                          useCaseID={arr[1].useCaseID}
+                          mainDirectory={arr[1].mainDirectory}
+                          fileName={arr[1].fileName}
+                          env={arr[1].env}
+                        />
 
-                    <div className="collapse-card-mod">
-                      <Collapse className={this.shouldBeOpen(arr[1].useCaseBody)}>
-                        <Card>
-                          <CardBody>
-                            <BreadcrumbItems
-                              useCaseID={arr[1].useCaseID}
-                              mainDirectory={arr[1].mainDirectory}
-                              fileName={arr[1].fileName}
-                              env={arr[1].env}
-                              />
+                        <div className="uc-description_and_image-section">
+                          <ResultItemStepsSection steps={arr[1].steps}
+                                                  classesForSteps={this.classesForSteps}/>
 
-                            <div className="uc-description_and_image-section">
-                              <ResultItemStepsSection steps={arr[1].steps}
-                                                      classesForSteps={this.classesForSteps}/>
-                              <ResultItemImageSection uc={arr[1].useCaseBody}
-                                                      src={this.state[arr[1].useCaseBody]}/>
-                            </div>
+                          <div className="use-case-image">
+                            {<img src={this.state[arr[1].useCaseBody]} alt={arr[1].useCaseBody}/>}
+                          </div>
 
-                            <ResultItemFooter
-                              arrWithData={this.state.arrWithData}
-                              uc={arr[1].useCaseBody}
-                              useCaseID={arr[1].useCaseID}
-                              runCommand={arr[1].runCommand}
-                              />
+                        </div>
 
-                          </CardBody>
-                        </Card>
-                      </Collapse>
-                    </div>
+                        <ResultItemFooter
+                          arrWithData={this.state.arrWithData}
+                          uc={arr[1].useCaseBody}
+                          useCaseID={arr[1].useCaseID}
+                          runCommand={arr[1].runCommand}
+                        />
 
-                  </Breadcrumb>
+                      </CardBody>
+                    </Card>
+                  </Collapse>
+                </div>
 
-                </Col>
-              </Row>
-            );
-          return '';
+              </Breadcrumb>
 
+            </Col>
+          </Row>
+        );
       })
     );
 
