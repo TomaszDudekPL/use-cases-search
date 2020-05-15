@@ -37,6 +37,7 @@ export default class FormComponent extends React.Component {
   state = {
     initialState: null,
     items: [],
+    searchResult_arr: [],
     base: null,
     consumerList: null,
     proList: null,
@@ -150,7 +151,7 @@ export default class FormComponent extends React.Component {
 
         const {updatedList, wantedValue} = returnUpdatedListOfUseCases_ifOneWord(base, searchValue);
 
-        const searchResult_obj = createObjectWithSearchResult(updatedList);
+        const searchResult_arr = createObjectWithSearchResult(updatedList);
 
         console.log('wantedValue: ', wantedValue);
         console.log('updatedList: ', updatedList);
@@ -159,7 +160,7 @@ export default class FormComponent extends React.Component {
         this.setState({
           items: updatedList,
           wantedWords: [wantedValue],
-          searchResult_obj
+          searchResult_arr
         });
 
       }
@@ -186,13 +187,13 @@ export default class FormComponent extends React.Component {
       if (secondKeyWord || thirdKeyWord) {
 
         let updatedList = returnUpdatedListOfUseCases_ifMoreThenOneWord(base, arrOfKeyWords, firstKeyWord, secondKeyWord, thirdKeyWord);
-        const searchResult_obj = createObjectWithSearchResult(updatedList);
+        const searchResult_arr = createObjectWithSearchResult(updatedList);
 
         // if something will be wrong with searching with two or more key words move this setState func to TARGET comment place in filterEngine_helpers
         this.setState({
           items: updatedList,
           wantedWords: wantedWords,
-          searchResult_obj
+          searchResult_arr
         });
       }
 
@@ -201,12 +202,12 @@ export default class FormComponent extends React.Component {
     if (!arrOfKeyWords.length && this.state.hashtag) {
 
       // to implement
-      const searchResult_obj = createObjectWithSearchResult(base);
+      const searchResult_arr = createObjectWithSearchResult(base);
 
       this.setState(() => {
         return {
           items: base,
-          searchResult_obj
+          searchResult_arr
         }
       })
     }
@@ -384,6 +385,7 @@ export default class FormComponent extends React.Component {
               <ResultNumberTextComponent state={this.state}/>
 
               <SearchResultItems items={this.state.items}
+                                 searchResult_arr={this.state.searchResult_arr}
                                  consumerBase={this.state.consumerList}
                                  proBase={this.state.proList}
                                  wantedWords={this.state.wantedWords}

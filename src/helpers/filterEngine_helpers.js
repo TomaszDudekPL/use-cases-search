@@ -9,7 +9,9 @@ import {
   returnUseCaseNameBody_arr,
   returnUseCaseTagName_arr,
   returnRunCommand,
-  returnLinkToJenkinsJob
+  returnLinkToJenkinsJob,
+  getImageID,
+  getUrlToImageInFirebase
 } from "./helperFunctions";
 
 const returnBaseDividedOnCategories = (state) => {
@@ -294,6 +296,8 @@ const createObjectWithSearchResult = (base) => {
         let uc = changeAllSemicolonsToDots(fullUC[0]);
         uc = changeAllVerticalLinesToSlash(uc);
 
+        const image_id = getImageID(uc);
+        const imageURL = getUrlToImageInFirebase(arrWithData, image_id);
         const useCaseID_str = returnUseCaseID_str(uc);
         const allHashTags_arr = returnHashTags_arr(uc);
         const allKeyWords_arr = returnKeyWords_arr(uc);
@@ -309,11 +313,13 @@ const createObjectWithSearchResult = (base) => {
           useCaseBody: useCaseNameWithoutTag_str,
           hashTags: allHashTags_arr,
           keyWords: allKeyWords_arr,
-          steps: fullUC[1],
+          steps: Array.isArray(fullUC[1]) ? fullUC[1] : [],
           mainDirectory: [mainDirectory, jenkinsLinkToJob],
           fileName: [fileName, githubLinkToFile],
           runCommand: runCommand,
           useCaseID: useCaseID_str,
+          directoryPath: path,
+          image_url: imageURL,
           checked: false,
           focused: false
         };
@@ -323,7 +329,7 @@ const createObjectWithSearchResult = (base) => {
     });
   });
 
-  return obj;
+  return Object.entries(obj);
 }
 
 export {

@@ -102,13 +102,9 @@ const returnLinkToJenkinsJob = (data, arr) => {
 
 };
 
-const getUrlToImageInFirebase = (arrWithData, name) => {
-
-  const findID = name.match(/ID_.{2}/);
-  const ID = findID ? findID[0].replace('ID_', '') : 'NO_ID';
+const getUrlToImageInFirebase = (arrWithData, image_id) => {
   const directoryPath = arrWithData.join('/');
-
-  return `gs://use-cases-search.appspot.com/${directoryPath}.js/${ID}.jpg`
+  return `gs://use-cases-search.appspot.com/${directoryPath}.js/${image_id}.jpg`;
 
 };
 
@@ -200,6 +196,11 @@ const returnRunCommand = (arrWithData) => {
 
 };
 
+const getImageID = (uc) => {
+  const image_id = uc.match(/ID_.{2}/)[0];
+  return image_id ? image_id.replace('ID_', '') : 'NO_ID';
+}
+
 export {
   preventActionHandler,
   saveToClipboard,
@@ -216,5 +217,6 @@ export {
   returnRunCommand,
   firstLetterToUpperCase,
   changeAllSemicolonsToDots,
-  changeAllVerticalLinesToSlash
+  changeAllVerticalLinesToSlash,
+  getImageID
 }

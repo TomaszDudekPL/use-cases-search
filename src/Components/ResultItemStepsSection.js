@@ -3,18 +3,17 @@ import {randomNum} from '../helpers/helperFunctions';
 
 export default class ResultItemHeader extends React.Component {
 
-  arrOfUseCaseAndItsSteps = this.props.arrOfUseCaseAndItsSteps;
-  arrWithStepsOfCurrentUseCase = typeof this.arrOfUseCaseAndItsSteps[1] !== 'string' ? this.arrOfUseCaseAndItsSteps[1] : [];
+  steps = this.props.steps;
   classesForSteps = this.props.classesForSteps;
 
   render() {
 
     return (
       <div className="steps-section">
-        {this.arrWithStepsOfCurrentUseCase.length ?
+        {this.steps.length ?
           <div className="collapse-steps collapse-descriptors test-description margin-bottom">
             {<div className="test-description-title">TEST DESCRIPTION</div>}
-            {this.arrWithStepsOfCurrentUseCase.map(step => {
+            {this.steps.map(step => {
               return (<div key={step + String(randomNum())}
                            className={this.classesForSteps(step)}>{step}</div>);
             })}

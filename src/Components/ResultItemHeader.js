@@ -5,30 +5,30 @@ import {randomNum, returnUseCaseNameBody_arr, returnUseCaseTagName_arr, getRidOf
 export default class ResultItemHeader extends React.Component {
 
   defaultDescribeTagName_arr = ['UseCase:'];
-  rawUC = this.props.uc;
   arr = this.props.arr;
-  ordinalNumber = this.props.number;
+  ordinalNumber = this.props.ordinalNumber;
   wantedWords = this.props.wantedWords;
   chosenKeyWords = this.props.chosenKeyWords;
   useCaseID = this.props.useCaseID;
   onBreadcrumbClickHandler = this.props.onBreadcrumbClickHandler;
-  allHashTags = returnHashTags_arr(this.rawUC);
-  describeTag_arr = returnUseCaseTagName_arr(this.rawUC);
-  useCaseBody_arr = returnUseCaseNameBody_arr(this.rawUC);
-  useCaseNameWithoutTag_str = getRidOfTagName(this.useCaseBody_arr);
-  allKeyWords = returnKeyWords_arr(this.rawUC);
+  allHashTags = this.props.hashTags;
+  describeTag = this.props.describeTag;
+  image_url = this.props.image_url;
+  useCaseBody_str = this.props.uc;
+  allKeyWords = this.props.keyWords;
+  directoryPath = this.props.directoryPath;
 
   render() {
 
     return (
-      <div className="breadcrumb-header" onClick={this.onBreadcrumbClickHandler(this.rawUC, this.arr, this.describeTag_arr[0])}>
+      <div className="breadcrumb-header" onClick={this.onBreadcrumbClickHandler(this.useCaseBody_str, this.directoryPath, this.describeTag, this.image_url)}>
 
         <div className="breadcrumb-item-mod">
           <span className="item-number_mod">{this.ordinalNumber}.</span>
         </div>
         <div className="use_case-text_mod">
           <Highlighter
-            className={this.useCaseNameWithoutTag_str.length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
+            className={this.useCaseBody_str.length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
             highlightClassName="highlight-describeTag"
             // searchWords={this.showTagIfOpen(uc, describeTag_arr, describeTag_View)}
             searchWords={this.defaultDescribeTagName_arr}
@@ -37,11 +37,11 @@ export default class ResultItemHeader extends React.Component {
             textToHighlight={this.defaultDescribeTagName_arr[0]}
           />
           <Highlighter
-            className={this.useCaseNameWithoutTag_str.length > 140 ? 'list-text_mod2 font-roboto' : 'list-text_mod1 font-roboto'}
+            className={this.useCaseBody_str.length > 140 ? 'list-text_mod2 font-roboto' : 'list-text_mod1 font-roboto'}
             highlightClassName="highlight-text"
             searchWords={this.wantedWords}
             autoEscape={true}
-            textToHighlight={this.useCaseNameWithoutTag_str}
+            textToHighlight={this.useCaseBody_str}
           />
         </div>
         <div className="item-footer-mod">

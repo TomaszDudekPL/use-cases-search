@@ -5,7 +5,7 @@ import ResultItemFooter from './ResultItemFooter';
 import ResultItemHeader from './ResultItemHeader';
 import ResultItemStepsSection from './ResultItemStepsSection';
 import ResultItemImageSection from './ResultItemImageSection';
-import {getUrlToImageInFirebase, randomNum, returnUseCaseID_str} from '../helpers/helperFunctions';
+// import {getUrlToImageInFirebase, randomNum, returnUseCaseID_str} from '../helpers/helperFunctions';
 import firebase from '@firebase/app';
 import '@firebase/storage';
 
@@ -17,11 +17,11 @@ export default class SearchResultItems extends React.Component {
     arrOfAllSteps: []
   };
 
-  onBreadcrumbClickHandler = (uc, arr, describeTag_arr) => async () => {
+  onBreadcrumbClickHandler = (uc, directoryPath, describeTag_arr, image_url) => async () => {
 
     console.log('onBreadcrumbClickHandler');
 
-    const arrWithData = arr[0].split(/%5C|%2F/);
+    const arrWithData = directoryPath.split(/%5C|%2F/);
     const fileName = arrWithData[2];
     let arrWithCleanSteps = [];
     // const pathToFilePreparedForFirebaseStorage = arrWithData.join('_').toLowerCase();
@@ -40,7 +40,7 @@ export default class SearchResultItems extends React.Component {
       let arrWithSteps = [];
 
       if (describeTag_arr.includes('Step')) {
-        arrWithSteps = this.getAllStepsFromFullBase(this.props.consumerBase, this.props.proBase, arr[0]);
+        arrWithSteps = this.getAllStepsFromFullBase(this.props.consumerBase, this.props.proBase, directoryPath);
       }
 
       // prepare steps to show in collapse dialog
@@ -75,7 +75,7 @@ export default class SearchResultItems extends React.Component {
 
     }
 
-    this.getImageFromFirebaseStorage(uc, arrWithData);
+    this.getImageFromFirebaseStorage(uc, image_url);
 
     // set: if you clicked different item set uc name in state, if the same then clean state (rerender run onBreadcrumbClickHandler once again and .show class will be removed)
     // set: change isOpen state after each click (rerender) on opposite
@@ -92,17 +92,18 @@ export default class SearchResultItems extends React.Component {
 
   };
 
-  getImageFromFirebaseStorage = async (name, arrWithData) => {
+  getImageFromFirebaseStorage = async (name, image_url) => {
+
+    console.log('typeof image_url: ', typeof image_url, JSON.stringify(image_url, null, 4));
 
     if (!this.state.isOpen && !this.state[name]) {
 
       console.log('GET STORAGE');
 
-      const urlOfImageInFirebase = getUrlToImageInFirebase(arrWithData, name);
-      console.log('typeof urlOfImageInFirebase: ', typeof urlOfImageInFirebase, JSON.stringify(urlOfImageInFirebase, null, 4));
+      // const urlOfImageInFirebase = getUrlToImageInFirebase(arrWithData, name);
+      // console.log('typeof urlOfImageInFirebase: ', typeof urlOfImageInFirebase, JSON.stringify(urlOfImageInFirebase, null, 4));
       const storage = firebase.storage();
-      const pathReference = storage.refFromURL(urlOfImageInFirebase);
-
+      const pathReference = storage.refFromURL("gs://use-cases-search.appspot.com/CONSUMER/GROUP_ALERTS/group_alerts_uc01.js/02.jpg");
       const firebaseURL = await pathReference.getDownloadURL().then(function (url) {
 
         return url;
@@ -225,52 +226,55 @@ export default class SearchResultItems extends React.Component {
 
   render() {
 
-    const numberState = this.numberOfAllUC;
-
-    return (this.props.items && this.props.items.map(arr => {
-
-        return arr[1].map(arrOfUseCaseAndItsSteps => {
-
-          const uc = this.transformUseCaseStringToProperForm(arrOfUseCaseAndItsSteps[0]);
-          const useCaseID = returnUseCaseID_str(uc);
+    return (this.props.searchResult_arr && this.props.searchResult_arr.map(arr => {
 
           // if use case have '!validation;' key words do not show this use case.
-          if (!(/!validation;/.test(uc))) {
+          // if (!(/!validation;/.test(uc))) {
 
             return (
 
-              <Row key={uc + randomNum()}>
+              <Row key={arr[0]}>
                 <Col sm="12" md={{size: 12, offset: 0}}>
 
                   <Breadcrumb className="list-item_mod">
 
                     <ResultItemHeader
-                      uc={uc}
-                      useCaseID={useCaseID}
-                      arr={arr}
-                      items={this.props.items}
+                      uc={arr[1].useCaseBody}
+                      useCaseID={arr[1].useCaseID}
+                      hashTags={arr[1].hashTags}
+                      keyWords={arr[1].keyWords}
+                      describeTag={arr[1].describeTag}
+                      image_url={arr[1].image_url}
+                      directoryPath={arr[1].directoryPath}
+                      // arr={arr}
+                      // items={this.props.items}
                       wantedWords={this.props.wantedWords}
                       chosenKeyWords={this.props.chosenKeyWords}
-                      number={(this.numberOfAllUC++) - (numberState - 1)}
+                      ordinalNumber={arr[1].ordinalNumber}
                       onBreadcrumbClickHandler={this.onBreadcrumbClickHandler}/>
 
                     <div className="collapse-card-mod">
-                      <Collapse className={this.shouldBeOpen(uc)}>
+                      <Collapse className={this.shouldBeOpen(arr[1].useCaseBody)}>
                         <Card>
                           <CardBody>
-                            <BreadcrumbItems arrWithData={this.state.arrWithData}/>
+                            <BreadcrumbItems
+                              useCaseID={arr[1].useCaseID}
+                              mainDirectory={arr[1].mainDirectory}
+                              fileName={arr[1].fileName}
+                              env={arr[1].env}
+                              />
 
                             <div className="uc-description_and_image-section">
-                              <ResultItemStepsSection arrOfUseCaseAndItsSteps={arrOfUseCaseAndItsSteps}
+                              <ResultItemStepsSection steps={arr[1].steps}
                                                       classesForSteps={this.classesForSteps}/>
-                              <ResultItemImageSection uc={uc}
-                                                      src={this.state[uc]}/>
+                              <ResultItemImageSection uc={arr[1].useCaseBody}
+                                                      src={this.state[arr[1].useCaseBody]}/>
                             </div>
 
                             <ResultItemFooter
                               arrWithData={this.state.arrWithData}
-                              uc={uc}
-                              useCaseID={useCaseID}
+                              uc={arr[1].useCaseBody}
+                              useCaseID={arr[1].useCaseID}
                               onItemClickedHandler={this.onItemClickedHandler}/>
 
                           </CardBody>
@@ -283,9 +287,7 @@ export default class SearchResultItems extends React.Component {
                 </Col>
               </Row>
             );
-          }
           return '';
-        });
 
       })
     );
