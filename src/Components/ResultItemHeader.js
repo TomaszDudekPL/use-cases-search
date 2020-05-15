@@ -6,7 +6,6 @@ export default class ResultItemHeader extends React.Component {
 
   defaultDescribeTagName_arr = ['UseCase:'];
   arr = this.props.arr;
-  ordinalNumber = this.props.ordinalNumber;
   wantedWords = this.props.wantedWords;
   chosenKeyWords = this.props.chosenKeyWords;
   useCaseID = this.props.useCaseID;
@@ -19,13 +18,14 @@ export default class ResultItemHeader extends React.Component {
   directoryPath = this.props.directoryPath;
 
   render() {
+    const ordinalNumber = this.props.ordinalNumber;
 
     return (
       <div className="breadcrumb-header"
            onClick={this.onBreadcrumbClickHandler(this.useCaseBody_str, this.directoryPath, this.describeTag, this.image_url)}>
 
         <div className="breadcrumb-item-mod">
-          <span className="item-number_mod">{this.ordinalNumber}.</span>
+          <span className="item-number_mod">{ordinalNumber}.</span>
         </div>
         <div className="use_case-text_mod">
           <Highlighter
