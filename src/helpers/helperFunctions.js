@@ -108,7 +108,7 @@ const getUrlToImageInFirebase = (arrWithData, image_id) => {
 
 };
 
-const randomNum = () => Math.floor(Math.random() * 1000);
+const randomNum = () => Math.floor(Math.random() * 100000);
 
 const returnUseCaseNameBody_arr = (rawUC) => {
   // Get rid of everything before It or Step tag: It: something. OR Step 1of5: something OR Step: something

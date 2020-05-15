@@ -275,7 +275,8 @@ export default class SearchResultItems extends React.Component {
                               arrWithData={this.state.arrWithData}
                               uc={arr[1].useCaseBody}
                               useCaseID={arr[1].useCaseID}
-                              onItemClickedHandler={this.onItemClickedHandler}/>
+                              runCommand={arr[1].runCommand}
+                              />
 
                           </CardBody>
                         </Card>

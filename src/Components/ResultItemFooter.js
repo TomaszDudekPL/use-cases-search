@@ -1,15 +1,13 @@
 import React from 'react';
 import {Button, Input, InputGroup} from 'reactstrap';
-import {saveToClipboard, returnUseCaseNameBody_arr, getRidOfTagName} from '../helpers/helperFunctions';
+import {saveToClipboard} from '../helpers/helperFunctions';
 
 export default class ResultItemFooter extends React.Component {
 
-  rawUC = this.props.uc;
+  uc = this.props.uc;
   useCaseID = this.props.useCaseID;
+  runCommand = this.props.runCommand;
   arrWithData = this.props.arrWithData;
-  onItemClickedHandler = this.props.onItemClickedHandler;
-  useCaseBody_arr = returnUseCaseNameBody_arr(this.rawUC);
-  useCaseNameWithoutTag_str = getRidOfTagName(this.useCaseBody_arr);
 
   render() {
 
@@ -39,15 +37,15 @@ export default class ResultItemFooter extends React.Component {
                   size="sm"
                   outline
                   className="collapse-button_mod"
-                  value={`useCaseInput_${this.useCaseNameWithoutTag_str}`}
+                  value={`useCaseInput_${this.uc}`}
                   onClick={saveToClipboard()}>Copy Use Case name</Button>
           <Input placeholder=""
                  type="text"
                  spellCheck="false"
-                 value={this.useCaseNameWithoutTag_str}
+                 value={this.uc}
                  readOnly
                  className="collapse-input_mod collapse-input-one_mod shadow-none"
-                 id={`useCaseInput_${this.useCaseNameWithoutTag_str}`}/>
+                 id={`useCaseInput_${this.uc}`}/>
 
         </InputGroup>
 
@@ -56,15 +54,15 @@ export default class ResultItemFooter extends React.Component {
                   size="sm"
                   outline
                   className="collapse-button_mod"
-                  value={`runThisUCInput_${this.useCaseNameWithoutTag_str}`}
+                  value={`runThisUCInput_${this.uc}`}
                   onClick={saveToClipboard()}>Copy run command</Button>
           <Input placeholder=""
                  type="text"
                  spellCheck="false"
-                 value={this.onItemClickedHandler(this.arrWithData, this.rawUC)}
+                 value={this.runCommand}
                  readOnly
                  className="collapse-input_mod collapse-input-two_mod shadow-none"
-                 id={`runThisUCInput_${this.useCaseNameWithoutTag_str}`}/>
+                 id={`runThisUCInput_${this.uc}`}/>
 
         </InputGroup>
       </div>
