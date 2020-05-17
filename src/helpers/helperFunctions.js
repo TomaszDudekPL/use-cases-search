@@ -3,39 +3,26 @@ const prepareHTMLOfSearchResults = (items, func) => {
   let keys_str = '';
 
   items.forEach((arr) => {
-    let key = arr[0].replace(/%5C|%2F/g, '/');
-    keys_str += `<br /><form style="font-weight:bold">${key}</form>`;
 
-    let useCases = '';
+    const obj = arr[1];
 
-    let newArr = arr[1].map(arrOfUseCaseAndItsSteps => {
+    const directoryPath = obj.directoryPath.replace(/%5C|%2F/g, '/');
+    const useCaseName = obj.useCaseBody;
+    const steps_arr = obj.steps;
+    const describeTag = obj.describeTag;
+    const useCaseID = obj.useCaseID;
 
-      let uc = arrOfUseCaseAndItsSteps[0];
-      let steps = arrOfUseCaseAndItsSteps[1];
-      uc = uc.replace(/;/g, '.').replace(/\|/, '/');
-      uc = uc.match(/ucs_id:.+/gmi)[0];
-      uc = uc.replace(/ucs_id/, 'uc search id');
+    keys_str += `<br /><form style="font-weight:bold">${directoryPath}</form>`;
+    keys_str += `<p style="color:black;width:100%;font-weight:bold;">Use Case Search ID: ${useCaseID}</p>`;
+    keys_str += `<p style="color:black;width:100%;${func ? 'font-weight:bold;' : ''}">${describeTag} ${useCaseName}</p>`;
 
-      return {
-        [uc]: steps
-      };
-    });
-
-    newArr.forEach(obj_uc_steps => {
-      const entry = Object.entries(obj_uc_steps)[0];
-      useCases += `<p style="color:black;width:100%;${func ? 'font-weight:bold;' : ''}">${entry[0]}</p>`;
-
-      if (Array.isArray(entry[1]) && func === 'WITH DESCRIPTIONS') {
-        entry[1].forEach(steps => {
-          useCases += `<p style="color:black;width:100%;font-style:italic;margin-left:40px">${steps}</p>`
+      if (Array.isArray(steps_arr) && func === 'WITH DESCRIPTIONS') {
+        steps_arr.forEach(steps => {
+          keys_str += `<p style="color:black;width:100%;font-style:italic;margin-left:40px">${steps}</p>`
         })
       }
 
     });
-
-    keys_str += useCases;
-
-  });
 
   let myWindow = window.open("", "_blank");
   myWindow.document.write(`<section style="color:#b42012;display:flex;flex-direction:column;align-items:center;"><div>${keys_str}</div></section>`);

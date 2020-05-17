@@ -42,7 +42,7 @@ export default class FormComponent extends React.Component {
     consumerList: null,
     proList: null,
     name: '',
-    numberOfAllUseCases: 0,
+    // numberOfAllUseCases: 0,
     wantedWords: [],
     ucInfoObj: null,
     consumer_chkbox: false,
@@ -80,13 +80,15 @@ export default class FormComponent extends React.Component {
   };
 
   resetAllSettings = (e) => {
+    console.log('resetAllSettings');
     e.preventDefault();
     this.setState(() => {
         return {
-          items: [],
+          // items: [],
+          searchResult_arr: [],
           name: '',
           hashtag: '',
-          searchButtonClicked: false,
+          // searchButtonClicked: false,
           readyToProceed: true,
           chosenKeyWords: [],
           keyWords: []
@@ -121,7 +123,7 @@ export default class FormComponent extends React.Component {
           return {
             readyToProceed: false,
             // base,
-            searchButtonClicked: true
+            // searchButtonClicked: true
           }
         }
       );
@@ -144,7 +146,7 @@ export default class FormComponent extends React.Component {
 
       this.setState({
         // name: event.value,
-        showWholeBase: false
+        // showWholeBase: false
       });
 
       if (searchValue && searchValue.length >= 3) {
@@ -158,7 +160,7 @@ export default class FormComponent extends React.Component {
 
         // ready results to be rendered
         this.setState({
-          items: updatedList,
+          // items: updatedList,
           wantedWords: [wantedValue],
           searchResult_arr
         });
@@ -191,7 +193,7 @@ export default class FormComponent extends React.Component {
 
         // if something will be wrong with searching with two or more key words move this setState func to TARGET comment place in filterEngine_helpers
         this.setState({
-          items: updatedList,
+          // items: updatedList,
           wantedWords: wantedWords,
           searchResult_arr
         });
@@ -206,18 +208,18 @@ export default class FormComponent extends React.Component {
 
       this.setState(() => {
         return {
-          items: base,
+          // items: base,
           searchResult_arr
         }
       })
     }
 
     // clear search result view if input is clearing by user
-    if (searchValue && searchValue.length < 4) {
-      this.setState({
-        items: []
-      })
-    }
+    // if (searchValue && searchValue.length < 4) {
+    //   this.setState({
+    //     items: []
+    //   })
+    // }
   };
 
   multipleFuncOnChangeHandler = (event) => {
@@ -317,7 +319,7 @@ export default class FormComponent extends React.Component {
         <JumbotronComponent name={this.state.name}
                             ucInfoObj={this.state.ucInfoObj}
                             detailsSwitchView={this.state.detailsSwitchView}
-                            items={this.state.items}
+                            searchResult_arr={this.state.searchResult_arr}
                             createPrintView={this.createPrintView}
 
 
@@ -389,7 +391,7 @@ export default class FormComponent extends React.Component {
                                  proBase={this.state.proList}
                                  wantedWords={this.state.wantedWords}
                                  chosenKeyWords={this.state.chosenKeyWords}
-                                 showWholeBase={this.state.showWholeBase}>.</SearchResultItems>
+                                 >.</SearchResultItems>
 
             </FormGroup>
           </Form>
