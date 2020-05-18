@@ -1,5 +1,5 @@
 import React from 'react';
-import {Breadcrumb, Card, CardBody, Col, Collapse, Row} from 'reactstrap';
+import {Breadcrumb, Card, CardBody, Col, Collapse, Row, Input} from 'reactstrap';
 import BreadcrumbItems from './BreadcrumbItems';
 import ResultItemFooter from './ResultItemFooter';
 import ResultItemHeader from './ResultItemHeader';
@@ -94,6 +94,8 @@ export default class SearchResultItems extends React.Component {
         return (
 
           <Row key={arr[0]}>
+            <Input type="checkbox" id="uc_done" />
+            <Input type="checkbox" id="uc_focused" />
             <Col sm="12" md={{size: 12, offset: 0}}>
 
               <Breadcrumb className="list-item_mod">

@@ -646,3 +646,38 @@ body::-webkit-scrollbar {
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
+#uc_done, #uc_focused {
+    width: 20px;
+    height: 20px;
+}
+
+#uc_focused {
+    margin-top: 2.8rem;
+    margin-left: -10.25rem;
+    opacity: 0;
+}
+
+#uc_focused:hover {
+    opacity: 1;
+}
+
+#uc_focused::after {
+    border-radius: 15px;
+    content: "FOCUS";
+    font-weight: bolder;
+    color: white;
+    background: #218621;
+    padding: 8px;
+}
+
+#uc_focused:checked::after {
+    content: "FOCUSED";
+    font-weight: bolder;
+    color: white;
+    background:#6a1919;
+}
+
+#uc_focused:checked {
+    opacity: 1;
+}
