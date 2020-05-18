@@ -275,7 +275,7 @@ const returnUpdatedListOfUseCases_ifMoreThenOneWord = (base, arrOfKeyWords, firs
 
 const createObjectWithSearchResult = (base) => {
 
-  const obj = {};
+  const result = [];
   let number = 0;
 
   base.forEach(arr => {
@@ -306,7 +306,9 @@ const createObjectWithSearchResult = (base) => {
         const useCaseNameWithoutTag_str = firstLetterToUpperCase(getRidOfTagName(useCaseBody_arr)) + '.';
         if(useCaseID_str) number++;
 
-        obj[useCaseID_str] = {
+        localStorage.setItem(useCaseID_str, JSON.stringify({checked: false, focused: false}))
+
+        result.push([useCaseID_str, {
           ordinalNumber: number,
           env: environment,
           describeTag: describeTag_str,
@@ -322,16 +324,11 @@ const createObjectWithSearchResult = (base) => {
           image_url: imageURL,
           checked: false,
           focused: false
-        };
-
-        localStorage.setItem(useCaseID_str, JSON.stringify({checked: false, focused: false}))
-
+        }]);
       }
-
     });
   });
-
-  return Object.entries(obj);
+  return result
 }
 
 export {
