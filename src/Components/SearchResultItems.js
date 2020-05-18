@@ -89,8 +89,6 @@ export default class SearchResultItems extends React.Component {
 
   render() {
 
-    console.log('typeof arrOfAllSteps: ', typeof this.state.arrOfAllSteps, JSON.stringify(this.state.arrOfAllSteps, null, 4));
-
     return (this.props.searchResult_arr && this.props.searchResult_arr.map(arr => {
 
         return (
