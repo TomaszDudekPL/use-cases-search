@@ -4,6 +4,7 @@ import BreadcrumbItems from './BreadcrumbItems';
 import ResultItemFooter from './ResultItemFooter';
 import ResultItemHeader from './ResultItemHeader';
 import ResultItemStepsSection from './ResultItemStepsSection';
+import {returnUC_StepsFromFile} from '../helpers/helperFunctions';
 import firebase from '@firebase/app';
 import '@firebase/storage';
 
@@ -17,8 +18,6 @@ export default class SearchResultItems extends React.Component {
 
   onBreadcrumbClickHandler = (uc, directoryPath, describeTag_arr, image_url) => async () => {
 
-    let arrWithCleanSteps = [];
-
     // close item if is open
     if (this.state.isOpen) {
       let elem = await document.querySelector('.list-item_mod .show');
@@ -26,46 +25,6 @@ export default class SearchResultItems extends React.Component {
       this.setState({
         isOpen: false
       });
-    }
-
-    if (this.state.isOpen === false) {
-
-      let arrWithSteps = [];
-
-      if (describeTag_arr.includes('Step')) {
-        arrWithSteps = this.getAllStepsFromFullBase(this.props.consumerBase, this.props.proBase, directoryPath);
-      }
-
-      // prepare steps to show in collapse dialog
-      if (0 in arrWithSteps) {
-        arrWithSteps.forEach(step => {
-
-          // mark step which must be highlighted
-          const reg = new RegExp(describeTag_arr);
-          if (reg.test(step)) {
-            step = step.concat('_XOXO');
-          }
-          arrWithCleanSteps.push(step.match(/Step.+/gmi, '')[0]);
-        });
-
-        // sorting arr for steps. Steps with numeration higher then 9 can not be first in arr but last.
-        const reg2 = new RegExp(/ [0-9]of/);
-        const newArr1 = [];
-        const newArr2 = [];
-
-        arrWithCleanSteps.forEach((step) => {
-          if (reg2.test(step)) {
-            newArr1.push(step);
-          } else {
-            newArr2.push(step);
-          }
-        });
-
-        newArr1.sort();
-        newArr2.sort();
-        arrWithCleanSteps = [...newArr1, ...newArr2];
-      }
-
     }
 
     this.getImageFromFirebaseStorage(uc, image_url);
@@ -77,7 +36,7 @@ export default class SearchResultItems extends React.Component {
       return {
         shouldBeOpen: uc !== this.state.shouldBeOpen ? uc : '',
         isOpen: !this.state.isOpen,
-        arrOfAllSteps: arrWithCleanSteps
+        arrOfAllSteps: this.state.isOpen === false ? returnUC_StepsFromFile(describeTag_arr, this.props.consumerBase, this.props.proBase, directoryPath): []
       };
     });
 
@@ -115,35 +74,6 @@ export default class SearchResultItems extends React.Component {
     }
   };
 
-  getAllStepsFromFullBase = (consumerBase, proBase, pathToFile) => {
-
-    let arrWithSteps = [];
-
-    if (pathToFile.includes('CONSUMER')) {
-      for (let i = 0; i < consumerBase.length; i++) {
-        if (consumerBase[i][0] === pathToFile) {
-          // eslint-disable-next-line no-loop-func
-          consumerBase[i][1].forEach(arrWithUCWithStepInDescriptor => {
-            arrWithSteps.push(arrWithUCWithStepInDescriptor[0]);
-          });
-          break;
-        }
-      }
-    } else if (pathToFile.includes('PRO')) {
-      for (let i = 0; i < proBase.length; i++) {
-        if (proBase[i][0] === pathToFile) {
-          // eslint-disable-next-line no-loop-func
-          proBase[i][1].forEach(arrWithUCWithStepInDescriptor => {
-            arrWithSteps.push(arrWithUCWithStepInDescriptor[0]);
-          });
-          break;
-        }
-      }
-    }
-
-    return arrWithSteps;
-  };
-
   classesForSteps = (step) => {
 
     let classStr = '';
@@ -158,6 +88,8 @@ export default class SearchResultItems extends React.Component {
   };
 
   render() {
+
+    console.log('typeof arrOfAllSteps: ', typeof this.state.arrOfAllSteps, JSON.stringify(this.state.arrOfAllSteps, null, 4));
 
     return (this.props.searchResult_arr && this.props.searchResult_arr.map(arr => {
 

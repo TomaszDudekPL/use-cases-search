@@ -188,6 +188,76 @@ const getImageID = (uc) => {
   return image_id ? image_id.replace('ID_', '') : 'NO_ID';
 }
 
+const getAllStepsFromFullBase = (consumerBase, proBase, pathToFile) => {
+
+  let arrWithSteps = [];
+
+  if (pathToFile.includes('CONSUMER')) {
+    for (let i = 0; i < consumerBase.length; i++) {
+      if (consumerBase[i][0] === pathToFile) {
+        // eslint-disable-next-line no-loop-func
+        consumerBase[i][1].forEach(arrWithUCWithStepInDescriptor => {
+          arrWithSteps.push(arrWithUCWithStepInDescriptor[0]);
+        });
+        break;
+      }
+    }
+  } else if (pathToFile.includes('PRO')) {
+    for (let i = 0; i < proBase.length; i++) {
+      if (proBase[i][0] === pathToFile) {
+        // eslint-disable-next-line no-loop-func
+        proBase[i][1].forEach(arrWithUCWithStepInDescriptor => {
+          arrWithSteps.push(arrWithUCWithStepInDescriptor[0]);
+        });
+        break;
+      }
+    }
+  }
+
+  return arrWithSteps;
+};
+
+const returnUC_StepsFromFile = (describeTag_arr, consumerBase, proBase, directoryPath) => {
+
+  let arrWithSteps = [];
+  let arrWithCleanSteps = [];
+
+  if (describeTag_arr.includes('Step')) {
+    arrWithSteps = getAllStepsFromFullBase(consumerBase, proBase, directoryPath);
+  }
+
+  // prepare steps to show in collapse dialog
+  if (0 in arrWithSteps) {
+    arrWithSteps.forEach(step => {
+
+      // mark step which must be highlighted
+      const reg = new RegExp(describeTag_arr);
+      if (reg.test(step)) {
+        step = step.concat('_XOXO');
+      }
+      arrWithCleanSteps.push(step.match(/Step.+/gmi, '')[0]);
+    });
+
+    // sorting arr for steps. Steps with numeration higher then 9 can not be first in arr but last.
+    const reg2 = new RegExp(/ [0-9]of/);
+    const newArr1 = [];
+    const newArr2 = [];
+
+    arrWithCleanSteps.forEach((step) => {
+      if (reg2.test(step)) {
+        newArr1.push(step);
+      } else {
+        newArr2.push(step);
+      }
+    });
+
+    newArr1.sort();
+    newArr2.sort();
+    return arrWithCleanSteps = [...newArr1, ...newArr2];
+  }
+
+}
+
 export {
   preventActionHandler,
   saveToClipboard,
@@ -205,5 +275,6 @@ export {
   firstLetterToUpperCase,
   changeAllSemicolonsToDots,
   changeAllVerticalLinesToSlash,
-  getImageID
+  getImageID,
+  returnUC_StepsFromFile
 }
