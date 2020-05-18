@@ -42,9 +42,7 @@ export default class FormComponent extends React.Component {
     consumerList: null,
     proList: null,
     name: '',
-    // numberOfAllUseCases: 0,
     wantedWords: [],
-    ucInfoObj: null,
     consumer_chkbox: false,
     pro_chkbox: false,
     detailsSwitchView: false,
@@ -74,21 +72,17 @@ export default class FormComponent extends React.Component {
 
   clearPreviousView = () => {
     this.setState({
-      ucInfoObj: null,
       wantedWords: []
     })
   };
 
   resetAllSettings = (e) => {
-    console.log('resetAllSettings');
     e.preventDefault();
     this.setState(() => {
         return {
-          // items: [],
           searchResult_arr: [],
           name: '',
           hashtag: '',
-          // searchButtonClicked: false,
           readyToProceed: true,
           chosenKeyWords: [],
           keyWords: []
@@ -121,9 +115,7 @@ export default class FormComponent extends React.Component {
 
       this.setState(() => {
           return {
-            readyToProceed: false,
-            // base,
-            // searchButtonClicked: true
+            readyToProceed: false
           }
         }
       );
@@ -144,11 +136,6 @@ export default class FormComponent extends React.Component {
     if (arrOfKeyWords.length === 1) {
       console.log('searching with ONE word');
 
-      this.setState({
-        // name: event.value,
-        // showWholeBase: false
-      });
-
       if (searchValue && searchValue.length >= 3) {
 
         const {updatedList, wantedValue} = returnUpdatedListOfUseCases_ifOneWord(base, searchValue);
@@ -160,7 +147,6 @@ export default class FormComponent extends React.Component {
 
         // ready results to be rendered
         this.setState({
-          // items: updatedList,
           wantedWords: [wantedValue],
           searchResult_arr
         });
@@ -193,8 +179,7 @@ export default class FormComponent extends React.Component {
 
         // if something will be wrong with searching with two or more key words move this setState func to TARGET comment place in filterEngine_helpers
         this.setState({
-          // items: updatedList,
-          wantedWords: wantedWords,
+          wantedWords,
           searchResult_arr
         });
       }
@@ -203,35 +188,20 @@ export default class FormComponent extends React.Component {
 
     if (!arrOfKeyWords.length && this.state.hashtag) {
 
-      // to implement
       const searchResult_arr = createObjectWithSearchResult(base);
 
       this.setState(() => {
         return {
-          // items: base,
           searchResult_arr
         }
       })
     }
-
-    // clear search result view if input is clearing by user
-    // if (searchValue && searchValue.length < 4) {
-    //   this.setState({
-    //     items: []
-    //   })
-    // }
-  };
-
-  multipleFuncOnChangeHandler = (event) => {
-    // this.filterList(event);
-    this.showSearchValue(event);
   };
 
   handleChangeConsumerChk = () => {
     this.setState({
       consumer_chkbox: !this.state.consumer_chkbox,
       pro_chkbox: false,
-      items: [],
       name: '',
       hashtag: '',
       searchButtonClicked: false,
@@ -245,7 +215,6 @@ export default class FormComponent extends React.Component {
     this.setState({
       pro_chkbox: !this.state.pro_chkbox,
       consumer_chkbox: false,
-      items: [],
       name: '',
       hashtag: '',
       searchButtonClicked: false,
@@ -363,7 +332,7 @@ export default class FormComponent extends React.Component {
               </div>
 
               <SearchInputComponent
-                multipleFuncOnChangeHandler={this.multipleFuncOnChangeHandler}
+                multipleFuncOnChangeHandler={this.showSearchValue}
                 name={this.state.name}
               />
 

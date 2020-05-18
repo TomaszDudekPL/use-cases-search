@@ -6,13 +6,13 @@ const prepareHTMLOfSearchResults = (items, func) => {
 
     const obj = arr[1];
 
-    const directoryPath = obj.directoryPath.replace(/%5C|%2F/g, '/');
+    const directoryPath = obj.directoryPath.replace(/%5C|%2F/g, ' / ');
     const useCaseName = obj.useCaseBody;
     const steps_arr = obj.steps;
     const describeTag = obj.describeTag;
     const useCaseID = obj.useCaseID;
 
-    keys_str += `<br /><form style="font-weight:bold">${directoryPath}</form>`;
+    keys_str += `<br /><form style="font-weight:bold">${directoryPath}.js</form>`;
     keys_str += `<p style="color:black;width:100%;font-weight:bold;">Use Case Search ID: ${useCaseID}</p>`;
     keys_str += `<p style="color:black;width:100%;${func ? 'font-weight:bold;' : ''}">${describeTag} ${useCaseName}</p>`;
 

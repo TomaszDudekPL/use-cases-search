@@ -5,7 +5,6 @@ import {randomNum} from '../helpers/helperFunctions';
 export default class ResultItemHeader extends React.Component {
 
   defaultDescribeTagName_arr = ['UseCase:'];
-  arr = this.props.arr;
   wantedWords = this.props.wantedWords;
   chosenKeyWords = this.props.chosenKeyWords;
   useCaseID = this.props.useCaseID;

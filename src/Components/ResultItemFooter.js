@@ -7,7 +7,6 @@ export default class ResultItemFooter extends React.Component {
   uc = this.props.uc;
   useCaseID = this.props.useCaseID;
   runCommand = this.props.runCommand;
-  arrWithData = this.props.arrWithData;
 
   render() {
 

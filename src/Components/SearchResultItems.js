@@ -17,12 +17,7 @@ export default class SearchResultItems extends React.Component {
 
   onBreadcrumbClickHandler = (uc, directoryPath, describeTag_arr, image_url) => async () => {
 
-    console.log('onBreadcrumbClickHandler');
-
-    const arrWithData = directoryPath.split(/%5C|%2F/);
-    const fileName = arrWithData[2];
     let arrWithCleanSteps = [];
-    // const pathToFilePreparedForFirebaseStorage = arrWithData.join('_').toLowerCase();
 
     // close item if is open
     if (this.state.isOpen) {
@@ -82,9 +77,7 @@ export default class SearchResultItems extends React.Component {
       return {
         shouldBeOpen: uc !== this.state.shouldBeOpen ? uc : '',
         isOpen: !this.state.isOpen,
-        arrOfAllSteps: arrWithCleanSteps,
-        fileName,
-        arrWithData
+        arrOfAllSteps: arrWithCleanSteps
       };
     });
 
@@ -102,8 +95,6 @@ export default class SearchResultItems extends React.Component {
       const firebaseURL = await pathReference.getDownloadURL().then(function (url) {
 
         return url;
-
-        // Insert url into an <img> tag to "download"
       }).catch(function (error) {
 
         // A full list of error codes is available at
@@ -212,7 +203,6 @@ export default class SearchResultItems extends React.Component {
                         </div>
 
                         <ResultItemFooter
-                          arrWithData={this.state.arrWithData}
                           uc={arr[1].useCaseBody}
                           useCaseID={arr[1].useCaseID}
                           runCommand={arr[1].runCommand}
