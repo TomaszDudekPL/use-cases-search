@@ -8,7 +8,7 @@ export default class JumbotronComponent extends React.Component {
     return (
       <Jumbotron fluid className="jumbotron_mod">
 
-        <h1 className={(this.props.ucInfoObj && this.props.detailsSwitchView) || (this.props.name && this.props.detailsSwitchView) ? "display-7 form-mainLabel_mod1" : "display-7 form-mainLabel_mod2"}>USE CASES SEARCH</h1>
+        <h1 className="form-mainLabel_mod2">USE CASES SEARCH</h1>
         {[0] in this.props.searchResult_arr? <ButtonGroup className="print_view-button_mod">
 
                                       <Button color="primary"

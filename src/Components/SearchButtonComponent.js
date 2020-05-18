@@ -1,15 +1,16 @@
 import React from 'react';
 import {Button} from 'reactstrap';
 
-export default class SearchButtonComponent extends React.Component {
+const SearchButtonComponent = ({visibility, color, executeFunc, name}) => {
 
-  render() {
     return (
-      !this.props.visibility ? (
-        <Button color={this.props.color} className="form-button_mod"
-                onClick={this.props.executeFunc}>{this.props.name}
+      !visibility ? (
+        <Button color={color} className="form-button_mod"
+                onClick={executeFunc}>{name}
         </Button>
       ) : null
     )
-  }
+
 }
+
+export default SearchButtonComponent;
