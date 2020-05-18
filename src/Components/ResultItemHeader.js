@@ -5,7 +5,6 @@ import {randomNum} from '../helpers/helperFunctions';
 export default class ResultItemHeader extends React.Component {
 
   defaultDescribeTagName_arr = ['UseCase:'];
-  wantedWords = this.props.wantedWords;
   chosenKeyWords = this.props.chosenKeyWords;
   useCaseID = this.props.useCaseID;
   onBreadcrumbClickHandler = this.props.onBreadcrumbClickHandler;
@@ -39,7 +38,7 @@ export default class ResultItemHeader extends React.Component {
           <Highlighter
             className={this.useCaseBody_str.length > 140 ? 'list-text_mod2 font-roboto' : 'list-text_mod1 font-roboto'}
             highlightClassName="highlight-text"
-            searchWords={this.wantedWords}
+            searchWords={this.props.wantedWords}
             autoEscape={true}
             textToHighlight={this.useCaseBody_str}
           />
