@@ -306,8 +306,6 @@ const createObjectWithSearchResult = (base) => {
         const useCaseNameWithoutTag_str = firstLetterToUpperCase(getRidOfTagName(useCaseBody_arr)) + '.';
         if(useCaseID_str) number++;
 
-        localStorage.setItem(useCaseID_str, JSON.stringify({checked: false, focused: false}))
-
         result.push([useCaseID_str, {
           ordinalNumber: number,
           env: environment,

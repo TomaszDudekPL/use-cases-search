@@ -10,6 +10,11 @@ import '@firebase/storage';
 
 export default class SearchResultItems extends React.Component {
 
+
+  componentDidMount() {
+    // localStorage.setItem('itemsState', JSON.stringify({}))
+  }
+
   state = {
     shouldBeOpen: '',
     isOpen: false,
@@ -87,6 +92,35 @@ export default class SearchResultItems extends React.Component {
 
   };
 
+  executeFunc = (id) => async () => {
+
+    if(!(localStorage.getItem('itemsState'))) {
+      const itemsState_obj = {};
+      itemsState_obj[id] = {};
+      itemsState_obj[id].checked = true;
+      localStorage.setItem('itemsState', JSON.stringify(itemsState_obj));
+    } else {
+      const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
+      if(itemsState_obj[id]) {
+        itemsState_obj[id].checked = !itemsState_obj[id].checked;
+      } else {
+        itemsState_obj[id] = {};
+        itemsState_obj[id].checked = true;
+      }
+      localStorage.setItem('itemsState', JSON.stringify(itemsState_obj));
+    }
+  }
+
+  checked = (useCaseID) => {
+
+    const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
+    if(itemsState_obj){
+      if(itemsState_obj[useCaseID]){
+        return itemsState_obj[useCaseID].checked;
+      }
+    }
+  }
+
   render() {
 
     return (this.props.searchResult_arr && this.props.searchResult_arr.map(arr => {
@@ -94,7 +128,11 @@ export default class SearchResultItems extends React.Component {
         return (
 
           <Row key={arr[0]}>
-            <Input type="checkbox" id="uc_done" />
+            <Input type="checkbox"
+                   id="uc_done"
+                   onChange={this.executeFunc(arr[1].useCaseID)}
+                   defaultChecked={this.checked(arr[1].useCaseID)}
+            />
             <Input type="checkbox" id="uc_focused" />
             <Col sm="12" md={{size: 12, offset: 0}}>
 
