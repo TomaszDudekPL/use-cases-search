@@ -235,6 +235,10 @@ body::-webkit-scrollbar {
     margin-left: 20px;
 }
 
+.x-button_mod {
+    width: 80px;
+}
+
 ::placeholder {
     font-size: 1.3rem;
     font-style: italic;

@@ -80,6 +80,8 @@ export default class FormComponent extends React.Component {
     e.preventDefault();
     this.setState(() => {
         return {
+          consumer_chkbox: false,
+          pro_chkbox: false,
           searchResult_arr: [],
           name: '',
           hashtag: '',
@@ -252,6 +254,7 @@ export default class FormComponent extends React.Component {
           return {
             hashtag: this.state.hashtag !== hashTagName ? hashTagName : '',
             hashtagBase: base,
+            searchResult_arr: [],
             chosenKeyWords: [],
             keyWords
           }
@@ -268,6 +271,8 @@ export default class FormComponent extends React.Component {
     }
     this.setState(() => {
       return {
+        searchResult_arr: [],
+        readyToProceed: true,
         chosenKeyWords: [...this.collection].sort()
       }
     })
@@ -276,6 +281,8 @@ export default class FormComponent extends React.Component {
   getBackConnector = (connector) => {
     this.setState(
       {
+        searchResult_arr: [],
+        readyToProceed: true,
         connector
       }
     )
@@ -348,7 +355,7 @@ export default class FormComponent extends React.Component {
                 <SearchButtonComponent executeFunc={this.resetAllSettings}
                                        readyToProceed={this.state.readyToProceed}
                                        color="secondary"
-                                       name="✕ start from the beginning"
+                                       name="✕"
                                        visibility={this.state.readyToProceed}
                 />
               </ButtonGroup>
