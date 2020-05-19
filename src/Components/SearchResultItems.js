@@ -92,7 +92,7 @@ export default class SearchResultItems extends React.Component {
 
   };
 
-  executeFunc = (id) => async () => {
+  checkThisUseCase = (id) => async () => {
 
     if(!(localStorage.getItem('itemsState'))) {
       const itemsState_obj = {};
@@ -111,12 +111,41 @@ export default class SearchResultItems extends React.Component {
     }
   }
 
+  checkToFocused = (id) => async () => {
+
+    if(!(localStorage.getItem('itemsState'))) {
+      const itemsState_obj = {};
+      itemsState_obj[id] = {};
+      itemsState_obj[id].focused = true;
+      localStorage.setItem('itemsState', JSON.stringify(itemsState_obj));
+    } else {
+      const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
+      if(itemsState_obj[id]) {
+        itemsState_obj[id].focused = !itemsState_obj[id].focused;
+      } else {
+        itemsState_obj[id] = {};
+        itemsState_obj[id].focused = true;
+      }
+      localStorage.setItem('itemsState', JSON.stringify(itemsState_obj));
+    }
+  }
+
   checked = (useCaseID) => {
 
     const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
     if(itemsState_obj){
       if(itemsState_obj[useCaseID]){
         return itemsState_obj[useCaseID].checked;
+      }
+    }
+  }
+
+  focused = (useCaseID) => {
+
+    const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
+    if(itemsState_obj){
+      if(itemsState_obj[useCaseID]){
+        return itemsState_obj[useCaseID].focused;
       }
     }
   }
@@ -130,10 +159,14 @@ export default class SearchResultItems extends React.Component {
           <Row key={arr[0]}>
             <Input type="checkbox"
                    id="uc_done"
-                   onChange={this.executeFunc(arr[1].useCaseID)}
+                   onChange={this.checkThisUseCase(arr[1].useCaseID)}
                    defaultChecked={this.checked(arr[1].useCaseID)}
             />
-            <Input type="checkbox" id="uc_focused" />
+            <Input type="checkbox"
+                   id="uc_focused"
+                   onChange={this.checkToFocused(arr[1].useCaseID)}
+                   defaultChecked={this.focused(arr[1].useCaseID)}
+            />
             <Col sm="12" md={{size: 12, offset: 0}}>
 
               <Breadcrumb className="list-item_mod">
