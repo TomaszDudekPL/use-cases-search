@@ -353,7 +353,9 @@ export default class FormComponent extends React.Component {
                 />
               </ButtonGroup>
 
-              <ResultNumberTextComponent searchResult_arr={this.state.searchResult_arr}/>
+              <ResultNumberTextComponent searchResult_arr={this.state.searchResult_arr}
+                                         readyToProceed={this.state.readyToProceed}
+              />
 
               <SearchResultItems searchResult_arr={this.state.searchResult_arr}
                                  consumerBase={this.state.consumerList}
