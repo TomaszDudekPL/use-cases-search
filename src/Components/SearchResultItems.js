@@ -4,7 +4,7 @@ import BreadcrumbItems from './BreadcrumbItems';
 import ResultItemFooter from './ResultItemFooter';
 import ResultItemHeader from './ResultItemHeader';
 import ResultItemStepsSection from './ResultItemStepsSection';
-import {returnUC_StepsFromFile} from '../helpers/helperFunctions';
+import {returnUC_StepsFromFile, checkThisUseCase, checked} from '../helpers/helperFunctions';
 import firebase from '@firebase/app';
 import '@firebase/storage';
 
@@ -92,35 +92,6 @@ export default class SearchResultItems extends React.Component {
 
   };
 
-  checkThisUseCase = (id, checkOrFocus) => async () => {
-
-    if(!(localStorage.getItem('itemsState'))) {
-      const itemsState_obj = {};
-      itemsState_obj[id] = {};
-      itemsState_obj[id][checkOrFocus] = true;
-      localStorage.setItem('itemsState', JSON.stringify(itemsState_obj));
-    } else {
-      const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
-      if(itemsState_obj[id]) {
-        itemsState_obj[id][checkOrFocus] = !itemsState_obj[id][checkOrFocus];
-      } else {
-        itemsState_obj[id] = {};
-        itemsState_obj[id][checkOrFocus] = true;
-      }
-      localStorage.setItem('itemsState', JSON.stringify(itemsState_obj));
-    }
-  }
-
-  checked = (useCaseID, checkOrFocus) => {
-
-    const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
-    if(itemsState_obj){
-      if(itemsState_obj[useCaseID]){
-        return itemsState_obj[useCaseID][checkOrFocus];
-      }
-    }
-  }
-
   render() {
 
     return (this.props.searchResult_arr && this.props.searchResult_arr.map(arr => {
@@ -130,13 +101,13 @@ export default class SearchResultItems extends React.Component {
           <Row key={arr[0]}>
             <Input type="checkbox"
                    id="uc_done"
-                   onChange={this.checkThisUseCase(arr[1].useCaseID, 'checked')}
-                   defaultChecked={this.checked(arr[1].useCaseID, 'checked')}
+                   onChange={checkThisUseCase(arr[1].useCaseID, 'checked')}
+                   defaultChecked={checked(arr[1].useCaseID, 'checked')}
             />
             <Input type="checkbox"
                    id="uc_focused"
-                   onChange={this.checkThisUseCase(arr[1].useCaseID, 'focused')}
-                   defaultChecked={this.checked(arr[1].useCaseID, 'focused')}
+                   onChange={checkThisUseCase(arr[1].useCaseID, 'focused')}
+                   defaultChecked={checked(arr[1].useCaseID, 'focused')}
             />
             <Col sm="12" md={{size: 12, offset: 0}}>
 

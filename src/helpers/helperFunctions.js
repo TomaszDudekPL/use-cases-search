@@ -258,6 +258,39 @@ const returnUC_StepsFromFile = (describeTag_arr, consumerBase, proBase, director
 
 }
 
+const getItemFromLocalStorage = (key) => JSON.parse(localStorage.getItem(key));
+
+const setItemInLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+
+const checkThisUseCase = (id, checkOrFocus) => async () => {
+
+  if(!(getItemFromLocalStorage('itemsState'))) {
+    const itemsState_obj = {};
+    itemsState_obj[id] = {};
+    itemsState_obj[id][checkOrFocus] = true;
+    setItemInLocalStorage('itemsState',itemsState_obj);
+  } else {
+    const itemsState_obj = getItemFromLocalStorage('itemsState');
+    if(itemsState_obj[id]) {
+      itemsState_obj[id][checkOrFocus] = !itemsState_obj[id][checkOrFocus];
+    } else {
+      itemsState_obj[id] = {};
+      itemsState_obj[id][checkOrFocus] = true;
+    }
+    setItemInLocalStorage('itemsState',itemsState_obj);
+  }
+}
+
+const checked = (useCaseID, checkOrFocus) => {
+
+  const itemsState_obj = getItemFromLocalStorage('itemsState');
+  if(itemsState_obj){
+    if(itemsState_obj[useCaseID]){
+      return itemsState_obj[useCaseID][checkOrFocus];
+    }
+  }
+}
+
 export {
   preventActionHandler,
   saveToClipboard,
@@ -276,5 +309,7 @@ export {
   changeAllSemicolonsToDots,
   changeAllVerticalLinesToSlash,
   getImageID,
-  returnUC_StepsFromFile
+  returnUC_StepsFromFile,
+  checkThisUseCase,
+  checked
 }
