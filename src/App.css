@@ -669,19 +669,19 @@ body::-webkit-scrollbar {
 }
 
 #uc_focused::after {
-    border-radius: 15px;
     content: "FOCUS";
     font-weight: bolder;
     color: white;
-    background: #218621;
+    background: #2f9c31;
     padding: 8px;
 }
 
 #uc_focused:checked::after {
+    clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%);
     content: "FOCUSED";
     font-weight: bolder;
     color: white;
-    background:#6a1919;
+    background: #9e0b0b;
 }
 
 #uc_focused:checked {
@@ -689,5 +689,5 @@ body::-webkit-scrollbar {
 }
 
 .focused{
-    background: #6a1919;
+    background: rgba(13, 99, 175, 0.27);
 }

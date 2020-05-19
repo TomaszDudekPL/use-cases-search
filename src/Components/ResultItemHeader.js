@@ -19,30 +19,19 @@ export default class ResultItemHeader extends React.Component {
 
 
   checked = (useCaseID, checkOrFocus) => {
-    console.log('A1');
     const itemsState_obj = getItemFromLocalStorage('itemsState');
     if(itemsState_obj){
-      console.log('A1-1');
       if(itemsState_obj[useCaseID]){
         return itemsState_obj[useCaseID][checkOrFocus];
       }
     }
-
-    // if(checkOrFocus === 'focused') {
-    //   console.log('A1-2');
-    //   this.setState({
-    //     useCaseID: true
-    //   });
-    // }
   }
-
-
 
   render() {
     const ordinalNumber = this.props.ordinalNumber;
 
     return (
-      <div className={"breadcrumb-header"}>
+      <div className={this.checked(this.useCaseID, 'focused')? "breadcrumb-header focused": "breadcrumb-header"}>
 
         <Input type="checkbox"
                id="uc_done"
