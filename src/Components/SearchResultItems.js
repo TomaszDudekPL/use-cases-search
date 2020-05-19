@@ -92,60 +92,31 @@ export default class SearchResultItems extends React.Component {
 
   };
 
-  checkThisUseCase = (id) => async () => {
+  checkThisUseCase = (id, checkOrFocus) => async () => {
 
     if(!(localStorage.getItem('itemsState'))) {
       const itemsState_obj = {};
       itemsState_obj[id] = {};
-      itemsState_obj[id].checked = true;
+      itemsState_obj[id][checkOrFocus] = true;
       localStorage.setItem('itemsState', JSON.stringify(itemsState_obj));
     } else {
       const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
       if(itemsState_obj[id]) {
-        itemsState_obj[id].checked = !itemsState_obj[id].checked;
+        itemsState_obj[id][checkOrFocus] = !itemsState_obj[id][checkOrFocus];
       } else {
         itemsState_obj[id] = {};
-        itemsState_obj[id].checked = true;
+        itemsState_obj[id][checkOrFocus] = true;
       }
       localStorage.setItem('itemsState', JSON.stringify(itemsState_obj));
     }
   }
 
-  checkToFocused = (id) => async () => {
-
-    if(!(localStorage.getItem('itemsState'))) {
-      const itemsState_obj = {};
-      itemsState_obj[id] = {};
-      itemsState_obj[id].focused = true;
-      localStorage.setItem('itemsState', JSON.stringify(itemsState_obj));
-    } else {
-      const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
-      if(itemsState_obj[id]) {
-        itemsState_obj[id].focused = !itemsState_obj[id].focused;
-      } else {
-        itemsState_obj[id] = {};
-        itemsState_obj[id].focused = true;
-      }
-      localStorage.setItem('itemsState', JSON.stringify(itemsState_obj));
-    }
-  }
-
-  checked = (useCaseID) => {
+  checked = (useCaseID, checkOrFocus) => {
 
     const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
     if(itemsState_obj){
       if(itemsState_obj[useCaseID]){
-        return itemsState_obj[useCaseID].checked;
-      }
-    }
-  }
-
-  focused = (useCaseID) => {
-
-    const itemsState_obj = JSON.parse(localStorage.getItem('itemsState'));
-    if(itemsState_obj){
-      if(itemsState_obj[useCaseID]){
-        return itemsState_obj[useCaseID].focused;
+        return itemsState_obj[useCaseID][checkOrFocus];
       }
     }
   }
@@ -159,13 +130,13 @@ export default class SearchResultItems extends React.Component {
           <Row key={arr[0]}>
             <Input type="checkbox"
                    id="uc_done"
-                   onChange={this.checkThisUseCase(arr[1].useCaseID)}
-                   defaultChecked={this.checked(arr[1].useCaseID)}
+                   onChange={this.checkThisUseCase(arr[1].useCaseID, 'checked')}
+                   defaultChecked={this.checked(arr[1].useCaseID, 'checked')}
             />
             <Input type="checkbox"
                    id="uc_focused"
-                   onChange={this.checkToFocused(arr[1].useCaseID)}
-                   defaultChecked={this.focused(arr[1].useCaseID)}
+                   onChange={this.checkThisUseCase(arr[1].useCaseID, 'focused')}
+                   defaultChecked={this.checked(arr[1].useCaseID, 'focused')}
             />
             <Col sm="12" md={{size: 12, offset: 0}}>
 
