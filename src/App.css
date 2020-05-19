@@ -383,7 +383,6 @@ body::-webkit-scrollbar {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 5px;
 }
 
 .breadcrumb-item-mod {
@@ -421,7 +420,8 @@ body::-webkit-scrollbar {
 }
 
 .use_case-text_mod {
-    margin-top: unset;
+    margin-top: 25px;
+    margin-left: -40px;
 }
 
 .collapse-steps {
@@ -648,13 +648,19 @@ body::-webkit-scrollbar {
 }
 
 #uc_done, #uc_focused {
+    position: absolute;
     width: 20px;
     height: 20px;
 }
 
+#uc_done {
+    left: 0;
+    top: 0;
+}
+
 #uc_focused {
-    margin-top: 2.8rem;
-    margin-left: -10.25rem;
+    left: -100px;
+    top: 30px;
     opacity: 0;
 }
 
@@ -680,4 +686,8 @@ body::-webkit-scrollbar {
 
 #uc_focused:checked {
     opacity: 1;
+}
+
+.focused{
+    background: #6a1919;
 }

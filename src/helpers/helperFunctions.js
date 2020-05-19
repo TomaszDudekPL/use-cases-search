@@ -281,16 +281,6 @@ const checkThisUseCase = (id, checkOrFocus) => async () => {
   }
 }
 
-const checked = (useCaseID, checkOrFocus) => {
-
-  const itemsState_obj = getItemFromLocalStorage('itemsState');
-  if(itemsState_obj){
-    if(itemsState_obj[useCaseID]){
-      return itemsState_obj[useCaseID][checkOrFocus];
-    }
-  }
-}
-
 export {
   preventActionHandler,
   saveToClipboard,
@@ -311,5 +301,6 @@ export {
   getImageID,
   returnUC_StepsFromFile,
   checkThisUseCase,
-  checked
+  getItemFromLocalStorage
+  // checked
 }

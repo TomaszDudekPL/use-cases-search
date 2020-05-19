@@ -1,6 +1,7 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import {randomNum} from '../helpers/helperFunctions';
+import {getItemFromLocalStorage, checkThisUseCase, randomNum} from '../helpers/helperFunctions';
+import {Input} from "reactstrap";
 
 export default class ResultItemHeader extends React.Component {
 
@@ -15,16 +16,49 @@ export default class ResultItemHeader extends React.Component {
   allKeyWords = this.props.keyWords;
   directoryPath = this.props.directoryPath;
 
+
+
+  checked = (useCaseID, checkOrFocus) => {
+    console.log('A1');
+    const itemsState_obj = getItemFromLocalStorage('itemsState');
+    if(itemsState_obj){
+      console.log('A1-1');
+      if(itemsState_obj[useCaseID]){
+        return itemsState_obj[useCaseID][checkOrFocus];
+      }
+    }
+
+    // if(checkOrFocus === 'focused') {
+    //   console.log('A1-2');
+    //   this.setState({
+    //     useCaseID: true
+    //   });
+    // }
+  }
+
+
+
   render() {
     const ordinalNumber = this.props.ordinalNumber;
 
     return (
-      <div className="breadcrumb-header"
-           onClick={this.onBreadcrumbClickHandler(this.useCaseBody_str, this.directoryPath, this.describeTag, this.image_url)}>
+      <div className={"breadcrumb-header"}>
 
-        <div className="breadcrumb-item-mod">
+        <Input type="checkbox"
+               id="uc_done"
+               onChange={checkThisUseCase(this.useCaseID, 'checked')}
+               defaultChecked={this.checked(this.useCaseID, 'checked')}
+        />
+        <Input type="checkbox"
+               id="uc_focused"
+               onChange={checkThisUseCase(this.useCaseID, 'focused')}
+               defaultChecked={this.checked(this.useCaseID, 'focused')}
+        />
+
+        <div className="breadcrumb-item-mod"
+             onClick={this.onBreadcrumbClickHandler(this.useCaseBody_str, this.directoryPath, this.describeTag, this.image_url)}>
           <span className="item-number_mod">{ordinalNumber}.</span>
-        </div>
+
         <div className="use_case-text_mod">
           <Highlighter
             className={this.useCaseBody_str.length > 140 ? 'list-text_mod2' : 'list-text_mod1'}
@@ -42,6 +76,7 @@ export default class ResultItemHeader extends React.Component {
             autoEscape={true}
             textToHighlight={this.useCaseBody_str}
           />
+        </div>
         </div>
         <div className="item-footer-mod">
 

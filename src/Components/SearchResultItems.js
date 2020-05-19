@@ -1,10 +1,10 @@
 import React from 'react';
-import {Breadcrumb, Card, CardBody, Col, Collapse, Row, Input} from 'reactstrap';
+import {Breadcrumb, Card, CardBody, Col, Collapse, Row} from 'reactstrap';
 import BreadcrumbItems from './BreadcrumbItems';
 import ResultItemFooter from './ResultItemFooter';
 import ResultItemHeader from './ResultItemHeader';
 import ResultItemStepsSection from './ResultItemStepsSection';
-import {returnUC_StepsFromFile, checkThisUseCase, checked} from '../helpers/helperFunctions';
+import {returnUC_StepsFromFile} from '../helpers/helperFunctions';
 import firebase from '@firebase/app';
 import '@firebase/storage';
 
@@ -99,16 +99,6 @@ export default class SearchResultItems extends React.Component {
         return (
 
           <Row key={arr[0]}>
-            <Input type="checkbox"
-                   id="uc_done"
-                   onChange={checkThisUseCase(arr[1].useCaseID, 'checked')}
-                   defaultChecked={checked(arr[1].useCaseID, 'checked')}
-            />
-            <Input type="checkbox"
-                   id="uc_focused"
-                   onChange={checkThisUseCase(arr[1].useCaseID, 'focused')}
-                   defaultChecked={checked(arr[1].useCaseID, 'focused')}
-            />
             <Col sm="12" md={{size: 12, offset: 0}}>
 
               <Breadcrumb className="list-item_mod">
