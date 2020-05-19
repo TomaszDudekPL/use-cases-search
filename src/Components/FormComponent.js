@@ -349,7 +349,7 @@ export default class FormComponent extends React.Component {
                 <SearchButtonComponent executeFunc={this.proceedSearching}
                                        readyToProceed={this.state.readyToProceed}
                                        color="success"
-                                       name={this.state.readyToProceed ? "proceed with these settings!" : "re-search again"}
+                                       name={this.state.readyToProceed ? "search" : "re-search again"}
                 />
 
                 <SearchButtonComponent executeFunc={this.resetAllSettings}
