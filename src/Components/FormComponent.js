@@ -255,6 +255,7 @@ export default class FormComponent extends React.Component {
             hashtag: this.state.hashtag !== hashTagName ? hashTagName : '',
             hashtagBase: base,
             searchResult_arr: [],
+            readyToProceed: true,
             chosenKeyWords: [],
             keyWords
           }
@@ -355,7 +356,7 @@ export default class FormComponent extends React.Component {
                 <SearchButtonComponent executeFunc={this.resetAllSettings}
                                        readyToProceed={this.state.readyToProceed}
                                        color="secondary"
-                                       name="✕"
+                                       name="✕ reset all"
                                        visibility={this.state.readyToProceed}
                 />
               </ButtonGroup>
