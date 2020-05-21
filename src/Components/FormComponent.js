@@ -208,6 +208,7 @@ export default class FormComponent extends React.Component {
       hashtag: '',
       searchButtonClicked: false,
       readyToProceed: true,
+      searchResult_arr: [],
       chosenKeyWords: [],
       keyWords: []
     });
@@ -221,6 +222,7 @@ export default class FormComponent extends React.Component {
       hashtag: '',
       searchButtonClicked: false,
       readyToProceed: true,
+      searchResult_arr: [],
       chosenKeyWords: [],
       keyWords: []
     });
