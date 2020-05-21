@@ -87,7 +87,8 @@ export default class FormComponent extends React.Component {
           hashtag: '',
           readyToProceed: true,
           chosenKeyWords: [],
-          keyWords: []
+          keyWords: [],
+          connector: 'WITH'
         }
       }
     )
@@ -334,6 +335,7 @@ export default class FormComponent extends React.Component {
                 />
 
                 <KeyWordsConnectorComponent keyWords={this.state.keyWords}
+                                            connector={this.state.connector}
                                             chosenHashTag={this.state.hashtag}
                                             getBackConnector={this.getBackConnector}
 
