@@ -252,7 +252,7 @@ body::-webkit-scrollbar {
 }
 
 ::selection {
-    color: #ff1500;
+    /*color: #ff1500;*/
 }
 
 .form-control[readonly] {
