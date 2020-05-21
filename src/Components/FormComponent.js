@@ -358,10 +358,9 @@ export default class FormComponent extends React.Component {
                 />
 
                 <SearchButtonComponent executeFunc={this.resetAllSettings}
-                                       readyToProceed={this.state.readyToProceed}
                                        color="secondary"
                                        name="✕ reset all"
-                                       visibility={this.state.readyToProceed}
+                                       visibility={this.state.readyToProceed && !this.state.hashtag}
                 />
               </ButtonGroup>
 
