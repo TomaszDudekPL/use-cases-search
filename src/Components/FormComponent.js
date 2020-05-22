@@ -96,7 +96,7 @@ export default class FormComponent extends React.Component {
 
   proceedSearching = (e) => {
     let base;
-    e.preventDefault();
+    if(e) e.preventDefault();
     console.log('proceedSearching');
 
     if ((this.state.name || this.state.hashtag) && this.state.base) {
@@ -233,7 +233,7 @@ export default class FormComponent extends React.Component {
     prepareHTMLOfSearchResults(items, func);
   };
 
-  chooseHashTag = (hashTagName) => () => {
+  chooseHashTag = (hashTagName) => async () => {
 
     if (this.state.base) {
 
@@ -253,7 +253,7 @@ export default class FormComponent extends React.Component {
         base = returnAllUseCasesWithWantedTag(base, hashTagName);
         let keyWords = returnAllKeyWords(base);
 
-        this.setState(() => {
+        await this.setState(() => {
           return {
             hashtag: this.state.hashtag !== hashTagName ? hashTagName : '',
             hashtagBase: base,
@@ -265,6 +265,8 @@ export default class FormComponent extends React.Component {
         })
       }
     }
+
+    this.proceedSearching()
   };
 
   returnChosenKeyWords = (keyWord) => {
