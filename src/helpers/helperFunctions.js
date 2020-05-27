@@ -120,15 +120,25 @@ const getRidOfTagName = (useCaseBody_arr) => {
   }
 }
 
-const returnKeyWords_arr = (rawUC) => {
+const returnKeyWords_obj = (rawUC) => {
   // Return array with all raw keywords from full use case: !keyWord1., !!!keyWord2.
-  const rawKeyWords_arr = rawUC.match(/![a-zA-Z0-9-_]+\./gmi); // !keyWord1, !keyWord2.
+  const rawKeyWords1_arr = rawUC.match(/1_[a-zA-Z0-9-_]+\./gmi); // 1_keyWord1, 1_keyWord2.
+  const rawKeyWords2_arr = rawUC.match(/2_[a-zA-Z0-9-_]+\./gmi); // 2_keyWord1, 2_keyWord2.
+  const rawKeyWords3_arr = rawUC.match(/3_[a-zA-Z0-9-_]+\./gmi); // 3_keyWord1, 3_keyWord2.
 
   // Return array with all keywords without exclamation marks and change dots into comma at the end: !keyWord1., !!!keyWord2.
-  if (rawKeyWords_arr && rawKeyWords_arr[0]) {
-    return rawKeyWords_arr.map(keyWord => {
-      return keyWord.replace(/!/, '').replace(/\./, ',');
-    });
+  // if (rawKeyWords1_arr && rawKeyWords1_arr[0]) {
+  //   return rawKeyWords1_arr.map(keyWord => {
+  //     return keyWord.replace(/1_/, '').replace(/\./, ',');
+  //   });
+  // }
+
+  const getCleanKeyWords = (arr, str) => arr? arr.map(rawKeyWord => rawKeyWord.replace(str, '').replace(/\./, ',')): [];
+
+  return {
+    keyWords1: getCleanKeyWords(rawKeyWords1_arr, '1_'),
+    keyWords2: getCleanKeyWords(rawKeyWords2_arr, '2_'),
+    keyWords3: getCleanKeyWords(rawKeyWords3_arr, '3_')
   }
 }
 
@@ -286,7 +296,7 @@ export {
   returnUseCaseNameBody_arr,
   returnUseCaseTagName_arr,
   getRidOfTagName,
-  returnKeyWords_arr,
+  returnKeyWords_obj,
   returnHashTags_arr,
   returnUseCaseID_str,
   returnRunCommand,

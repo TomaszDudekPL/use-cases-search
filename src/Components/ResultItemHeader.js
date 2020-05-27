@@ -13,10 +13,8 @@ export default class ResultItemHeader extends React.Component {
   describeTag = this.props.describeTag;
   image_url = this.props.image_url;
   useCaseBody_str = this.props.uc;
-  allKeyWords = this.props.keyWords;
+  keyWords = this.props.keyWords;
   directoryPath = this.props.directoryPath;
-
-
 
   checked = (useCaseID, checkOrFocus) => {
     const itemsState_obj = getItemFromLocalStorage('itemsState');
@@ -26,6 +24,8 @@ export default class ResultItemHeader extends React.Component {
       }
     }
   }
+
+  mergeArraysWithKeyWords = (keyWords) => [...keyWords.keyWords1, ...keyWords.keyWords2, ...keyWords.keyWords3];
 
   render() {
     const ordinalNumber = this.props.ordinalNumber;
@@ -80,7 +80,7 @@ export default class ResultItemHeader extends React.Component {
           </div>
 
           <div className="keywords-title-mod">KEY WORDS:
-            {this.allKeyWords ? this.allKeyWords.map(singleKeyWord => {
+            {this.mergeArraysWithKeyWords(this.keyWords).map(singleKeyWord => {
               return <Highlighter
                 key={singleKeyWord + randomNum()}
                 className="keyword-item-mod"
@@ -89,7 +89,7 @@ export default class ResultItemHeader extends React.Component {
                 autoEscape={true}
                 textToHighlight={singleKeyWord}
               />;
-            }) : null}
+            })}
           </div>
 
         </div>

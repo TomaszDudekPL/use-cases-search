@@ -4,7 +4,7 @@ import {
   firstLetterToUpperCase,
   getRidOfTagName,
   returnHashTags_arr,
-  returnKeyWords_arr,
+  returnKeyWords_obj,
   returnUseCaseID_str,
   returnUseCaseNameBody_arr,
   returnUseCaseTagName_arr,
@@ -298,7 +298,7 @@ const createObjectWithSearchResult = (base) => {
         const useCaseID_str = returnUseCaseID_str(uc);
         const imageURL = getUrlToImageInFirebase(arrWithData, useCaseID_str);
         const allHashTags_arr = returnHashTags_arr(uc);
-        const allKeyWords_arr = returnKeyWords_arr(uc);
+        const allKeyWords_obj = returnKeyWords_obj(uc);
         const describeTag_str = returnUseCaseTagName_arr(uc)[0];
         const useCaseBody_arr = returnUseCaseNameBody_arr(uc);
         const useCaseNameWithoutTag_str = firstLetterToUpperCase(getRidOfTagName(useCaseBody_arr)) + '.';
@@ -310,7 +310,7 @@ const createObjectWithSearchResult = (base) => {
           describeTag: describeTag_str,
           useCaseBody: useCaseNameWithoutTag_str,
           hashTags: allHashTags_arr,
-          keyWords: allKeyWords_arr,
+          keyWords: allKeyWords_obj,
           steps: Array.isArray(fullUC[1]) ? fullUC[1] : [],
           mainDirectory: [mainDirectory, jenkinsLinkToJob],
           fileName: [fileName, githubLinkToFile],
