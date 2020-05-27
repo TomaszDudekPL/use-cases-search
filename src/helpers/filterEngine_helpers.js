@@ -10,7 +10,6 @@ import {
   returnUseCaseTagName_arr,
   returnRunCommand,
   returnLinkToJenkinsJob,
-  getImageID,
   getUrlToImageInFirebase
 } from "./helperFunctions";
 
@@ -296,9 +295,8 @@ const createObjectWithSearchResult = (base) => {
         let uc = changeAllSemicolonsToDots(fullUC[0]);
         uc = changeAllVerticalLinesToSlash(uc);
 
-        const image_id = getImageID(uc);
-        const imageURL = getUrlToImageInFirebase(arrWithData, image_id);
         const useCaseID_str = returnUseCaseID_str(uc);
+        const imageURL = getUrlToImageInFirebase(arrWithData, useCaseID_str);
         const allHashTags_arr = returnHashTags_arr(uc);
         const allKeyWords_arr = returnKeyWords_arr(uc);
         const describeTag_str = returnUseCaseTagName_arr(uc)[0];

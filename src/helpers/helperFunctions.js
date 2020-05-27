@@ -183,11 +183,6 @@ const returnRunCommand = (arrWithData) => {
 
 };
 
-const getImageID = (uc) => {
-  const image_id = uc.match(/ID_.{2}/)[0];
-  return image_id ? image_id.replace('ID_', '') : 'NO_ID';
-}
-
 const getAllStepsFromFullBase = (consumerBase, proBase, pathToFile) => {
 
   let arrWithSteps = [];
@@ -298,7 +293,6 @@ export {
   firstLetterToUpperCase,
   changeAllSemicolonsToDots,
   changeAllVerticalLinesToSlash,
-  getImageID,
   returnUC_StepsFromFile,
   checkThisUseCase,
   getItemFromLocalStorage
