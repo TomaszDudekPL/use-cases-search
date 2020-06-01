@@ -8,7 +8,9 @@ export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKe
     return returnChosenKeyWords(keyWord);
   };
 
-  const arr = Object.entries(keyWords);
+  const keyWord1 = keyWords.keyWords1;
+  const keyWord2 = keyWords.keyWords2;
+  const keyWord3 = keyWords.keyWords3;
 
   // arr.sort();
 
@@ -16,52 +18,47 @@ export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKe
     <Row className="bottom-margin">
       <Col sm="12" md={{size: 8, offset: 2}}>
 
-        {/*{*/}
-        {/*  arr.map(arrWithKeyWord => {*/}
+        {
+          keyWord1 ? keyWord1.map(keyWord => {
+              return (
+                <div className="badge-mod h5x" key={keyWord}>
+                  <Badge onClick={collectAllKeyWords}
+                         className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                  >{keyWord}
+                  </Badge>
+                </div>
+              )
+            }
+          ) : null
+        }
 
-        {/*    if (0 <= arrWithKeyWord[1] && arrWithKeyWord[1] < 5) {*/}
-        {/*      return (*/}
-        {/*        <div className="badge-mod h5x" key={arrWithKeyWord[0]}>*/}
-        {/*          <Badge onClick={collectAllKeyWords}*/}
-        {/*                 className={chosenKeyWords.includes(arrWithKeyWord[0]) ? "keywords-badge_mod2" : "keywords-badge_mod1"}*/}
-        {/*          >{arrWithKeyWord[0]}*/}
-        {/*          </Badge>*/}
-        {/*        </div>*/}
-        {/*      )*/}
-        {/*    }*/}
-        {/*    if (5 <= arrWithKeyWord[1] && arrWithKeyWord[1] < 10) {*/}
-        {/*      return (*/}
-        {/*        <div className="badge-mod h4x" key={arrWithKeyWord[0]}>*/}
-        {/*          <Badge onClick={collectAllKeyWords}*/}
-        {/*                 className={chosenKeyWords.includes(arrWithKeyWord[0]) ? "keywords-badge_mod2" : "keywords-badge_mod1"}*/}
-        {/*          >{arrWithKeyWord[0]}*/}
-        {/*          </Badge>*/}
-        {/*        </div>*/}
-        {/*      )*/}
-        {/*    }*/}
-        {/*    if (10 <= arrWithKeyWord[1] && arrWithKeyWord[1] < 15) {*/}
-        {/*      return (*/}
-        {/*        <div className="badge-mod h3x" key={arrWithKeyWord[0]}>*/}
-        {/*          <Badge onClick={collectAllKeyWords}*/}
-        {/*                 className={chosenKeyWords.includes(arrWithKeyWord[0]) ? "keywords-badge_mod2" : "keywords-badge_mod1"}*/}
-        {/*          >{arrWithKeyWord[0]}*/}
-        {/*          </Badge>*/}
-        {/*        </div>*/}
-        {/*      )*/}
-        {/*    }*/}
-        {/*    if (15 <= arrWithKeyWord[1]) {*/}
-        {/*      return (*/}
-        {/*        <div className="badge-mod h2x" key={arrWithKeyWord[0]}>*/}
-        {/*          <Badge onClick={collectAllKeyWords}*/}
-        {/*                 className={chosenKeyWords.includes(arrWithKeyWord[0]) ? "keywords-badge_mod2" : "keywords-badge_mod1"}*/}
-        {/*          >{arrWithKeyWord[0]}*/}
-        {/*          </Badge>*/}
-        {/*        </div>*/}
-        {/*      )*/}
-        {/*    }*/}
-        {/*    return {};*/}
-        {/*  })*/}
-        {/*}*/}
+        {
+          keyWord2 ? keyWord2.map(keyWord => {
+              return (
+                <div className="badge-mod h5x" key={keyWord}>
+                  <Badge onClick={collectAllKeyWords}
+                         className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                  >{keyWord}
+                  </Badge>
+                </div>
+              )
+            }
+          ) : null
+        }
+
+        {
+          keyWord3 ? keyWord3.map(keyWord => {
+              return (
+                <div className="badge-mod h5x" key={keyWord}>
+                  <Badge onClick={collectAllKeyWords}
+                         className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                  >{keyWord}
+                  </Badge>
+                </div>
+              )
+            }
+          ) : null
+        }
 
       </Col>
     </Row>

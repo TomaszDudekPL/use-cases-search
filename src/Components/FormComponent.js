@@ -296,8 +296,6 @@ export default class FormComponent extends React.Component {
 
   render() {
 
-    console.log('this.state.keyWords: ', this.state.keyWords);
-
     return (
       <div className="main-label">
         <JumbotronComponent name={this.state.name}
