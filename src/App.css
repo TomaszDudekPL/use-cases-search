@@ -535,16 +535,16 @@ body::-webkit-scrollbar {
     font-size: 1.2em;
 }
 
-.h4x {
-    font-size: 1.6em;
+.keywords-where1_mod {
+    background-color: #9e0b0b;
 }
 
-.h3x {
-    font-size: 1.9em;
+.keywords-where2_mod {
+    background-color: #235561;
 }
 
-.h2x {
-    font-size: 2.4em;
+.keywords-what_mod {
+    background-color: #0e2182;
 }
 
 .search-connector_text {

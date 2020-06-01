@@ -18,47 +18,67 @@ export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKe
     <Row className="bottom-margin">
       <Col sm="12" md={{size: 8, offset: 2}}>
 
-        {
-          keyWord1 ? keyWord1.map(keyWord => {
-              return (
-                <div className="badge-mod h5x" key={keyWord}>
-                  <Badge onClick={collectAllKeyWords}
-                         className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
-                  >{keyWord}
-                  </Badge>
-                </div>
-              )
-            }
-          ) : null
-        }
+        <table width="100%" border="1">
+          <tr>
+            <td>Where1:</td>
 
-        {
-          keyWord2 ? keyWord2.map(keyWord => {
-              return (
-                <div className="badge-mod h5x" key={keyWord}>
-                  <Badge onClick={collectAllKeyWords}
-                         className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
-                  >{keyWord}
-                  </Badge>
-                </div>
-              )
+            {
+              <td className="keywords-where1_mod">
+                {keyWord1 ? keyWord1.map(keyWord => {
+                    return (
+                      <div className="badge-mod" key={keyWord}>
+                        <Badge onClick={collectAllKeyWords}
+                               className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                        >{keyWord}
+                        </Badge>
+                      </div>
+                    )
+                  }
+                ) : null
+                }
+              </td>
             }
-          ) : null
-        }
+          </tr>
 
-        {
-          keyWord3 ? keyWord3.map(keyWord => {
-              return (
-                <div className="badge-mod h5x" key={keyWord}>
-                  <Badge onClick={collectAllKeyWords}
-                         className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
-                  >{keyWord}
-                  </Badge>
-                </div>
-              )
+          <tr>
+            <td>Where2:</td>
+            {
+              <td className="keywords-where2_mod">
+                {keyWord2 ? keyWord2.map(keyWord => {
+                    return (
+                      <div className="badge-mod" key={keyWord}>
+                        <Badge onClick={collectAllKeyWords}
+                               className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                        >{keyWord}
+                        </Badge>
+                      </div>
+                    )
+                  }
+                ) : null
+                }
+              </td>
             }
-          ) : null
-        }
+          </tr>
+          <tr>
+            <td>What:</td>
+            {
+              <td className="keywords-what_mod">
+                {keyWord3 ? keyWord3.map(keyWord => {
+                    return (
+                      <div className="badge-mod" key={keyWord}>
+                        <Badge onClick={collectAllKeyWords}
+                               className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                        >{keyWord}
+                        </Badge>
+                      </div>
+                    )
+                  }
+                ) : null
+                }
+              </td>
+            }
+          </tr>
+        </table>
 
       </Col>
     </Row>
