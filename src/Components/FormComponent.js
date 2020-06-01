@@ -296,6 +296,8 @@ export default class FormComponent extends React.Component {
 
   render() {
 
+    console.log('this.state.keyWords: ', this.state.keyWords);
+
     return (
       <div className="main-label">
         <JumbotronComponent name={this.state.name}
@@ -336,7 +338,8 @@ export default class FormComponent extends React.Component {
 
                 />
 
-                <KeyWordsConnectorComponent keyWords={this.state.keyWords}
+                <KeyWordsConnectorComponent
+                  // keyWords={this.state.keyWords}
                                             connector={this.state.connector}
                                             chosenHashTag={this.state.hashtag}
                                             getBackConnector={this.getBackConnector}

@@ -157,48 +157,83 @@ const returnAllKeyWords = (base) => {
 
   // base - array of nested arrays. Each of them has arr of UCs on second position
 
-  const arrOfAllKeyWords = [];
+  const keyWords1 = new Set();
+  const keyWords2 = new Set();
+  const keyWords3 = new Set();
 
-  const countWords = inputWords => inputWords.reduce((obj, word) => {
-    obj[word] = (obj[word] || 0) + 1;
-    return obj;
-  }, {});
 
-  const countPercent = (value, total) => ((value / total) * 100).toPrecision(2);
-
-  function returnPercentageOfEachKeyWord(obj, callback, total) {
-    const newObj = {};
-    for (let item in obj) {
-      if (obj.hasOwnProperty(item)) {
-        newObj[item] = Number.parseFloat(callback(obj[item], total));
-      }
-    }
-    return newObj;
-  }
+  // const countWords = inputWords => inputWords.reduce((obj, word) => {
+  //   obj[word] = (obj[word] || 0) + 1;
+  //   return obj;
+  // }, {});
+  //
+  // const countPercent = (value, total) => ((value / total) * 100).toPrecision(2);
+  //
+  // function returnPercentageOfEachKeyWord(obj, callback, total) {
+  //   const newObj = {};
+  //   for (let item in obj) {
+  //     if (obj.hasOwnProperty(item)) {
+  //       newObj[item] = Number.parseFloat(callback(obj[item], total));
+  //     }
+  //   }
+  //   return newObj;
+  // }
 
   // 1. Create array of all key words in use cases - now they are not uniq.
 
   if (base.length) {
     base.forEach((nestedArr) => {
       nestedArr[1].forEach((useCase) => {
-        const arrOfKeyWords = useCase[0].match(/![a-zA-Z0-9-_]+;/gmi);
-        if (arrOfKeyWords) {
-          arrOfKeyWords.forEach((keyWord) => {
-            keyWord = keyWord.replace(/!/, '').replace(/;/, '');
-            arrOfAllKeyWords.push(keyWord);
-          })
+
+        if(/1_/.test(useCase[0])){
+
+          let words = useCase[0].match(/1_[a-zA-Z0-9_-]+;/gmi);
+
+          if(words){
+            words = words.map(word=> word.replace('1_', '').replace(';', ''));
+            keyWords1.add(...words);
+          }
         }
+
+        if(/2_/.test(useCase[0])){
+
+          let words = useCase[0].match(/2_[a-zA-Z0-9_-]+;/gmi);
+
+          if(words){
+            words = words.map(word=> word.replace('2_', '').replace(';', ''));
+            keyWords2.add(...words);
+          }
+        }
+
+        if(/3_/.test(useCase[0])){
+
+          let words = useCase[0].match(/3_[a-zA-Z0-9_-]+;/gmi);
+
+          if(words){
+            words = words.map(word=> word.replace('3_', '').replace(';', ''));
+            keyWords3.add(...words);
+          }
+        }
+
       })
     });
 
+
+
     // 2. Calculate how many not uniq words are in array -this will be our 100% (total)
-    const oneHundredPercent = arrOfAllKeyWords.length;
+    // const oneHundredPercent = arrOfAllKeyWords.length;
 
     // 3. Count: how many times each keyWord appears for a given HashTag
-    const objWithCountedWords = countWords(arrOfAllKeyWords);
+    // const objWithCountedWords = countWords(arrOfAllKeyWords);
 
     // 4. Calculate percentage for each keyWord in relation to total -return object with these values
-    return returnPercentageOfEachKeyWord(objWithCountedWords, countPercent, oneHundredPercent);
+    // return returnPercentageOfEachKeyWord(objWithCountedWords, countPercent, oneHundredPercent);
+
+    return {
+      keyWords1: [...keyWords1],
+      keyWords2: [...keyWords2],
+      keyWords3: [...keyWords3]
+    }
 
   }
 };
