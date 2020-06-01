@@ -83,7 +83,7 @@ const returnAllUseCasesWithWantedKeyWords = (base, chosenKeyWords, connector) =>
     const returnRegExp = (chosenKeyWords) => {
       let regExp = '';
       chosenKeyWords.forEach((keyWord, index, arr) => {
-        regExp += (`!${keyWord}; ${index !== arr.length - 1 ? '|' : ''}`)
+        regExp += (`1_${keyWord};|2_${keyWord};|3_${keyWord}; ${index !== arr.length - 1 ? '|' : ''}`)
       });
       return regExp;
     };
@@ -107,7 +107,7 @@ const returnAllUseCasesWithWantedKeyWords = (base, chosenKeyWords, connector) =>
     const returnRegExp = (chosenKeyWords) => {
       let regExp = '';
       chosenKeyWords.forEach((keyWord, index, arr) => {
-        regExp += (`!${keyWord}; ${index !== arr.length - 1 ? '|' : ''}`)
+        regExp += (`1_${keyWord};|2_${keyWord};|3_${keyWord}; ${index !== arr.length - 1 ? '|' : ''}`)
       });
       return regExp;
     };
@@ -135,7 +135,7 @@ const returnAllUseCasesWithWantedKeyWords = (base, chosenKeyWords, connector) =>
       arrOfUC[1].forEach(uc => {
 
         let passed = chosenKeyWords.every(keyWord => {
-          const regExp = `!${keyWord};`;
+          const regExp = `1_${keyWord};|2_${keyWord};|3_${keyWord};`;
           const reg = new RegExp(regExp);
           return reg.test(uc);
         });
@@ -160,7 +160,6 @@ const returnAllKeyWords = (base) => {
   const keyWords1 = new Set();
   const keyWords2 = new Set();
   const keyWords3 = new Set();
-
 
   // const countWords = inputWords => inputWords.reduce((obj, word) => {
   //   obj[word] = (obj[word] || 0) + 1;
@@ -217,8 +216,6 @@ const returnAllKeyWords = (base) => {
 
       })
     });
-
-
 
     // 2. Calculate how many not uniq words are in array -this will be our 100% (total)
     // const oneHundredPercent = arrOfAllKeyWords.length;
