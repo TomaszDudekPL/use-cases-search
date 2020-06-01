@@ -161,23 +161,6 @@ const returnAllKeyWords = (base) => {
   const keyWords2 = new Set();
   const keyWords3 = new Set();
 
-  // const countWords = inputWords => inputWords.reduce((obj, word) => {
-  //   obj[word] = (obj[word] || 0) + 1;
-  //   return obj;
-  // }, {});
-  //
-  // const countPercent = (value, total) => ((value / total) * 100).toPrecision(2);
-  //
-  // function returnPercentageOfEachKeyWord(obj, callback, total) {
-  //   const newObj = {};
-  //   for (let item in obj) {
-  //     if (obj.hasOwnProperty(item)) {
-  //       newObj[item] = Number.parseFloat(callback(obj[item], total));
-  //     }
-  //   }
-  //   return newObj;
-  // }
-
   // 1. Create array of all key words in use cases - now they are not uniq.
 
   if (base.length) {
