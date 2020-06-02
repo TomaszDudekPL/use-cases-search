@@ -261,7 +261,7 @@ const getItemFromLocalStorage = (key) => JSON.parse(localStorage.getItem(key));
 
 const setItemInLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
-const checkThisUseCase = (id, checkOrFocus) => async () => {
+const checkThisUseCase = (id, checkOrFocus) => () => {
 
   if(!(getItemFromLocalStorage('itemsState'))) {
     const itemsState_obj = {};

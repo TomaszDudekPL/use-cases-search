@@ -710,3 +710,7 @@ body::-webkit-scrollbar {
 #uc_focused:checked {
     opacity: 1;
 }
+
+.btn-primary {
+    background-color: #0d63af;
+}
