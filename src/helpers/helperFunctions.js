@@ -33,6 +33,7 @@ const preventActionHandler = (event) => {
   let charCode = event.charCode;
   if (charCode === 13) {
     event.preventDefault();
+    document.getElementById("search_btn").click();
   }
 };
 

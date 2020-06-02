@@ -269,29 +269,33 @@ export default class FormComponent extends React.Component {
     this.proceedSearching()
   };
 
-  returnChosenKeyWords = (keyWord) => {
+  returnChosenKeyWords = async (keyWord) => {
     if (this.collection.has(keyWord)) {
       this.collection.delete(keyWord)
     } else {
       this.collection.add(keyWord);
     }
-    this.setState(() => {
+    await this.setState(() => {
       return {
         searchResult_arr: [],
         readyToProceed: true,
         chosenKeyWords: [...this.collection].sort()
       }
     })
+
+    this.proceedSearching()
   };
 
-  getBackConnector = (connector) => {
-    this.setState(
+  getBackConnector = async (connector) => {
+    await this.setState(
       {
         searchResult_arr: [],
         readyToProceed: true,
         connector
       }
     )
+
+    this.proceedSearching()
   };
 
   render() {
@@ -357,6 +361,7 @@ export default class FormComponent extends React.Component {
                 <SearchButtonComponent executeFunc={this.proceedSearching}
                                        readyToProceed={this.state.readyToProceed}
                                        color="success"
+                                       id="search_btn"
                                        name={this.state.readyToProceed ? "search" : "re-search again"}
                 />
 

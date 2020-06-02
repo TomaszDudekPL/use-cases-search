@@ -714,3 +714,7 @@ body::-webkit-scrollbar {
 .btn-primary {
     background-color: #0d63af;
 }
+
+#search_btn {
+    display: none;
+}
