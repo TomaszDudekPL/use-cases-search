@@ -186,9 +186,9 @@ body::-webkit-scrollbar {
     /*font-style: italic;*/
 }
 
-.breadcrumb {
-    background-color: #f4f7fa;
-}
+/*.breadcrumb {*/
+/*    background-color: #145597;*/
+/*}*/
 
 .breadcrumb:hover {
     outline: 2px solid #2fb431;
@@ -624,7 +624,7 @@ body::-webkit-scrollbar {
 }
 
 .breadcrumb-header {
-    background-color: #eceff2;
+    background-color: rgba(231, 241, 255, 0.8);
     width: 100%;
     padding: 10px;
 }
@@ -661,7 +661,7 @@ body::-webkit-scrollbar {
     padding-bottom: 5px;
 }
 
-#uc_done, #uc_focused {
+#uc_done {
     position: absolute;
     width: 20px;
     height: 20px;
@@ -672,8 +672,14 @@ body::-webkit-scrollbar {
     top: 0;
 }
 
+.focused{
+    background: rgba(245, 156, 2, 0.22);
+}
+
 #uc_focused {
-    left: -60px;
+    width: 0;
+    height: 0;
+    left: -80px;
     top: 40px;
     opacity: 0;
 }
@@ -689,6 +695,7 @@ body::-webkit-scrollbar {
     color: white;
     background: #2f9c31;
     padding: 8px;
+    font-size: 1.2rem;
 }
 
 #uc_focused:checked::after {
@@ -696,13 +703,10 @@ body::-webkit-scrollbar {
     content: "FOCUSED";
     font-weight: bolder;
     color: white;
-    background: #9e0b0b;
+    background: #f59c02;
+    font-size: 1.2rem;
 }
 
 #uc_focused:checked {
     opacity: 1;
-}
-
-.focused{
-    background: rgba(13, 99, 175, 0.27);
 }
