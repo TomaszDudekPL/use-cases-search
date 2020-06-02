@@ -448,6 +448,7 @@ body::-webkit-scrollbar {
     margin-top: 9px;
     color: black;
     font-style: italic;
+    font-size: .9rem;
 }
 
 .keywords-badge_mod2 {
@@ -455,6 +456,11 @@ body::-webkit-scrollbar {
     margin-top: 9px;
     color: #fff;
     font-style: italic;
+    font-size: .9rem;
+}
+
+.table td {
+    vertical-align: middle;
 }
 
 .badge-counter_mod1 {
@@ -535,16 +541,15 @@ body::-webkit-scrollbar {
     font-size: 1.2em;
 }
 
-.keywords-where1_mod {
-    background-color: #9e0b0b;
+.keywords-location_mod {
+    border-bottom-style: solid;
+    border-color: #0d63af;
+    border-bottom-width: 4px;
+    color: #0d63af;
 }
 
-.keywords-where2_mod {
-    background-color: #235561;
-}
-
-.keywords-what_mod {
-    background-color: #0e2182;
+.keywords-subject_mod {
+    color: #0d63af;
 }
 
 .search-connector_text {
