@@ -452,7 +452,7 @@ body::-webkit-scrollbar {
 }
 
 .keywords-badge_mod2 {
-    background-color: #61ac69;
+    background-color: #0d63af;
     margin-top: 9px;
     color: #fff;
     font-style: italic;
@@ -566,6 +566,11 @@ body::-webkit-scrollbar {
 
 .search-connector-buttons {
     font-weight: bolder;
+    color: #0d63af;
+    border-color: #0d63af;
+}
+.btn-outline-primary:not(:disabled):not(.disabled).active {
+    background-color: #0d63af;
 }
 
 .or-mod {

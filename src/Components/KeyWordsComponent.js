@@ -66,7 +66,7 @@ export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKe
           </tr>
 
           <tr className="keywords-subject_mod">
-            <td>SUBJECT:</td>
+            <td>SUBJECT</td>
             <td>
 
               {keyWord3 ? keyWord3.map(keyWord => {
