@@ -238,15 +238,15 @@ export default class FormComponent extends React.Component {
     if (this.state.base) {
 
       if (this.state.hashtag === hashTagName) {
-        this.setState(() => {
+        await this.setState(() => {
           return {
             keyWords: [],
             hashtag: '',
-            chosenKeyWords: []
+            chosenKeyWords: [],
+            searchResult_arr: []
           }
         })
       } else {
-
         this.collection = new Set();
 
         let base = returnBaseDividedOnCategories(this.state);
