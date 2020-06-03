@@ -262,7 +262,7 @@ const getItemFromLocalStorage = (key) => JSON.parse(localStorage.getItem(key));
 
 const setItemInLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
-const checkThisUseCase = (id, checkOrFocus) => () => {
+const checkThisUseCase = (id, checkOrFocus, that) => () => {
 
   if(!(getItemFromLocalStorage('itemsState'))) {
     const itemsState_obj = {};
@@ -279,6 +279,8 @@ const checkThisUseCase = (id, checkOrFocus) => () => {
     }
     setItemInLocalStorage('itemsState',itemsState_obj);
   }
+
+  that.forceUpdate();
 }
 
 export {
@@ -301,5 +303,4 @@ export {
   returnUC_StepsFromFile,
   checkThisUseCase,
   getItemFromLocalStorage
-  // checked
 }

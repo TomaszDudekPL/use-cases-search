@@ -35,12 +35,12 @@ export default class ResultItemHeader extends React.Component {
 
         <Input type="checkbox"
                id="uc_done"
-               onChange={checkThisUseCase(this.useCaseID, 'checked')}
+               onChange={checkThisUseCase(this.useCaseID, 'checked', this)}
                defaultChecked={this.checked(this.useCaseID, 'checked')}
         />
         <Input type="checkbox"
                id="uc_focused"
-               onChange={checkThisUseCase(this.useCaseID, 'focused')}
+               onChange={checkThisUseCase(this.useCaseID, 'focused', this)}
                defaultChecked={this.checked(this.useCaseID, 'focused')}
         />
 
