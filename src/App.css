@@ -250,7 +250,8 @@ body::-webkit-scrollbar {
 }
 
 ::placeholder {
-    font-size: 1.3rem;
+    font-size: 1rem;
+    text-align: center;
     font-style: italic;
 }
 
