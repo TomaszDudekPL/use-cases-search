@@ -1,5 +1,6 @@
 import React from 'react';
 import {ButtonGroup, Button, Jumbotron} from 'reactstrap';
+import SearchButtonComponent from "./SearchButtonComponent";
 
 export default class JumbotronComponent extends React.Component {
 
@@ -9,7 +10,9 @@ export default class JumbotronComponent extends React.Component {
       <Jumbotron fluid className="jumbotron_mod">
 
         <h1 className="form-mainLabel_mod2">USE CASES SEARCH</h1>
-        {[0] in this.props.searchResult_arr? <ButtonGroup className="print_view-button_mod">
+        {[0] in this.props.searchResult_arr? (
+
+                                  <ButtonGroup className="print_view-button_mod">
 
                                       <Button color="primary"
                                               size="sm"
@@ -20,7 +23,13 @@ export default class JumbotronComponent extends React.Component {
                                               size="sm"
                                               onClick={this.props.createPrintView(this.props.searchResult_arr, 'WITH DESCRIPTIONS')}>WITH DESCRIPTIONS
                                       </Button>
-                                  </ButtonGroup>: null}
+                                  </ButtonGroup>): null}
+
+                                  <SearchButtonComponent executeFunc={this.props.resetAllSettings}
+                                                         color="secondary"
+                                                         name="✕ reset all"
+                                                         visibility={this.props.readyToProceed && !this.props.hashtag}
+                                  />
 
       </Jumbotron>
     )

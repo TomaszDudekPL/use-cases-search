@@ -307,6 +307,9 @@ export default class FormComponent extends React.Component {
                             detailsSwitchView={this.state.detailsSwitchView}
                             searchResult_arr={this.state.searchResult_arr}
                             createPrintView={this.createPrintView}
+                            readyToProceed={this.state.readyToProceed}
+                            hashtag={this.state.hashtag}
+                            resetAllSettings={this.resetAllSettings}
 
 
         />
@@ -340,9 +343,7 @@ export default class FormComponent extends React.Component {
 
                 />
 
-                <KeyWordsConnectorComponent
-                  // keyWords={this.state.keyWords}
-                                            connector={this.state.connector}
+                <KeyWordsConnectorComponent connector={this.state.connector}
                                             chosenHashTag={this.state.hashtag}
                                             getBackConnector={this.getBackConnector}
 
@@ -357,7 +358,7 @@ export default class FormComponent extends React.Component {
 
               <SearchAlgorithmTextComponent state={this.state}/>
 
-              <ButtonGroup>
+
                 <SearchButtonComponent executeFunc={this.proceedSearching}
                                        readyToProceed={this.state.readyToProceed}
                                        color="success"
@@ -365,12 +366,6 @@ export default class FormComponent extends React.Component {
                                        name={this.state.readyToProceed ? "search" : "re-search again"}
                 />
 
-                <SearchButtonComponent executeFunc={this.resetAllSettings}
-                                       color="secondary"
-                                       name="✕ reset all"
-                                       visibility={this.state.readyToProceed && !this.state.hashtag}
-                />
-              </ButtonGroup>
 
               <ResultNumberTextComponent searchResult_arr={this.state.searchResult_arr}
                                          readyToProceed={this.state.readyToProceed}
