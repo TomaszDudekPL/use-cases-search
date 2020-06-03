@@ -1,6 +1,5 @@
 import React from 'react';
 import {ButtonGroup, Button, Jumbotron} from 'reactstrap';
-import SearchButtonComponent from "./SearchButtonComponent";
 
 export default class JumbotronComponent extends React.Component {
 
@@ -24,12 +23,6 @@ export default class JumbotronComponent extends React.Component {
                                               onClick={this.props.createPrintView(this.props.searchResult_arr, 'WITH DESCRIPTIONS')}>WITH DESCRIPTIONS
                                       </Button>
                                   </ButtonGroup>): null}
-
-                                  <SearchButtonComponent executeFunc={this.props.resetAllSettings}
-                                                         color="secondary"
-                                                         name="✕ reset all"
-                                                         visibility={this.props.readyToProceed && !this.props.hashtag}
-                                  />
 
       </Jumbotron>
     )

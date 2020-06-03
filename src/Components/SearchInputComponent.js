@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Col, FormGroup, Input, InputGroup, InputGroupAddon, Row} from "reactstrap";
 import {preventActionHandler} from "../helpers/helperFunctions";
 
-const SearchInputComponent = ({multipleFuncOnChangeHandler, name}) => {
+const SearchInputComponent = ({multipleFuncOnChangeHandler, name, cancel}) => {
   return (
     <Row>
       <Col sm="12" md={{size: 8, offset: 2}}>
@@ -21,7 +21,7 @@ const SearchInputComponent = ({multipleFuncOnChangeHandler, name}) => {
                    onChange={multipleFuncOnChangeHandler}
                    onKeyPress={preventActionHandler}
             />
-            <InputGroupAddon addonType="append"><Button outline color="danger">✕</Button></InputGroupAddon>
+            <InputGroupAddon addonType="append"><Button outline color="danger" onClick={cancel}>✕</Button></InputGroupAddon>
           </InputGroup>
 
         </FormGroup>

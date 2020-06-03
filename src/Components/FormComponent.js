@@ -1,5 +1,5 @@
 import React from 'react';
-import {ButtonGroup, Container, Form, FormGroup} from 'reactstrap';
+import {Container, Form, FormGroup} from 'reactstrap';
 import SearchResultItems from "./SearchResultItems";
 import JumbotronComponent from "./JumbotronComponent";
 import CheckboxesComponent from "./CheckboxesComponent";
@@ -74,24 +74,6 @@ export default class FormComponent extends React.Component {
     this.setState({
       wantedWords: []
     })
-  };
-
-  resetAllSettings = (e) => {
-    e.preventDefault();
-    this.setState(() => {
-        return {
-          consumer_chkbox: false,
-          pro_chkbox: false,
-          searchResult_arr: [],
-          name: '',
-          hashtag: '',
-          readyToProceed: true,
-          chosenKeyWords: [],
-          keyWords: [],
-          connector: 'WITH'
-        }
-      }
-    )
   };
 
   proceedSearching = (e) => {
@@ -242,6 +224,7 @@ export default class FormComponent extends React.Component {
           return {
             keyWords: [],
             hashtag: '',
+            name: '',
             chosenKeyWords: [],
             searchResult_arr: []
           }
@@ -298,20 +281,27 @@ export default class FormComponent extends React.Component {
     this.proceedSearching()
   };
 
+  cancelInput = (e) => {
+    e.preventDefault();
+    this.setState(() => {
+      return {
+        searchResult_arr: [],
+        name: '',
+        hashtag: '',
+        readyToProceed: true,
+        chosenKeyWords: [],
+        keyWords: [],
+        connector: 'WITH'
+      }
+    })
+  }
+
   render() {
 
     return (
       <div className="main-label">
-        <JumbotronComponent name={this.state.name}
-                            ucInfoObj={this.state.ucInfoObj}
-                            detailsSwitchView={this.state.detailsSwitchView}
-                            searchResult_arr={this.state.searchResult_arr}
+        <JumbotronComponent searchResult_arr={this.state.searchResult_arr}
                             createPrintView={this.createPrintView}
-                            readyToProceed={this.state.readyToProceed}
-                            hashtag={this.state.hashtag}
-                            resetAllSettings={this.resetAllSettings}
-
-
         />
 
         <Container fluid>
@@ -352,6 +342,7 @@ export default class FormComponent extends React.Component {
               </div>
 
               <SearchInputComponent
+                cancel={this.cancelInput}
                 multipleFuncOnChangeHandler={this.showSearchValue}
                 name={this.state.name}
               />
