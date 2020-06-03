@@ -315,6 +315,10 @@ body::-webkit-scrollbar {
     font-weight: bolder;
 }
 
+.form-control.is-valid {
+    background: none;
+}
+
 .jumbotron-label_mod {
     font-size: .8rem;
     padding-top: 6px;
@@ -731,4 +735,9 @@ body::-webkit-scrollbar {
 
 #search_btn {
     display: none;
+}
+
+.badge-warning {
+    background-color: unset;
+    border: #4CAF50 solid 1px;
 }
