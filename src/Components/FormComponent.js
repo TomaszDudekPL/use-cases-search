@@ -9,7 +9,6 @@ import firebaseConfig from '../firebaseConfig.js'
 import changeBaseEngine from '../helpers/changeBaseEngine'
 import BadgesComponent from './BadgesComponent'
 import KeyWordsComponent from './KeyWordsComponent'
-import KeyWordsConnectorComponent from './KeyWordsConnectorComponent'
 import SearchInputComponent from './SearchInputComponent'
 import SearchButtonComponent from './SearchButtonComponent'
 import ResultNumberTextComponent from './ResultNumberTextComponent'
@@ -330,12 +329,8 @@ export default class FormComponent extends React.Component {
                                    returnChosenKeyWords={this.returnChosenKeyWords}
                                    chosenKeyWords={this.state.chosenKeyWords}
                                    chosenHashTag={this.state.hashtag}
-
-                />
-
-                <KeyWordsConnectorComponent connector={this.state.connector}
-                                            chosenHashTag={this.state.hashtag}
-                                            getBackConnector={this.getBackConnector}
+                                   connector={this.state.connector}
+                                   getBackConnector={this.getBackConnector}
 
                 />
 

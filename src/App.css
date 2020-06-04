@@ -581,9 +581,8 @@ body::-webkit-scrollbar {
 
 .search-connector-buttons {
     font-weight: bolder;
-    color: #0d63af;
-    border-color: #0d63af;
 }
+
 .btn-outline-primary:not(:disabled):not(.disabled).active {
     background-color: #0d63af;
 }
@@ -741,4 +740,28 @@ body::-webkit-scrollbar {
 .badge-warning {
     background-color: unset;
     border: #4CAF50 solid 1px;
+}
+
+.toast_mod {
+    max-width: unset;
+    border-radius: 10px;
+}
+
+.card-body {
+    background-color: #dff2e3
+}
+
+.toast-header_mod {
+    height: 50px;
+    width: 100%;
+    border-bottom: unset;
+}
+
+.card {
+    padding-top: unset;
+}
+
+.collapse-connector-section {
+    margin-top: 5px;
+    margin-bottom: 15px;
 }

@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button, ButtonGroup, Col, Row} from "reactstrap";
+import {Button, ButtonGroup} from "reactstrap";
 
 export default class KeyWordsConnectorComponent extends React.Component {
 
-  clickHandler = (connector) => (e)=> {
+  clickHandler = (connector) => (e) => {
     e.preventDefault();
     return this.props.getBackConnector(connector);
   };
@@ -11,23 +11,25 @@ export default class KeyWordsConnectorComponent extends React.Component {
   render() {
 
     return (
-      this.props.chosenHashTag ? (
-        <Row className="bottom-margin">
-          <Col sm="12" md={{size: 8, offset: 2}}>
-            <div className="blue-color font-weight-bolder search-connector_text">KEY WORD CONNECTOR
-            </div>
-            <ButtonGroup >
-              <Button outline color="primary" className="search-connector-buttons or-mod"
-                      active={this.props.connector === 'OR'} onClick={this.clickHandler('OR')}>OR</Button>
-              <Button outline color="primary" className="search-connector-buttons"
-                      active={this.props.connector === 'WITH'} onClick={this.clickHandler('WITH')}>WITH</Button>
-              <Button outline color="primary" className="search-connector-buttons"
-                      active={this.props.connector === 'WITHOUT'} onClick={this.clickHandler('WITHOUT')}>WITHOUT</Button>
-            </ButtonGroup>
-            <div className="blue-color font-weight-bolder margin-top"> </div>
+      this.props.chosenHashTag && this.props.isOpen ? (
 
-          </Col>
-        </Row>
+        <div className="collapse-connector-section">
+          <span>Use connector&nbsp;&nbsp;&nbsp;</span>
+
+          <ButtonGroup size="sm">
+            <Button outline color="success" className="search-connector-buttons or-mod"
+                    active={this.props.connector === 'OR'} onClick={this.clickHandler('OR')}>OR</Button>
+            <Button outline color="success" className="search-connector-buttons"
+                    active={this.props.connector === 'WITH'} onClick={this.clickHandler('WITH')}>WITH</Button>
+            <Button outline color="success" className="search-connector-buttons"
+                    active={this.props.connector === 'WITHOUT'} onClick={this.clickHandler('WITHOUT')}>WITHOUT</Button>
+          </ButtonGroup>
+
+          <span>&nbsp;&nbsp;&nbsp;for keywords.</span>
+        </div>
+
+
+
       ) : null
 
     );

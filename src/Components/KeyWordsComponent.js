@@ -1,7 +1,8 @@
-import React from 'react';
-import {Badge, Col, Row, Table} from "reactstrap";
+import React, {useState} from 'react';
+import {Badge, Card, CardBody, Col, Collapse, Row, Toast, ToastHeader} from "reactstrap";
+import KeyWordsConnectorComponent from "./KeyWordsConnectorComponent";
 
-export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKeyWords = [], chosenHashTag}) => {
+export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKeyWords = [], chosenHashTag, connector, getBackConnector}) => {
 
   const collectAllKeyWords = (e) => {
     let keyWord = e.target.innerText;
@@ -12,7 +13,11 @@ export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKe
   const keyWord2 = keyWords.keyWords2;
   const keyWord3 = keyWords.keyWords3;
 
-  // arr.sort();
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = (e) => {
+    e.stopPropagation();
+    setIsOpen(!isOpen);
+  }
 
   return (
 
@@ -20,74 +25,64 @@ export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKe
       <Row className="bottom-margin">
         <Col sm="12" md={{size: 8, offset: 2}}>
 
-          <Table borderless>
+          <Toast className="toast_mod">
 
-            <tr className="keywords-location_mod">
-              <td>LOCATION</td>
+            <ToastHeader className="toast-header_mod" onClick={toggle}>KEY WORDS - click to open it.</ToastHeader>
 
-              {
-                <tr>
-                  <td className="keywords-location_main">main:</td>
-                  <td width="100%" className="keywords-location_main">
-                    {keyWord1 ? keyWord1.map(keyWord => {
-                        return (
-                          <div className="badge-mod keyword-badge" key={keyWord}>
-                            <Badge onClick={collectAllKeyWords}
-                                   className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
-                            >{keyWord}
-                            </Badge>
-                          </div>
-                        )
-                      }
-                    ) : null
+            <KeyWordsConnectorComponent
+              isOpen={isOpen}
+              connector={connector}
+              chosenHashTag={chosenHashTag}
+              getBackConnector={getBackConnector}
+            />
+
+            <Collapse isOpen={isOpen}>
+              <Card>
+                <CardBody>
+                  {keyWord1 ? keyWord1.sort().map(keyWord => {
+                      return (
+                        <div className="badge-mod keyword-badge" key={keyWord}>
+                          <Badge onClick={collectAllKeyWords}
+                                 className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                          >{keyWord}
+                          </Badge>
+                        </div>
+                      )
                     }
-                  </td>
-                </tr>
-              }
-
-              {
-                <tr>
-                  <td>exact:</td>
-                  <td width="100%">
-                    {keyWord2 ? keyWord2.map(keyWord => {
-                        return (
-                          <div className="badge-mod keyword-badge" key={keyWord}>
-                            <Badge onClick={collectAllKeyWords}
-                                   className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
-                            >{keyWord}
-                            </Badge>
-                          </div>
-                        )
-                      }
-                    ) : null
-                    }
-
-                  </td>
-                </tr>
-              }
-            </tr>
-
-            <tr className="keywords-subject_mod">
-              <td>SUBJECT</td>
-              <td>
-
-                {keyWord3 ? keyWord3.map(keyWord => {
-                    return (
-                      <div className="badge-mod keyword-badge" key={keyWord}>
-                        <Badge onClick={collectAllKeyWords}
-                               className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
-                        >{keyWord}
-                        </Badge>
-                      </div>
-                    )
+                  ) : null
                   }
-                ) : null
-                }
 
-              </td>
+                  {keyWord2 ? keyWord2.sort().map(keyWord => {
+                      return (
+                        <div className="badge-mod keyword-badge" key={keyWord}>
+                          <Badge onClick={collectAllKeyWords}
+                                 className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                          >{keyWord}
+                          </Badge>
+                        </div>
+                      )
+                    }
+                  ) : null
+                  }
 
-            </tr>
-          </Table>
+                  {keyWord3 ? keyWord3.sort().map(keyWord => {
+                      return (
+                        <div className="badge-mod keyword-badge" key={keyWord}>
+                          <Badge onClick={collectAllKeyWords}
+                                 className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                          >{keyWord}
+                          </Badge>
+                        </div>
+                      )
+                    }
+                  ) : null
+                  }
+
+                </CardBody>
+              </Card>
+            </Collapse>
+
+          </Toast>
 
         </Col>
       </Row>
