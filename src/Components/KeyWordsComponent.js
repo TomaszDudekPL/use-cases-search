@@ -27,7 +27,7 @@ export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKe
 
           <Toast className="toast_mod">
 
-            <ToastHeader className="toast-header_mod" onClick={toggle}>KEY WORDS - click to open it.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇩</ToastHeader>
+            <ToastHeader className="toast-header_mod" onClick={toggle}>KEY WORDS - click to open it.</ToastHeader>
 
             <KeyWordsConnectorComponent
               isOpen={isOpen}

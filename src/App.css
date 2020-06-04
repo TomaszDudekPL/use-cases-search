@@ -117,7 +117,7 @@
 
 /* remove scrollbar */
 body::-webkit-scrollbar {
-    /*width: 0;*/
+    width: 0;
 }
 
 .highlight-text {
@@ -753,8 +753,7 @@ body::-webkit-scrollbar {
     height: 50px;
     width: 100%;
     border-bottom: unset;
-    color: #046f09;
-    background-color: rgba(0, 174, 10, 0.05);
+    color: grey;
 }
 
 .collapse-connector-section {
