@@ -27,7 +27,7 @@ export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKe
 
           <Toast className="toast_mod">
 
-            <ToastHeader className="toast-header_mod" onClick={toggle}>KEY WORDS - click to open it.</ToastHeader>
+            <ToastHeader className="toast-header_mod" onClick={toggle}>KEY WORDS - click to open it.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇩</ToastHeader>
 
             <KeyWordsConnectorComponent
               isOpen={isOpen}
@@ -39,44 +39,60 @@ export const KeyWordsComponent = ({keyWords = {}, returnChosenKeyWords, chosenKe
             <Collapse isOpen={isOpen}>
               <Card>
                 <CardBody>
-                  {keyWord1 ? keyWord1.sort().map(keyWord => {
-                      return (
-                        <div className="badge-mod keyword-badge" key={keyWord}>
-                          <Badge onClick={collectAllKeyWords}
-                                 className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
-                          >{keyWord}
-                          </Badge>
-                        </div>
-                      )
-                    }
-                  ) : null
-                  }
 
-                  {keyWord2 ? keyWord2.sort().map(keyWord => {
-                      return (
-                        <div className="badge-mod keyword-badge" key={keyWord}>
-                          <Badge onClick={collectAllKeyWords}
-                                 className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
-                          >{keyWord}
-                          </Badge>
-                        </div>
-                      )
-                    }
-                  ) : null
-                  }
+                  <div className="keyword-location-container">
+                    <div className="location-label keywords-label">MAIN LOCATION</div>
+                    <div className="location-body keywords-body">
+                      {keyWord1 ? keyWord1.sort().map(keyWord => {
+                          return (
+                            <div className="badge-mod keyword-badge" key={keyWord}>
+                              <Badge onClick={collectAllKeyWords}
+                                     className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                              >{keyWord}
+                              </Badge>
+                            </div>
+                          )
+                        }
+                      ) : null
+                      }
+                    </div>
 
-                  {keyWord3 ? keyWord3.sort().map(keyWord => {
-                      return (
-                        <div className="badge-mod keyword-badge" key={keyWord}>
-                          <Badge onClick={collectAllKeyWords}
-                                 className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
-                          >{keyWord}
-                          </Badge>
-                        </div>
-                      )
-                    }
-                  ) : null
-                  }
+                    <div className="location-label keywords-label">EXACT LOCATION</div>
+                    <div className="location-body keywords-body">
+                      {keyWord2 ? keyWord2.sort().map(keyWord => {
+                          return (
+                            <div className="badge-mod keyword-badge" key={keyWord}>
+                              <Badge onClick={collectAllKeyWords}
+                                     className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                              >{keyWord}
+                              </Badge>
+                            </div>
+                          )
+                        }
+                      ) : null
+                      }
+                    </div>
+                  </div>
+
+                  <div className="keyword-subject-container">
+                    <div className="subject-label keywords-label">SUBJECT</div>
+
+                    <div className="subject-body keywords-body">
+                      {keyWord3 ? keyWord3.sort().map(keyWord => {
+                          return (
+                            <div className="badge-mod keyword-badge" key={keyWord}>
+                              <Badge onClick={collectAllKeyWords}
+                                     className={chosenKeyWords.includes(keyWord) ? "keywords-badge_mod2" : "keywords-badge_mod1"}
+                              >{keyWord}
+                              </Badge>
+                            </div>
+                          )
+                        }
+                      ) : null
+                      }
+                    </div>
+                  </div>
+
 
                 </CardBody>
               </Card>

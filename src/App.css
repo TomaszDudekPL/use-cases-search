@@ -418,7 +418,8 @@ body::-webkit-scrollbar {
     text-align: left;
     background-color: #f4f7fa;
     border: unset;
-    padding-top: 5px;
+    /*padding-top: 5px;*/
+    /*padding-top: unset;*/
 }
 
 .card-body {
@@ -633,6 +634,7 @@ body::-webkit-scrollbar {
     margin-right: 5px;
     width: 50%;
 }
+
 .breadcrumb {
     padding: unset;
 }
@@ -686,7 +688,7 @@ body::-webkit-scrollbar {
     top: 0;
 }
 
-.focused{
+.focused {
     background: rgba(245, 156, 2, 0.22);
 }
 
@@ -747,21 +749,33 @@ body::-webkit-scrollbar {
     border-radius: 10px;
 }
 
-.card-body {
-    background-color: #dff2e3
-}
-
 .toast-header_mod {
     height: 50px;
     width: 100%;
     border-bottom: unset;
-}
-
-.card {
-    padding-top: unset;
+    color: #046f09;
+    background-color: rgba(0, 174, 10, 0.05);
 }
 
 .collapse-connector-section {
     margin-top: 5px;
     margin-bottom: 15px;
+    color: black;
+    font-weight: bolder;
+}
+
+.keyword-location-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.keywords-label {
+    width: 13%;
+    color: #00ae0a;
+}
+
+.keywords-body {
+    width: 87%;
 }
